@@ -351,3 +351,6 @@ test2013_rmse-1.3788, test2013_pr-0.8314, test2016_rmse-1.2199, test2016_pr-0.84
 epoch-270, train_loss-0.1313, train_rmse-0.3624, valid_rmse-1.2549, valid_pr-0.7436
 epoch-271, train_loss-0.1422, train_rmse-0.3771, valid_rmse-1.2457, valid_pr-0.7425
 epoch-272, train_loss-0.1359, train_rmse-0.3687, valid_rmse-1.2617, valid_pr-0.7396
+epoch-273, train_loss-0.1271, train_rmse-0.3565, valid_rmse-1.2618, valid_pr-0.7409
+epoch-274, train_loss-0.1352, train_rmse-0.3677, valid_rmse-1.2670, valid_pr-0.7423
+epoch-275, train_loss-0.1411, train_rmse-0.3757, valid_rmse-1.2468, valid_pr-0.7414
