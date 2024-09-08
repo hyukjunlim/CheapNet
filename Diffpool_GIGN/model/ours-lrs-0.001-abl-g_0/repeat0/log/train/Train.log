@@ -354,3 +354,6 @@ epoch-272, train_loss-0.1359, train_rmse-0.3687, valid_rmse-1.2617, valid_pr-0.7
 epoch-273, train_loss-0.1271, train_rmse-0.3565, valid_rmse-1.2618, valid_pr-0.7409
 epoch-274, train_loss-0.1352, train_rmse-0.3677, valid_rmse-1.2670, valid_pr-0.7423
 epoch-275, train_loss-0.1411, train_rmse-0.3757, valid_rmse-1.2468, valid_pr-0.7414
+epoch-276, train_loss-0.1437, train_rmse-0.3791, valid_rmse-1.2396, valid_pr-0.7421
+Validation : valid_rmse-1.2396, valid_pr-0.7421, 
+test2013_rmse-1.3721, test2013_pr-0.8334, test2016_rmse-1.2183, test2016_pr-0.8396, test2019_rmse-1.3767, test2019_pr-0.6419
