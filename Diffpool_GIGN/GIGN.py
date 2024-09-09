@@ -210,8 +210,8 @@ class GIGN(nn.Module):
         self.GIGNBlock1 = GIGNBlock(hidden_dim, hidden_dim, drop_rate)
         self.GIGNBlock2 = GIGNBlock(hidden_dim, hidden_dim, drop_rate)
         self.GIGNBlock3 = GIGNBlock(hidden_dim, hidden_dim, drop_rate)
-        # self.diffpool1 = DiffPool(hidden_dim, hidden_dim, 600, num_clusters[0], "intra_lig", drop_rate)
-        # self.diffpool2 = DiffPool(hidden_dim, hidden_dim, 600, num_clusters[1], "intra_pro", drop_rate)
+        self.diffpool1 = DiffPool(hidden_dim, hidden_dim, 600, num_clusters[0], "intra_lig", drop_rate)
+        self.diffpool2 = DiffPool(hidden_dim, hidden_dim, 600, num_clusters[1], "intra_pro", drop_rate)
         # self.attblock1 = AttentionBlock(hidden_dim, heads, drop_rate)
         # self.attblock2 = AttentionBlock(hidden_dim, heads, drop_rate)
         self.fc = FC(hidden_dim, hidden_dim, 2, drop_rate, 1)
@@ -233,10 +233,11 @@ class GIGN(nn.Module):
         x = self.GIGNBlock2(x, data)
         x = self.GIGNBlock3(x, data)
 
-        x = global_add_pool(x, data.batch)
-        # # DiffPool-Attention
-        # x_lig, _  = self.diffpool1(x, data)
-        # x_pro, _  = self.diffpool2(x, data)
+        # x = global_add_pool(x, data.batch)
+        # DiffPool-Attention
+        x_lig, _  = self.diffpool1(x, data)
+        x_pro, _  = self.diffpool2(x, data)
+        x = x_lig.sum(dim=1) + x_pro.sum(dim=1)
 
         # l2p, _ = self.attblock1(x_lig, x_pro, x_pro)
         # p2l, _ = self.attblock2(x_pro, x_lig, x_lig)
@@ -256,5 +257,5 @@ scheduler_bool = True
 lr = 10e-4
 os.environ["CUDA_VI SIBLE_DEVICES"] = "0"  
 # os.environ["CUDA_VISIBLE_DEVICES"] = "1"
-explain = f"ours-lrs-{lr}-abl-g"
-only_rep = [0, 1, 2]
+explain = f"ours-lrs-{lr}-abl-g-d-0"
+only_rep = [1]
