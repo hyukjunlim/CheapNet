@@ -65,3 +65,4 @@ epoch-37, train_loss-0.4683, train_rmse-0.6843, valid_rmse-1.3082, valid_pr-0.72
 Validation : valid_rmse-1.3082, valid_pr-0.7233, 
 test2013_rmse-1.4137, test2013_pr-0.7960, test2016_rmse-1.2418, test2016_pr-0.8203, test2019_rmse-1.4590, test2019_pr-0.6275
 epoch-38, train_loss-0.4461, train_rmse-0.6679, valid_rmse-1.3852, valid_pr-0.6924
+epoch-39, train_loss-0.4311, train_rmse-0.6566, valid_rmse-1.3791, valid_pr-0.6898
