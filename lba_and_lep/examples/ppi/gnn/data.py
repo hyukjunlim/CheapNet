@@ -5,13 +5,16 @@ import torch
 import random
 import math
 import scipy.spatial
+import sys
+sys.path.append(os.path.abspath('/data/project/dlagurwns03/GIGN/codes/lba_and_lep'))
+from tqdm import tqdm
 
 from atom3d.util.transforms import prot_graph_transform, PairedGraphTransform
 from atom3d.datasets import LMDBDataset
 from torch_geometric.data import Data, Dataset, Batch
 from torch.utils.data import IterableDataset, DataLoader
 import atom3d.util.graph as gr
-import atom3d.datasets.ppi.neighbors as nb
+import examples.ppi.dataset.neighbors as nb
 
 
 class PPIDataset(IterableDataset):
@@ -73,14 +76,12 @@ def df_to_graph(struct_df, chain_res, label):
     graph_pt_idx = kd_tree.query_ball_point(ca_pos, r=30.0, p=2.0)
     graph_df = struct_df.iloc[graph_pt_idx].reset_index(drop=True)
     ca_idx = np.where((graph_df.chain == chain) & (graph_df.residue == resnum) & (graph_df.name == 'CA'))[0]
-    if len(ca_idx) > 0:
-        return None
-
+    # if len(ca_idx) > 0:
+    #     return None
     node_feats, edge_index, edge_feats, pos = gr.prot_df_to_graph(graph_df)
     data = Data(node_feats, edge_index, edge_feats, y=label, pos=pos)
     data.ca_idx = torch.LongTensor(ca_idx)
     data.n_nodes = data.num_nodes
-
     return data
 
 def create_labels(positives, negatives, num_pos, neg_pos_ratio):
@@ -130,11 +131,48 @@ def dataset_generator(dataset, indices, shuffle=True):
                 yield graph1, graph2
 
 if __name__=="__main__":
-    from tqdm import tqdm
-        
-    dataset = PPIDataset(os.path.join('/scratch/users/raphtown/atom3d_mirror/lmdb/PPI/splits/DIPS-split/data', 'train'))
-    dataloader = DataLoader(dataset, batch_size=3, shuffle=False, collate_fn=CollaterPPI(batch_size=3), num_workers=4)
-    for graph1, graph2 in dataloader:
-        print(graph1)
-        print(graph2)
-        break
+    # save_dir = '/data/project/dlagurwns03/GIGN/atom3d/examples/lep/gnn/dataset'
+    # data_dir = '/data/project/dlagurwns03/GIGN/atom3d/dataset_lep/split-by-protein/data'
+    # os.makedirs(os.path.join(save_dir, 'train'), exist_ok=True)
+    # os.makedirs(os.path.join(save_dir, 'val'), exist_ok=True)
+    # os.makedirs(os.path.join(save_dir, 'test'), exist_ok=True)
+    # transform = GNNTransformLEP(label_key='label')
+    # train_dataset = LMDBDataset(os.path.join(data_dir, 'train'), transform=transform)
+    # val_dataset = LMDBDataset(os.path.join(data_dir, 'val'), transform=transform)
+    # test_dataset = LMDBDataset(os.path.join(data_dir, 'test'), transform=transform)
+    
+    # print('processing train dataset...')
+    # for i, item in enumerate(tqdm(train_dataset)):
+    #     torch.save(item, os.path.join(save_dir, 'train', f'data_{i}.pt'))
+    
+    # print('processing validation dataset...')
+    # for i, item in enumerate(tqdm(val_dataset)):
+    #     torch.save(item, os.path.join(save_dir, 'val', f'data_{i}.pt'))
+    
+    # print('processing test dataset...')
+    # for i, item in enumerate(tqdm(test_dataset)):
+    #     torch.save(item, os.path.join(save_dir, 'test', f'data_{i}.pt'))
+
+    save_dir = '/data/project/dlagurwns03/GIGN/codes/lba_and_lep/examples/ppi/gnn/dataset'
+    data_dir = '/data/project/dlagurwns03/GIGN/codes/lba_and_lep/dataset_ppi/DIPS-split/data'
+    os.makedirs(os.path.join(save_dir, 'train'), exist_ok=True)
+    os.makedirs(os.path.join(save_dir, 'val'), exist_ok=True)
+    os.makedirs(os.path.join(save_dir, 'test'), exist_ok=True)
+    train_dataset = PPIDataset(os.path.join(data_dir, 'train'))
+    val_dataset = PPIDataset(os.path.join(data_dir, 'val'))
+    test_dataset = PPIDataset(os.path.join(data_dir, 'test'))
+
+    # print('processing train dataset...')
+    print(len(train_dataset))
+    # for i, item in enumerate(tqdm(train_dataset)):
+    #     torch.save(item, os.path.join(save_dir, 'train', f'data_{i}.pt'))
+    
+    # print('processing validation dataset...')
+    print(len(val_dataset))
+    # for i, item in enumerate(tqdm(val_dataset)):
+    #     torch.save(item, os.path.join(save_dir, 'val', f'data_{i}.pt'))
+    
+    # print('processing test dataset...')
+    print(len(test_dataset))
+    # for i, item in enumerate(tqdm(test_dataset)):
+    #     torch.save(item, os.path.join(save_dir, 'test', f'data_{i}.pt'))

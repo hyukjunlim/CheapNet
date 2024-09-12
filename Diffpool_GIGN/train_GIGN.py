@@ -72,6 +72,7 @@ if __name__ == '__main__':
             else:
                 pass   
             seed_everything(seed)
+            # save_dir = f"./model/{explain}_{rep}-0"
             save_dir = f"./model/{explain}_{rep}-1"
             msg_info = f"{explain}, lr={lr}, seed={seed}"
         

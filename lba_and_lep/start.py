@@ -1,5 +1,5 @@
 import atom3d.datasets.datasets as da
-da.download_dataset('ppi', 'dataset_ppi', split='DIPS') # Download LBA dataset
+da.download_dataset('ppi', 'dataset_ppi', split='DIPS') # Download dataset
 
 
 # import atom3d.datasets as da
