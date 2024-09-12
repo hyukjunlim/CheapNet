@@ -61,18 +61,18 @@ if __name__ == '__main__':
 
         
     for rep in range(10):
-        # seed_always = [867, 714, 444]
-        # seed_random = []
+        seed_always = [418, 714, 444]
+        seed_random = []
+        l = [i for i in range(1000) if i not in seed_always]
         # for repeat, seed in enumerate(seed_always + list(np.random.choice(seed_random, size=3-len(seed_always), replace=False))):
-        # l = [i for i in range(1000) if i not in seed_always]
-        # for repeat, seed in enumerate(np.random.choice(l, size=3, replace=False)):
-        for repeat, seed in enumerate(np.random.randint(0, 1000, size=3)):
+        for repeat, seed in enumerate(np.random.choice(l, size=3, replace=False)):
+        # for repeat, seed in enumerate(np.random.randint(0, 1000, size=3)):
             if only_rep is not None and repeat not in only_rep:
                 continue
             else:
                 pass   
             seed_everything(seed)
-            save_dir = f"./model/{explain}_{rep}"
+            save_dir = f"./model/{explain}_{rep}-1"
             msg_info = f"{explain}, lr={lr}, seed={seed}"
         
             # # writer = SummaryWriter()

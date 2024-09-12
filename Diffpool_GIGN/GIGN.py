@@ -137,10 +137,10 @@ class DiffPool(nn.Module):
             mask = mask.view(batch_size, num_nodes, 1).to(x.dtype)
             x, s = x * mask, s * mask
 
-        x = torch.matmul(s.transpose(1, 2), x)
-        adj = torch.matmul(torch.matmul(s.transpose(1, 2), adj), s)
+        out = torch.matmul(s.transpose(1, 2), x)
+        out_adj = torch.matmul(torch.matmul(s.transpose(1, 2), adj), s)
 
-        return x, adj, s
+        return out, out_adj, s
     
     def set_edge_index(self, data, edge):
 
@@ -212,8 +212,8 @@ class GIGN(nn.Module):
         self.GIGNBlock3 = GIGNBlock(hidden_dim, hidden_dim, drop_rate)
         self.diffpool1 = DiffPool(hidden_dim, hidden_dim, 600, num_clusters[0], "intra_lig", drop_rate)
         self.diffpool2 = DiffPool(hidden_dim, hidden_dim, 600, num_clusters[1], "intra_pro", drop_rate)
-        # self.attblock1 = AttentionBlock(hidden_dim, heads, drop_rate)
-        # self.attblock2 = AttentionBlock(hidden_dim, heads, drop_rate)
+        self.attblock1 = AttentionBlock(hidden_dim, heads, drop_rate)
+        self.attblock2 = AttentionBlock(hidden_dim, heads, drop_rate)
         self.fc = FC(hidden_dim, hidden_dim, 2, drop_rate, 1)
 
     def make_edge_index(self, data):
@@ -233,15 +233,13 @@ class GIGN(nn.Module):
         x = self.GIGNBlock2(x, data)
         x = self.GIGNBlock3(x, data)
 
-        # x = global_add_pool(x, data.batch)
         # DiffPool-Attention
-        x_lig, _  = self.diffpool1(x, data)
+        x_lig, _ = self.diffpool1(x, data)
         x_pro, _  = self.diffpool2(x, data)
-        x = x_lig.sum(dim=1) + x_pro.sum(dim=1)
 
-        # l2p, _ = self.attblock1(x_lig, x_pro, x_pro)
-        # p2l, _ = self.attblock2(x_pro, x_lig, x_lig)
-        # x = l2p + p2l
+        l2p, _ = self.attblock1(x_lig, x_pro, x_pro)
+        p2l, _ = self.attblock2(x_pro, x_lig, x_lig)
+        x = l2p + p2l
 
         # FC
         x = self.fc(x)
@@ -251,11 +249,17 @@ class GIGN(nn.Module):
 # red_rate_list = [0.1, 0.2, 0.3, 0.4]
 # red_rate_list = [0.5, 0.6, 0.7]
 # red_rate_list = [0.8, 0.9, 1.0]
-num_clusters = [28, 156]
+q_lig = [0, 20, 28, 37, 177]
+q_pro = [0, 130, 156, 186, 500]
+
+q_i_lig = 2
+q_i_pro = 2
+
+num_clusters = [q_lig[q_i_lig], q_pro[q_i_pro]]
 
 scheduler_bool = True
 lr = 10e-4
-os.environ["CUDA_VI SIBLE_DEVICES"] = "0"  
-# os.environ["CUDA_VISIBLE_DEVICES"] = "1"
-explain = f"ours-lrs-{lr}-abl-g-d-0"
-only_rep = [1]
+# os.environ["CUDA_VI SIBLE_DEVICES"] = "0"  
+os.environ["CUDA_VISIBLE_DEVICES"] = "1"
+explain = f"ours-lrs-{lr}-{num_clusters[0]}-{num_clusters[1]}"
+only_rep = [0, 1, 2]

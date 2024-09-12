@@ -87,7 +87,7 @@ for red_node in [1]:
         model_root = '../GIGN/data_saved'
     else:
         # model_root = f'model/ours_0.2'
-        model_root = f'save/ours-lrs-0.001-28-156_0'
+        model_root = f'save/g-d-c/q2q2/ours-lrs-0.001-28-156_0'
     device = torch.device('cuda:0')
 
     # Regular expression to match epoch files
