@@ -199,3 +199,4 @@ epoch-145, train_loss-0.1883, train_rmse-0.4340, valid_rmse-1.2449, valid_pr-0.7
 epoch-146, train_loss-0.1846, train_rmse-0.4296, valid_rmse-1.2509, valid_pr-0.7366
 epoch-147, train_loss-0.1883, train_rmse-0.4339, valid_rmse-1.2797, valid_pr-0.7297
 epoch-148, train_loss-0.1950, train_rmse-0.4415, valid_rmse-1.2656, valid_pr-0.7372
+epoch-149, train_loss-0.1814, train_rmse-0.4259, valid_rmse-1.2412, valid_pr-0.7478

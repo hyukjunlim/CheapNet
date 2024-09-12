@@ -1,18 +1,18 @@
-# import atom3d.datasets.datasets as da
-# da.download_dataset('lep', 'dataset_lep', split='protein') # Download LBA dataset
+import atom3d.datasets.datasets as da
+da.download_dataset('ppi', 'dataset_ppi', split='DIPS') # Download LBA dataset
 
 
-import atom3d.datasets as da
-dataset = da.load_dataset('dataset_lep/raw/LEP/data', 'lmdb') # Load LMDB format dataset
-print(len(dataset))  # Print length
-from atom3d.filters import filters
-filter1 = filters.distance_filter
-df = dataset[0]['atoms_active'] 
-protein_active = df[df.chain != 'L']
-ligand_active = df[df.chain == 'L']
-print(df.columns) # Print keys stored in first structure
-filtered_dataset = filter1(protein_active, ligand_active[['x','y','z']], 6)
-print(filtered_dataset) # Print filtered dataset
+# import atom3d.datasets as da
+# dataset = da.load_dataset('dataset_lep/raw/LEP/data', 'lmdb') # Load LMDB format dataset
+# print(len(dataset))  # Print length
+# from atom3d.filters import filters
+# filter1 = filters.distance_filter
+# df = dataset[0]['atoms_active'] 
+# protein_active = df[df.chain != 'L']
+# ligand_active = df[df.chain == 'L']
+# print(df.columns) # Print keys stored in first structure
+# filtered_dataset = filter1(protein_active, ligand_active[['x','y','z']], 6)
+# print(filtered_dataset) # Print filtered dataset
 
 # from atom3d.filters import filters
 # import atom3d.datasets as da
