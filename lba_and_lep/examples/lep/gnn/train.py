@@ -275,13 +275,13 @@ if __name__=="__main__":
         
     elif args.mode == 'test':
         for repeat in range(100):
+            seed_random = []
+            seed_always = [758, 657, 123]
             if args.seed_set:
-                seed_random = []
-                seed_always = [388, 378, 898]
-                # seed_always = [758, 657, 123]
                 iter_list = seed_always + list(np.random.choice(seed_random, size=3-len(seed_always), replace=False))
             else:
-                iter_list = np.random.randint(0, 1000, size=3)
+                l = [i for i in range(1000) if i not in seed_always]
+                iter_list = np.random.choice(l, size=3, replace=False)
             for rep, seed in enumerate(iter_list):
                 if args.rep is not None and rep != args.rep:
                     continue
