@@ -1,6 +1,8 @@
 import argparse
 import logging
 import os
+import sys
+sys.path.append(os.path.abspath('/data/project/dlagurwns03/GIGN/codes/lba_and_lep'))
 import time
 import datetime
 import random
@@ -107,7 +109,7 @@ def train(args, device, log_dir, rep=None, test_mode=False):
         break
 
     num_clusters = [49, 312]
-    gcn_model = GIGN(num_features1, hidden_dim=args.hidden_dim, num_clusters=num_clusters).to(device)
+    gcn_model = GIGN(num_features1, hidden_dim=args.hidden_dim, num_clusters=num_clusters)
     gcn_model.to(device)
     ff_model = MLP_LEP(args.hidden_dim).to(device)
     num_params_gcn = sum(p.numel() for p in gcn_model.parameters() if p.requires_grad)
@@ -275,15 +277,14 @@ if __name__=="__main__":
         for repeat in range(100):
             if args.seed_set:
                 seed_random = []
-                seed_always = [758, 657, 123]
+                seed_always = [388, 378, 898]
+                # seed_always = [758, 657, 123]
                 iter_list = seed_always + list(np.random.choice(seed_random, size=3-len(seed_always), replace=False))
             else:
                 iter_list = np.random.randint(0, 1000, size=3)
             for rep, seed in enumerate(iter_list):
                 if args.rep is not None and rep != args.rep:
                     continue
-                else:
-                    pass
                 log_dir = os.path.join('logs', f'lep_test_{explain}_{repeat}_{args.GPU_NUM}_{rep}')
                 if not os.path.exists(log_dir):
                     os.makedirs(log_dir)

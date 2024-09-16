@@ -242,6 +242,7 @@ class GIGN(nn.Module):
 
         # FC
         x = self.fc(x)
+        x = torch.sigmoid(x)
 
         return x.view(-1)
 

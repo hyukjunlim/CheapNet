@@ -9,6 +9,7 @@ from dataset_GIGN import GraphDataset, PLIDataLoader
 import numpy as np
 from utils import *
 from sklearn.metrics import mean_squared_error, mean_absolute_error
+from scipy.stats import spearmanr
 
 from glob import glob
 from collections import defaultdict
@@ -35,11 +36,11 @@ def val(model, dataloader, device):
 
     coff = np.corrcoef(pred, label)[0, 1]
     rmse = np.sqrt(mean_squared_error(label, pred))
-    mae = mean_absolute_error(label, pred)
+    spea = spearmanr(label, pred)[0]
 
     model.train()
 
-    return rmse, coff, mae
+    return rmse, coff, spea
     
 # %%
 data_root = './data'
@@ -76,7 +77,7 @@ for red_node in [1]:
     casf2016_loader = PLIDataLoader(casf2016_set, batch_size=batch_size, shuffle=False, num_workers=4)
 
     # columns = ['Model', 'Test2013 RMSE', 'Test2013 R', 'Test2016 RMSE', 'Test2016 R', 'Test2019 RMSE', 'Test2019 R']
-    columns = ['Model', 'Valid RMSE', 'Valid R', 'Valid MAE', 'Test2013 RMSE', 'Test2013 R', 'Test2013 MAE', 'Test2016 RMSE', 'Test2016 R', 'Test2016 MAE', 'Test2019 RMSE', 'Test2019 R', 'Test2019 MAE', 'CSAR RMSE', 'CSAR R', 'CSAR MAE', 'CASF2016 RMSE', 'CASF2016 R', 'CASF2016 MAE']
+    columns = ['Model', 'Valid RMSE', 'Valid R', 'Valid spea', 'Test2013 RMSE', 'Test2013 R', 'Test2013 spea', 'Test2016 RMSE', 'Test2016 R', 'Test2016 spea', 'Test2019 RMSE', 'Test2019 R', 'Test2019 spea', 'CSAR RMSE', 'CSAR R', 'CSAR spea', 'CASF2016 RMSE', 'CASF2016 R', 'CASF2016 spea']
     results_df = pd.DataFrame(columns=columns)
 
     org = False
@@ -110,15 +111,15 @@ for red_node in [1]:
             load_model_dict(model, latest_epoch_model_path)
             model = model.cuda()
 
-            valid_rmse, valid_coff, valid_mae = val(model, valid_loader, device)
-            test2013_rmse, test2013_coff, test2013_mae = val(model, test2013_loader, device)
-            test2016_rmse, test2016_coff, test2016_mae = val(model, test2016_loader, device)
-            test2019_rmse, test2019_coff, test2019_mae = val(model, test2019_loader, device)
-            csar_rmse, csar_coff, csar_mae = val(model, csar_loader, device)
-            casf2016_rmse, casf2016_coff, casf2016_mae = val(model, casf2016_loader, device)
+            valid_rmse, valid_coff, valid_spea = val(model, valid_loader, device)
+            test2013_rmse, test2013_coff, test2013_spea = val(model, test2013_loader, device)
+            test2016_rmse, test2016_coff, test2016_spea = val(model, test2016_loader, device)
+            test2019_rmse, test2019_coff, test2019_spea = val(model, test2019_loader, device)
+            csar_rmse, csar_coff, csar_spea = val(model, csar_loader, device)
+            casf2016_rmse, casf2016_coff, casf2016_spea = val(model, casf2016_loader, device)
 
-            # msg = "valid_rmse-%.4f, valid_r-%.4f, valid_mae-%.4f, test2013_rmse-%.4f, test2013_r-%.4f, test2013_mae-%.4f, test2016_rmse-%.4f, test2016_r-%.4f, test2016_mae-%.4f, test2019_rmse-%.4f, test2019_r-%.4f, test2019_mae-%.4f, csar_rmse-%.4f, csar_r-%.4f, csar_mae-%.4f" \
-            #     % (valid_rmse, valid_coff, valid_mae, test2013_rmse, test2013_coff, test2013_mae, test2016_rmse, test2016_coff, test2016_mae, test2019_rmse, test2019_coff, test2019_mae, csar_rmse, csar_coff, csar_mae)
+            # msg = "valid_rmse-%.4f, valid_r-%.4f, valid_spea-%.4f, test2013_rmse-%.4f, test2013_r-%.4f, test2013_spea-%.4f, test2016_rmse-%.4f, test2016_r-%.4f, test2016_spea-%.4f, test2019_rmse-%.4f, test2019_r-%.4f, test2019_spea-%.4f, csar_rmse-%.4f, csar_r-%.4f, csar_spea-%.4f" \
+            #     % (valid_rmse, valid_coff, valid_spea, test2013_rmse, test2013_coff, test2013_spea, test2016_rmse, test2016_coff, test2016_spea, test2019_rmse, test2019_coff, test2019_spea, csar_rmse, csar_coff, csar_spea)
 
             # print(msg)
             
@@ -126,22 +127,22 @@ for red_node in [1]:
                 'Model': md.split('/')[2] + " | " + md[-1],
                 'Valid RMSE': valid_rmse,
                 'Valid R': valid_coff,
-                'Valid MAE': valid_mae,
+                'Valid spea': valid_spea,
                 'Test2013 RMSE': test2013_rmse,
                 'Test2013 R': test2013_coff,
-                'Test2013 MAE': test2013_mae,
+                'Test2013 spea': test2013_spea,
                 'Test2016 RMSE': test2016_rmse,
                 'Test2016 R': test2016_coff,
-                'Test2016 MAE': test2016_mae,
+                'Test2016 spea': test2016_spea,
                 'Test2019 RMSE': test2019_rmse,
                 'Test2019 R': test2019_coff,
-                'Test2019 MAE': test2019_mae,
+                'Test2019 spea': test2019_spea,
                 'CSAR RMSE': csar_rmse,
                 'CSAR R': csar_coff,
-                'CSAR MAE': csar_mae,
+                'CSAR spea': csar_spea,
                 'CASF2016 RMSE': casf2016_rmse,
                 'CASF2016 R': casf2016_coff,
-                'CASF2016 MAE': casf2016_mae,
+                'CASF2016 spea': casf2016_spea,
             }
 
             new_row_df = pd.DataFrame([new_row])
@@ -149,7 +150,7 @@ for red_node in [1]:
             results_df = pd.concat([results_df, new_row_df], ignore_index=True)
 # 
     # metrics = ['Test2013 RMSE', 'Test2013 R', 'Test2016 RMSE', 'Test2016 R', 'Test2019 RMSE', 'Test2019 R']
-    metrics = ['Valid RMSE', 'Valid R', 'Valid MAE', 'Test2013 RMSE', 'Test2013 R', 'Test2013 MAE', 'Test2016 RMSE', 'Test2016 R', 'Test2016 MAE', 'Test2019 RMSE', 'Test2019 R', 'Test2019 MAE', 'CSAR RMSE', 'CSAR R', 'CSAR MAE', 'CASF2016 RMSE', 'CASF2016 R', 'CASF2016 MAE']
+    metrics = ['Valid RMSE', 'Valid R', 'Valid spea', 'Test2013 RMSE', 'Test2013 R', 'Test2013 spea', 'Test2016 RMSE', 'Test2016 R', 'Test2016 spea', 'Test2019 RMSE', 'Test2019 R', 'Test2019 spea', 'CSAR RMSE', 'CSAR R', 'CSAR spea', 'CASF2016 RMSE', 'CASF2016 R', 'CASF2016 spea']
     mean_values = results_df[metrics].mean()
     std_values = results_df[metrics].std()
     results_df = results_df.append(pd.Series(['Mean'] + list(mean_values), index=results_df.columns), ignore_index=True)

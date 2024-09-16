@@ -8,13 +8,31 @@ import atom3d.util.metrics as met
 
 # Define the training run 
 
-for rep in range(1):
-    for g in [0]:
-        name = f'logs/lep_test_q2q2_{rep}_{g}'
+# for rep in range(1):
+#     for g in [0]:
+#         name = f'save/crucial//lep_test_q2q2_{rep}_{g}'
+#         print(name)
+
+#         # Load training results
+#         rloader = res.ResultsGNN(name, task='lep', reps=[0,1,2])
+#         results = rloader.get_all_predictions()
+
+#         # Calculate and print results
+#         summary_roc = met.evaluate_average(results, metric = met.auroc, verbose = False)
+#         print('Test AUROC: %6.3f \pm %6.3f'%summary_roc[2])
+
+#         summary_prc = met.evaluate_average(results, metric = met.auprc, verbose = False)
+#         print('Test AUPRC: %6.3f \pm %6.3f'%summary_prc[2])
+
+for reps in [0,1]:
+    l = []
+    ls = []
+    for dir in os.listdir('logs'):
+        name = f'logs/{dir}'
         print(name)
 
         # Load training results
-        rloader = res.ResultsGNN(name, task='lep', reps=[0,1,2])
+        rloader = res.ResultsGNN(name, task='lep', reps=[reps])
         results = rloader.get_all_predictions()
 
         # Calculate and print results
@@ -24,29 +42,10 @@ for rep in range(1):
         summary_prc = met.evaluate_average(results, metric = met.auprc, verbose = False)
         print('Test AUPRC: %6.3f \pm %6.3f'%summary_prc[2])
 
-# for reps in [0,1]:
-#     l = []
-#     ls = []
-#     for rep in range(2, 9):
-#         for g in [0]:
-#             name = f'logs/lep_test_q2q2_{rep}_{reps}_{reps}'
-#             # print(name)
+        l.append((summary_roc[2][0], summary_prc[2][0]))
+        ls.append((summary_roc[2][0] + summary_prc[2][0])/2)
 
-#             # Load training results
-#             rloader = res.ResultsGNN(name, task='lep', reps=[reps])
-#             results = rloader.get_all_predictions()
-
-#             # Calculate and print results
-#             summary_roc = met.evaluate_average(results, metric = met.auroc, verbose = False)
-#             print('Test AUROC: %6.3f \pm %6.3f'%summary_roc[2])
-
-#             summary_prc = met.evaluate_average(results, metric = met.auprc, verbose = False)
-#             print('Test AUPRC: %6.3f \pm %6.3f'%summary_prc[2])
-
-#             l.append((summary_roc[2][0], summary_prc[2][0]))
-#             ls.append((summary_roc[2][0] + summary_prc[2][0])/2)
-
-#     # max index
-#     print(np.argmax(ls))
-#     print(l[np.argmax(ls)])
+    # max index
+    print(np.argmax(ls))
+    print(l[np.argmax(ls)])
 

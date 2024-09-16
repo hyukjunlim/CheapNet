@@ -61,7 +61,7 @@ if __name__ == '__main__':
 
         
     for rep in range(10):
-        seed_always = [418, 714, 444]
+        seed_always = [418, 714, 444, 598]
         seed_random = []
         l = [i for i in range(1000) if i not in seed_always]
         # for repeat, seed in enumerate(seed_always + list(np.random.choice(seed_random, size=3-len(seed_always), replace=False))):
