@@ -1,0 +1,28 @@
+ours-lrs-0.001-28-156, lr=0.001, seed=36
+train_GIGN.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+GIGN params # : 1331241
+epoch-0, train_loss-16.5677, train_rmse-4.0703, valid_rmse-1.8160, valid_pr-0.4905
+Validation : valid_rmse-1.8160, valid_pr-0.4905, 
+test2013_rmse-1.6234, test2013_pr-0.7270, test2016_rmse-1.6770, test2016_pr-0.7023, test2019_rmse-1.7001, test2019_pr-0.5502
+epoch-1, train_loss-2.6806, train_rmse-1.6372, valid_rmse-1.7166, valid_pr-0.5109
+Validation : valid_rmse-1.7166, valid_pr-0.5109, 
+test2013_rmse-1.6873, test2013_pr-0.6996, test2016_rmse-1.5463, test2016_pr-0.7091, test2019_rmse-1.6535, test2019_pr-0.5506
+epoch-2, train_loss-2.5104, train_rmse-1.5844, valid_rmse-1.4944, valid_pr-0.6098
+Validation : valid_rmse-1.4944, valid_pr-0.6098, 
+test2013_rmse-1.5955, test2013_pr-0.7668, test2016_rmse-1.5042, test2016_pr-0.7564, test2019_rmse-1.4199, test2019_pr-0.6122
+epoch-3, train_loss-2.2153, train_rmse-1.4884, valid_rmse-1.4338, valid_pr-0.6324
+Validation : valid_rmse-1.4338, valid_pr-0.6324, 
+test2013_rmse-1.5098, test2013_pr-0.7904, test2016_rmse-1.4266, test2016_pr-0.7741, test2019_rmse-1.3994, test2019_pr-0.6243
+epoch-4, train_loss-2.0486, train_rmse-1.4313, valid_rmse-1.4168, valid_pr-0.6571
+Validation : valid_rmse-1.4168, valid_pr-0.6571, 
+test2013_rmse-1.5657, test2013_pr-0.7874, test2016_rmse-1.4641, test2016_pr-0.7754, test2019_rmse-1.3866, test2019_pr-0.6329
+epoch-5, train_loss-1.9669, train_rmse-1.4025, valid_rmse-1.3874, valid_pr-0.6804
+Validation : valid_rmse-1.3874, valid_pr-0.6804, 
+test2013_rmse-1.5296, test2013_pr-0.8259, test2016_rmse-1.4193, test2016_pr-0.8078, test2019_rmse-1.4334, test2019_pr-0.6478
+epoch-6, train_loss-1.8767, train_rmse-1.3699, valid_rmse-1.4010, valid_pr-0.6783
+epoch-7, train_loss-1.8008, train_rmse-1.3419, valid_rmse-1.4034, valid_pr-0.6549
