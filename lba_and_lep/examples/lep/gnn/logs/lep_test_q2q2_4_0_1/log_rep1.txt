@@ -1,0 +1,16 @@
+seed: 657
+GIGN params # : 1449276(1317179, 132097)
+Best model saved at epoch 1 with val loss: 0.6619656
+Epoch: 1, Train loss 0.6768438, Val loss 0.6619656, Val AUROC 0.6566966, Val AUPRC 0.7167820
+Epoch: 2, Train loss 0.6499908, Val loss 0.6959797, Val AUROC 0.5653041, Val AUPRC 0.5763943
+Epoch: 3, Train loss 0.6242667, Val loss 0.6949979, Val AUROC 0.6470588, Val AUPRC 0.7008410
+Epoch: 4, Train loss 0.5876504, Val loss 0.6909992, Val AUROC 0.6905949, Val AUPRC 0.7691988
+Best model saved at epoch 5 with val loss: 0.6296876
+Epoch: 5, Train loss 0.5871890, Val loss 0.6296876, Val AUROC 0.7121967, Val AUPRC 0.7829565
+Epoch: 6, Train loss 0.5757005, Val loss 0.6826657, Val AUROC 0.7055500, Val AUPRC 0.7836662
+Epoch: 7, Train loss 0.5273269, Val loss 0.7793032, Val AUROC 0.7623795, Val AUPRC 0.7719937
+Best model saved at epoch 8 with val loss: 0.5725915
+Epoch: 8, Train loss 0.5411945, Val loss 0.5725915, Val AUROC 0.7809904, Val AUPRC 0.8330828
+Epoch: 9, Train loss 0.5265813, Val loss 0.6223673, Val AUROC 0.7530741, Val AUPRC 0.8002381
+Epoch: 10, Train loss 0.4864775, Val loss 1.4125452, Val AUROC 0.6753074, Val AUPRC 0.7156521
+Test loss 0.489973542208855, Test AUROC 0.8352534562211981, Test auprc 0.8262530150605394

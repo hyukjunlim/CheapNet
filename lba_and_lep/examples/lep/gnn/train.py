@@ -181,7 +181,7 @@ def train(args, device, log_dir, rep=None, test_mode=False):
     for epoch in range(1, args.num_epochs+1):
         start = time.time()
         train_loss = train_loop(args, epoch, gcn_model, ff_model, train_loader, criterion, optimizer, scheduler, device)
-        val_loss, auroc, auprc, _, _ = test(gcn_model, ff_model, val_loader, criterion, device)
+        val_loss, val_auroc, val_auprc, _, _ = test(gcn_model, ff_model, val_loader, criterion, device)
         if val_loss < best_val_loss:
             count = 0
             torch.save({
@@ -201,8 +201,8 @@ def train(args, device, log_dir, rep=None, test_mode=False):
                 cpt = torch.load(os.path.join(log_dir, f'best_weights_rep{rep}.pt'))
                 gcn_model.load_state_dict(cpt['gcn_state_dict'])
                 ff_model.load_state_dict(cpt['ff_state_dict'])
-                test_loss, auroc, auprc, y_true_test, y_pred_test = test(gcn_model, ff_model, test_loader, criterion, device)
-                print(f'\tTest loss {test_loss}, Test AUROC {auroc}, Test auprc {auprc}')
+                test_loss, test_auroc, test_auprc, y_true_test, y_pred_test = test(gcn_model, ff_model, test_loader, criterion, device)
+                print(f'\tTest loss {test_loss}, Test AUROC {test_auroc}, Test AUPRC {test_auprc}')
         else:
             count += 1
             if count > args.early_stop_patience and epoch > 200:
@@ -211,8 +211,8 @@ def train(args, device, log_dir, rep=None, test_mode=False):
                 break
         elapsed = (time.time() - start)
         print('Epoch: {:03d}, Time: {:.3f} s'.format(epoch, elapsed), end=', ')
-        print(f'Train loss {train_loss:.7f}, Val loss {val_loss:.7f}, Val AUROC {auroc:.7f}, Val auprc {auprc:.7f}')
-        logger.info(f'Epoch: {epoch}, Train loss {train_loss:.7f}, Val loss {val_loss:.7f}, Val AUROC {auroc:.7f}, Val auprc {auprc:.7f}')
+        print(f'Train loss {train_loss:.7f}, Val loss {val_loss:.7f}, Val AUROC {val_auroc:.7f}, Val AUPRC {val_auprc:.7f}')
+        logger.info(f'Epoch: {epoch}, Train loss {train_loss:.7f}, Val loss {val_loss:.7f}, Val AUROC {val_auroc:.7f}, Val AUPRC {val_auprc:.7f}')
 
     if test_mode:
         train_file = os.path.join(log_dir, f'lep-rep{rep}.best.train.pt')
@@ -247,7 +247,7 @@ if __name__=="__main__":
     parser.add_argument('--mode', type=str, default='test')
     parser.add_argument('--batch_size', type=int, default=4)
     parser.add_argument('--hidden_dim', type=int, default=256)
-    parser.add_argument('--num_epochs', type=int, default=15)
+    parser.add_argument('--num_epochs', type=int, default=10)
     parser.add_argument('--learning_rate', type=float, default=1e-3)
     parser.add_argument('--log_dir', type=str, default=None)
     parser.add_argument('--precomputed', type=bool, default=True)
@@ -276,7 +276,7 @@ if __name__=="__main__":
     elif args.mode == 'test':
         for repeat in range(100):
             seed_random = []
-            seed_always = [758, 657, 123]
+            seed_always = [758, 657, 263]
             if args.seed_set:
                 iter_list = seed_always + list(np.random.choice(seed_random, size=3-len(seed_always), replace=False))
             else:
