@@ -3,8 +3,8 @@ import torch.nn as nn
 import torch.nn.functional as F
 import matplotlib.pyplot as plt
 import networkx as nx
-from GIGN import GIGN
-from dataset_GIGN import GraphDataset, PLIDataLoader
+from CheapNet import GIGN
+from dataset_CheapNet import GraphDataset, PLIDataLoader
 import numpy as np
 import pandas as pd
 import os

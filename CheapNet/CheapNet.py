@@ -202,7 +202,7 @@ class AttentionBlock(nn.Module):
         
         return x, attention
 
-class GIGN(nn.Module):
+class CheapNet(nn.Module):
     def __init__(self, node_dim, hidden_dim, num_clusters=[28, 156], heads=1, drop_rate=0.1):
         super().__init__()
         
@@ -259,7 +259,8 @@ num_clusters = [q_lig[q_i_lig], q_pro[q_i_pro]]
 
 scheduler_bool = True
 lr = 10e-4
-# os.environ["CUDA_VI SIBLE_DEVICES"] = "0"  
-os.environ["CUDA_VISIBLE_DEVICES"] = "1"
-explain = f"ours-lrs-{lr}-{num_clusters[0]}-{num_clusters[1]}"
+# x = 0
+x = 1
+os.environ["CUDA_VISIBLE_DEVICES"] = f'{x}'
+explain = f"ours-lrs-{lr}-{num_clusters[0]}-{num_clusters[1]}-{x}"
 only_rep = [0, 1, 2]

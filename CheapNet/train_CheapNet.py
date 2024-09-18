@@ -6,17 +6,18 @@ import torch.optim as optim
 import pandas as pd
 import random
 from utils import AverageMeter
-from GIGN import GIGN
-from dataset_GIGN import GraphDataset, PLIDataLoader
+from CheapNet import CheapNet
+from dataset_CheapNet import GraphDataset, PLIDataLoader
 from config.config_dict import Config
 from log.train_logger import TrainLogger
 import numpy as np
 from utils import *
 from sklearn.metrics import mean_squared_error
-from GIGN import scheduler_bool, lr, explain, num_clusters, only_rep
+from CheapNet import scheduler_bool, lr, explain, num_clusters, only_rep
 from cosine_annealing_warmup import CosineAnnealingWarmupRestarts
 # from torch.utils.tensorboard import SummaryWriter
 # os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+from fvcore.nn import FlopCountAnalysis
 
 def val(model, dataloader, device):
     model.eval()
@@ -72,8 +73,7 @@ if __name__ == '__main__':
             else:
                 pass   
             seed_everything(seed)
-            # save_dir = f"./model/{explain}_{rep}-0"
-            save_dir = f"./model/{explain}_{rep}-1"
+            save_dir = f"./model/{explain}_{rep}"
             msg_info = f"{explain}, lr={lr}, seed={seed}"
         
             # # writer = SummaryWriter()
@@ -115,7 +115,7 @@ if __name__ == '__main__':
 
             device = "cuda" if torch.cuda.is_available() else "cpu"
             
-            model = GIGN(35, 256, num_clusters)
+            model = CheapNet(35, 256, num_clusters)
             model.cuda()
             logger.info(f"GIGN params # : {sum(p.numel() for p in model.parameters() if p.requires_grad)}")
             optimizer = optim.Adam(model.parameters(), lr=lr, weight_decay=1e-6)
@@ -136,7 +136,9 @@ if __name__ == '__main__':
             # maxnum = 0
             # maxnum_lig = 0
             # maxnum_pro = 0
-            # for j in [train_loader, valid_loader, test2013_loader, test2016_loader, test2019_loader]:
+            # for idx, j in [('test2013_loader', test2013_loader), ('test2016_loader', test2016_loader), ('test2019_loader', test2019_loader)]:
+            #     print(f'====================')
+            #     print(f'Processing {idx}')
             #     sum_intra = 0
             #     sum_lig = 0
             #     sum_pro = 0
@@ -171,10 +173,10 @@ if __name__ == '__main__':
             #             sum_pro += unique_nodes_pro.size(0)
             #             lig_list.append(unique_nodes_lig.size(0))
             #             pro_list.append(unique_nodes_pro.size(0))
-            #     print(sum_intra / 128 / len(j))
-            #     print(sum_lig / 128 / len(j))
-            #     print(sum_pro / 128 / len(j))
-            #     print(maxnum, maxnum_lig, maxnum_pro)
+            #     print(f'Avg total: {sum_intra / 128 / len(j)}')
+            #     print(f'Avg lig: {sum_lig / 128 / len(j)}')
+            #     print(f'Avg pro: {sum_pro / 128 / len(j)}')
+            #     # print(maxnum, maxnum_lig, maxnum_pro)
             #     lig_list = np.array(lig_list)
             #     q1 = np.percentile(lig_list, 25)
             #     q2 = np.percentile(lig_list, 50)
@@ -187,11 +189,15 @@ if __name__ == '__main__':
             #     q3 = np.percentile(pro_list, 75)
             #     q4 = np.percentile(pro_list, 100)
             #     print(f'PRO: {q1}, {q2}, {q3}, {q4}')
-            
+            # l = []
+            # import time
+            # logger.info(f"train start")
+            # start = time.time()
             for epoch in range(epochs):
                 for batch_idx, data in enumerate(train_loader):
                     data = data.to(device)
                     pred = model(data)
+                    # l.append(torch.cuda.memory_allocated() / 1024 /1024)
                     label = data.y
                     MSE_loss = criterion(pred, label)
                     loss = MSE_loss
@@ -209,17 +215,17 @@ if __name__ == '__main__':
                 msg = "epoch-%d, train_loss-%.4f, train_rmse-%.4f, valid_rmse-%.4f, valid_pr-%.4f" \
                         % (epoch, epoch_loss, epoch_rmse, valid_rmse, valid_pr)
                 logger.info(msg)
-                if scheduler_bool:
-                    scheduler.step(valid_rmse)
+                # if scheduler_bool:
+                #     scheduler.step(valid_rmse)
 
                 if valid_rmse < running_best_mse.get_best():
                     running_best_mse.update(valid_rmse)
                     if save_model:
-                        test2013_rmse, test2013_pr = val(model, test2013_loader, device)
-                        test2016_rmse, test2016_pr = val(model, test2016_loader, device)
-                        test2019_rmse, test2019_pr = val(model, test2019_loader, device)
-                        msg_train = f"Validation : valid_rmse-{valid_rmse:.4f}, valid_pr-{valid_pr:.4f}, \ntest2013_rmse-{test2013_rmse:.4f}, test2013_pr-{test2013_pr:.4f}, test2016_rmse-{test2016_rmse:.4f}, test2016_pr-{test2016_pr:.4f}, test2019_rmse-{test2019_rmse:.4f}, test2019_pr-{test2019_pr:.4f}"
-                        logger.info(msg_train)
+                        # test2013_rmse, test2013_pr = val(model, test2013_loader, device)
+                        # test2016_rmse, test2016_pr = val(model, test2016_loader, device)
+                        # test2019_rmse, test2019_pr = val(model, test2019_loader, device)
+                        # msg_train = f"Validation : valid_rmse-{valid_rmse:.4f}, valid_pr-{valid_pr:.4f}, \ntest2013_rmse-{test2013_rmse:.4f}, test2013_pr-{test2013_pr:.4f}, test2016_rmse-{test2016_rmse:.4f}, test2016_pr-{test2016_pr:.4f}, test2019_rmse-{test2019_rmse:.4f}, test2019_pr-{test2019_pr:.4f}"
+                        # logger.info(msg_train)
                         msg = "epoch-%d, train_loss-%.4f, train_rmse-%.4f, valid_rmse-%.4f, valid_pr-%.4f" \
                         % (epoch, epoch_loss, epoch_rmse, valid_rmse, valid_pr)
                         model_path = os.path.join(logger.get_model_dir(), msg + '.pt')
@@ -235,7 +241,10 @@ if __name__ == '__main__':
                         logger.info(msg)
                         break_flag = True
                         break
-                
+            # logger.info(f"train end")
+            # end = time.time()
+            # logger.info(f"train time: {(end - start) / epochs}")
+            # print(np.mean(l))
             # final testing
             load_model_dict(model, best_model_list[-1])
             valid_rmse, valid_pr = val(model, valid_loader, device)
