@@ -1,4 +1,4 @@
-ours-lrs-0.001-28-156-0, lr=0.001, seed=833
+ours-lrs-0.001-28-156-0, lr=0.001, seed=373
 train_CheapNet.py
 train data: 11904
 valid data: 1000
@@ -6,4 +6,3 @@ test2013 data: 107
 test2016 data: 285
 test2019 data: 4366
 GIGN params # : 1331241
-epoch-0, train_loss-14.8918, train_rmse-3.8590, valid_rmse-1.9344, valid_pr-0.4750

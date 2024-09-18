@@ -1,4 +1,4 @@
-ours-lrs-0.001-28-156-1, lr=0.001, seed=91
+ours-lrs-0.001-28-156-1, lr=0.001, seed=201
 train_CheapNet.py
 train data: 11904
 valid data: 1000

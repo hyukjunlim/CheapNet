@@ -215,17 +215,17 @@ if __name__ == '__main__':
                 msg = "epoch-%d, train_loss-%.4f, train_rmse-%.4f, valid_rmse-%.4f, valid_pr-%.4f" \
                         % (epoch, epoch_loss, epoch_rmse, valid_rmse, valid_pr)
                 logger.info(msg)
-                # if scheduler_bool:
-                #     scheduler.step(valid_rmse)
+                if scheduler_bool:
+                    scheduler.step(valid_rmse)
 
                 if valid_rmse < running_best_mse.get_best():
                     running_best_mse.update(valid_rmse)
                     if save_model:
-                        # test2013_rmse, test2013_pr = val(model, test2013_loader, device)
-                        # test2016_rmse, test2016_pr = val(model, test2016_loader, device)
-                        # test2019_rmse, test2019_pr = val(model, test2019_loader, device)
-                        # msg_train = f"Validation : valid_rmse-{valid_rmse:.4f}, valid_pr-{valid_pr:.4f}, \ntest2013_rmse-{test2013_rmse:.4f}, test2013_pr-{test2013_pr:.4f}, test2016_rmse-{test2016_rmse:.4f}, test2016_pr-{test2016_pr:.4f}, test2019_rmse-{test2019_rmse:.4f}, test2019_pr-{test2019_pr:.4f}"
-                        # logger.info(msg_train)
+                        test2013_rmse, test2013_pr = val(model, test2013_loader, device)
+                        test2016_rmse, test2016_pr = val(model, test2016_loader, device)
+                        test2019_rmse, test2019_pr = val(model, test2019_loader, device)
+                        msg_train = f"Validation : valid_rmse-{valid_rmse:.4f}, valid_pr-{valid_pr:.4f}, \ntest2013_rmse-{test2013_rmse:.4f}, test2013_pr-{test2013_pr:.4f}, test2016_rmse-{test2016_rmse:.4f}, test2016_pr-{test2016_pr:.4f}, test2019_rmse-{test2019_rmse:.4f}, test2019_pr-{test2019_pr:.4f}"
+                        logger.info(msg_train)
                         msg = "epoch-%d, train_loss-%.4f, train_rmse-%.4f, valid_rmse-%.4f, valid_pr-%.4f" \
                         % (epoch, epoch_loss, epoch_rmse, valid_rmse, valid_pr)
                         model_path = os.path.join(logger.get_model_dir(), msg + '.pt')
