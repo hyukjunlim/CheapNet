@@ -259,8 +259,32 @@ num_clusters = [q_lig[q_i_lig], q_pro[q_i_pro]]
 
 scheduler_bool = True
 lr = 10e-4
-x = 0
-# x = 1
+# x = 0
+x = 1
 os.environ["CUDA_VISIBLE_DEVICES"] = f'{x}'
 explain = f"ours-lrs-{lr}-{num_clusters[0]}-{num_clusters[1]}-{x}"
 only_rep = [0, 1, 2]
+
+
+# %%
+
+if __name__ == '__main__':
+    import os
+    import pandas as pd
+    from thop import profile
+    from dataset_CheapNet import GraphDataset, PLIDataLoader
+
+    data_root = './data'
+    graph_type = 'Graph_GIGN'
+    test2013_dir = os.path.join(data_root, 'test2013')
+    test2013_df = pd.read_csv(os.path.join(data_root, 'test2013.csv'))
+    test2013_set = GraphDataset(test2013_dir, test2013_df, graph_type=graph_type, create=False)
+    test2013_loader = PLIDataLoader(test2013_set, batch_size=1, shuffle=False, num_workers=4)
+
+    data = next(iter(test2013_loader))
+    
+    model = CheapNet(35, 256)
+    flops, params = profile(model, inputs=(data, ))
+    print("params: ", int(params))
+    print("flops: ", flops/1e9) 
+# %%

@@ -2,7 +2,9 @@
 *.pt
 *.mol2
 *.pdb
-Diffpool_GIGN/data/
+CheapNet/data/
+Atom3D/data/
+AttentionSiteDTI/data/
 lba_and_lep/dataset
 lba_and_lep/dataset_lep
 lba_and_lep/dataset_DUDE

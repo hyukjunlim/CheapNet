@@ -1,0 +1,642 @@
+Atom3D, lr=0.0005, seed=495
+train_Atom3D.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+GIGN params # : 243201
+epoch-0, train_loss-25.7758, train_rmse-5.0770, valid_rmse-2.4400, valid_pr-0.3414
+Validation : valid_rmse-2.4400, valid_pr-0.3414, 
+test2013_rmse-2.0753, test2013_pr-0.5901, test2016_rmse-2.1049, test2016_pr-0.5111, test2019_rmse-2.4524, test2019_pr-0.3868
+epoch-1, train_loss-6.0781, train_rmse-2.4654, valid_rmse-2.0354, valid_pr-0.3664
+Validation : valid_rmse-2.0354, valid_pr-0.3664, 
+test2013_rmse-1.9196, test2013_pr-0.5910, test2016_rmse-1.9408, test2016_pr-0.5501, test2019_rmse-1.9848, test2019_pr-0.3958
+epoch-2, train_loss-4.4053, train_rmse-2.0989, valid_rmse-1.8417, valid_pr-0.4544
+Validation : valid_rmse-1.8417, valid_pr-0.4544, 
+test2013_rmse-1.8212, test2013_pr-0.6347, test2016_rmse-1.8199, test2016_pr-0.6133, test2019_rmse-1.8299, test2019_pr-0.4578
+epoch-3, train_loss-3.5165, train_rmse-1.8752, valid_rmse-1.8917, valid_pr-0.4599
+epoch-4, train_loss-3.1578, train_rmse-1.7770, valid_rmse-1.7034, valid_pr-0.5059
+Validation : valid_rmse-1.7034, valid_pr-0.5059, 
+test2013_rmse-1.5823, test2013_pr-0.7373, test2016_rmse-1.5833, test2016_pr-0.6946, test2019_rmse-1.7282, test2019_pr-0.4936
+epoch-5, train_loss-2.8485, train_rmse-1.6878, valid_rmse-1.6805, valid_pr-0.5287
+Validation : valid_rmse-1.6805, valid_pr-0.5287, 
+test2013_rmse-1.5915, test2013_pr-0.7311, test2016_rmse-1.5950, test2016_pr-0.6971, test2019_rmse-1.7281, test2019_pr-0.5078
+epoch-6, train_loss-2.7762, train_rmse-1.6662, valid_rmse-1.6617, valid_pr-0.5326
+Validation : valid_rmse-1.6617, valid_pr-0.5326, 
+test2013_rmse-1.5485, test2013_pr-0.7487, test2016_rmse-1.5689, test2016_pr-0.7007, test2019_rmse-1.7247, test2019_pr-0.5053
+epoch-7, train_loss-2.5587, train_rmse-1.5996, valid_rmse-1.5965, valid_pr-0.5830
+Validation : valid_rmse-1.5965, valid_pr-0.5830, 
+test2013_rmse-1.5629, test2013_pr-0.7423, test2016_rmse-1.5262, test2016_pr-0.7145, test2019_rmse-1.7339, test2019_pr-0.5168
+epoch-8, train_loss-2.3910, train_rmse-1.5463, valid_rmse-1.5994, valid_pr-0.5686
+epoch-9, train_loss-2.2644, train_rmse-1.5048, valid_rmse-1.5785, valid_pr-0.5767
+Validation : valid_rmse-1.5785, valid_pr-0.5767, 
+test2013_rmse-1.5434, test2013_pr-0.7551, test2016_rmse-1.5475, test2016_pr-0.7178, test2019_rmse-1.6828, test2019_pr-0.5150
+epoch-10, train_loss-2.1907, train_rmse-1.4801, valid_rmse-1.6107, valid_pr-0.5622
+epoch-11, train_loss-2.1254, train_rmse-1.4579, valid_rmse-1.5199, valid_pr-0.6117
+Validation : valid_rmse-1.5199, valid_pr-0.6117, 
+test2013_rmse-1.5250, test2013_pr-0.7598, test2016_rmse-1.4503, test2016_pr-0.7501, test2019_rmse-1.6745, test2019_pr-0.5222
+epoch-12, train_loss-2.0331, train_rmse-1.4259, valid_rmse-1.5565, valid_pr-0.6073
+epoch-13, train_loss-1.9677, train_rmse-1.4027, valid_rmse-1.5160, valid_pr-0.6205
+Validation : valid_rmse-1.5160, valid_pr-0.6205, 
+test2013_rmse-1.6080, test2013_pr-0.7270, test2016_rmse-1.5194, test2016_pr-0.7308, test2019_rmse-1.6557, test2019_pr-0.5370
+epoch-14, train_loss-1.9282, train_rmse-1.3886, valid_rmse-1.5201, valid_pr-0.6137
+epoch-15, train_loss-1.9292, train_rmse-1.3889, valid_rmse-1.4694, valid_pr-0.6440
+Validation : valid_rmse-1.4694, valid_pr-0.6440, 
+test2013_rmse-1.5043, test2013_pr-0.7716, test2016_rmse-1.4757, test2016_pr-0.7526, test2019_rmse-1.6637, test2019_pr-0.5344
+epoch-16, train_loss-1.8706, train_rmse-1.3677, valid_rmse-1.5628, valid_pr-0.6096
+epoch-17, train_loss-1.8625, train_rmse-1.3647, valid_rmse-1.5094, valid_pr-0.6343
+epoch-18, train_loss-1.6993, train_rmse-1.3036, valid_rmse-1.5159, valid_pr-0.6298
+epoch-19, train_loss-1.6560, train_rmse-1.2869, valid_rmse-1.5006, valid_pr-0.6256
+epoch-20, train_loss-1.6356, train_rmse-1.2789, valid_rmse-1.4764, valid_pr-0.6444
+epoch-21, train_loss-1.6225, train_rmse-1.2738, valid_rmse-1.4647, valid_pr-0.6436
+Validation : valid_rmse-1.4647, valid_pr-0.6436, 
+test2013_rmse-1.4922, test2013_pr-0.7759, test2016_rmse-1.4613, test2016_pr-0.7452, test2019_rmse-1.6541, test2019_pr-0.5339
+epoch-22, train_loss-1.6322, train_rmse-1.2776, valid_rmse-1.4873, valid_pr-0.6520
+epoch-23, train_loss-1.5460, train_rmse-1.2434, valid_rmse-1.5255, valid_pr-0.6423
+epoch-24, train_loss-1.6226, train_rmse-1.2738, valid_rmse-1.4846, valid_pr-0.6322
+epoch-25, train_loss-1.5898, train_rmse-1.2609, valid_rmse-1.4737, valid_pr-0.6564
+epoch-26, train_loss-1.5352, train_rmse-1.2390, valid_rmse-1.5354, valid_pr-0.6225
+epoch-27, train_loss-1.4547, train_rmse-1.2061, valid_rmse-1.4764, valid_pr-0.6391
+epoch-28, train_loss-1.4707, train_rmse-1.2127, valid_rmse-1.4904, valid_pr-0.6543
+epoch-29, train_loss-1.3771, train_rmse-1.1735, valid_rmse-1.4566, valid_pr-0.6718
+Validation : valid_rmse-1.4566, valid_pr-0.6718, 
+test2013_rmse-1.4407, test2013_pr-0.7883, test2016_rmse-1.3655, test2016_pr-0.7783, test2019_rmse-1.6895, test2019_pr-0.5449
+epoch-30, train_loss-1.3541, train_rmse-1.1637, valid_rmse-1.4504, valid_pr-0.6573
+Validation : valid_rmse-1.4504, valid_pr-0.6573, 
+test2013_rmse-1.4527, test2013_pr-0.7840, test2016_rmse-1.3536, test2016_pr-0.7858, test2019_rmse-1.6447, test2019_pr-0.5330
+epoch-31, train_loss-1.3497, train_rmse-1.1618, valid_rmse-1.4916, valid_pr-0.6597
+epoch-32, train_loss-1.3491, train_rmse-1.1615, valid_rmse-1.5066, valid_pr-0.6378
+epoch-33, train_loss-1.3298, train_rmse-1.1532, valid_rmse-1.4434, valid_pr-0.6566
+Validation : valid_rmse-1.4434, valid_pr-0.6566, 
+test2013_rmse-1.5413, test2013_pr-0.7512, test2016_rmse-1.4250, test2016_pr-0.7614, test2019_rmse-1.6280, test2019_pr-0.5416
+epoch-34, train_loss-1.3819, train_rmse-1.1755, valid_rmse-1.4891, valid_pr-0.6393
+epoch-35, train_loss-1.3545, train_rmse-1.1638, valid_rmse-1.4822, valid_pr-0.6463
+epoch-36, train_loss-1.3108, train_rmse-1.1449, valid_rmse-1.5045, valid_pr-0.6248
+epoch-37, train_loss-1.2790, train_rmse-1.1309, valid_rmse-1.4602, valid_pr-0.6579
+epoch-38, train_loss-1.2138, train_rmse-1.1017, valid_rmse-1.5428, valid_pr-0.5993
+epoch-39, train_loss-1.2666, train_rmse-1.1254, valid_rmse-1.4683, valid_pr-0.6484
+epoch-40, train_loss-1.2274, train_rmse-1.1079, valid_rmse-1.5654, valid_pr-0.6489
+epoch-41, train_loss-1.2152, train_rmse-1.1024, valid_rmse-1.4464, valid_pr-0.6648
+epoch-42, train_loss-1.2180, train_rmse-1.1036, valid_rmse-1.4599, valid_pr-0.6541
+epoch-43, train_loss-1.1590, train_rmse-1.0766, valid_rmse-1.4617, valid_pr-0.6638
+epoch-44, train_loss-1.1764, train_rmse-1.0846, valid_rmse-1.4378, valid_pr-0.6641
+Validation : valid_rmse-1.4378, valid_pr-0.6641, 
+test2013_rmse-1.3926, test2013_pr-0.8084, test2016_rmse-1.3487, test2016_pr-0.7845, test2019_rmse-1.6242, test2019_pr-0.5522
+epoch-45, train_loss-1.1547, train_rmse-1.0746, valid_rmse-1.4267, valid_pr-0.6649
+Validation : valid_rmse-1.4267, valid_pr-0.6649, 
+test2013_rmse-1.5392, test2013_pr-0.7538, test2016_rmse-1.3880, test2016_pr-0.7717, test2019_rmse-1.6467, test2019_pr-0.5276
+epoch-46, train_loss-1.1330, train_rmse-1.0644, valid_rmse-1.4602, valid_pr-0.6561
+epoch-47, train_loss-1.1197, train_rmse-1.0582, valid_rmse-1.4846, valid_pr-0.6679
+epoch-48, train_loss-1.1801, train_rmse-1.0863, valid_rmse-1.4851, valid_pr-0.6642
+epoch-49, train_loss-1.1338, train_rmse-1.0648, valid_rmse-1.5359, valid_pr-0.6399
+epoch-50, train_loss-1.1371, train_rmse-1.0663, valid_rmse-1.4540, valid_pr-0.6600
+epoch-51, train_loss-1.0332, train_rmse-1.0165, valid_rmse-1.4377, valid_pr-0.6770
+epoch-52, train_loss-1.0975, train_rmse-1.0476, valid_rmse-1.4243, valid_pr-0.6692
+Validation : valid_rmse-1.4243, valid_pr-0.6692, 
+test2013_rmse-1.5623, test2013_pr-0.7473, test2016_rmse-1.4701, test2016_pr-0.7467, test2019_rmse-1.6107, test2019_pr-0.5425
+epoch-53, train_loss-1.0033, train_rmse-1.0016, valid_rmse-1.4120, valid_pr-0.6732
+Validation : valid_rmse-1.4120, valid_pr-0.6732, 
+test2013_rmse-1.5544, test2013_pr-0.7444, test2016_rmse-1.4076, test2016_pr-0.7621, test2019_rmse-1.6466, test2019_pr-0.5295
+epoch-54, train_loss-1.0178, train_rmse-1.0089, valid_rmse-1.4018, valid_pr-0.6867
+Validation : valid_rmse-1.4018, valid_pr-0.6867, 
+test2013_rmse-1.4953, test2013_pr-0.7805, test2016_rmse-1.4003, test2016_pr-0.7853, test2019_rmse-1.6268, test2019_pr-0.5363
+epoch-55, train_loss-0.9913, train_rmse-0.9957, valid_rmse-1.4572, valid_pr-0.6497
+epoch-56, train_loss-0.9756, train_rmse-0.9877, valid_rmse-1.4596, valid_pr-0.6643
+epoch-57, train_loss-0.9723, train_rmse-0.9861, valid_rmse-1.4489, valid_pr-0.6668
+epoch-58, train_loss-1.0020, train_rmse-1.0010, valid_rmse-1.4678, valid_pr-0.6759
+epoch-59, train_loss-1.0277, train_rmse-1.0138, valid_rmse-1.4336, valid_pr-0.6650
+epoch-60, train_loss-0.9803, train_rmse-0.9901, valid_rmse-1.4610, valid_pr-0.6559
+epoch-61, train_loss-0.9261, train_rmse-0.9623, valid_rmse-1.4391, valid_pr-0.6795
+epoch-62, train_loss-0.9336, train_rmse-0.9662, valid_rmse-1.4737, valid_pr-0.6555
+epoch-63, train_loss-0.9106, train_rmse-0.9542, valid_rmse-1.4950, valid_pr-0.6714
+epoch-64, train_loss-0.9606, train_rmse-0.9801, valid_rmse-1.5092, valid_pr-0.6496
+epoch-65, train_loss-0.9382, train_rmse-0.9686, valid_rmse-1.4487, valid_pr-0.6795
+epoch-66, train_loss-0.9291, train_rmse-0.9639, valid_rmse-1.4421, valid_pr-0.6642
+epoch-67, train_loss-0.8953, train_rmse-0.9462, valid_rmse-1.4625, valid_pr-0.6500
+epoch-68, train_loss-0.8766, train_rmse-0.9363, valid_rmse-1.4559, valid_pr-0.6503
+epoch-69, train_loss-0.8601, train_rmse-0.9274, valid_rmse-1.4264, valid_pr-0.6676
+epoch-70, train_loss-0.8648, train_rmse-0.9299, valid_rmse-1.4727, valid_pr-0.6646
+epoch-71, train_loss-0.8316, train_rmse-0.9119, valid_rmse-1.4286, valid_pr-0.6907
+epoch-72, train_loss-0.8676, train_rmse-0.9315, valid_rmse-1.4555, valid_pr-0.6435
+epoch-73, train_loss-0.8574, train_rmse-0.9259, valid_rmse-1.6799, valid_pr-0.6298
+epoch-74, train_loss-0.8259, train_rmse-0.9088, valid_rmse-1.5235, valid_pr-0.6744
+epoch-75, train_loss-0.8203, train_rmse-0.9057, valid_rmse-1.4699, valid_pr-0.6542
+epoch-76, train_loss-0.8341, train_rmse-0.9133, valid_rmse-1.5529, valid_pr-0.6583
+epoch-77, train_loss-0.8163, train_rmse-0.9035, valid_rmse-1.4665, valid_pr-0.6482
+epoch-78, train_loss-0.8160, train_rmse-0.9033, valid_rmse-1.5163, valid_pr-0.6443
+epoch-79, train_loss-0.8149, train_rmse-0.9027, valid_rmse-1.6008, valid_pr-0.6368
+epoch-80, train_loss-0.7798, train_rmse-0.8831, valid_rmse-1.3915, valid_pr-0.6831
+Validation : valid_rmse-1.3915, valid_pr-0.6831, 
+test2013_rmse-1.5347, test2013_pr-0.7526, test2016_rmse-1.4257, test2016_pr-0.7629, test2019_rmse-1.5948, test2019_pr-0.5446
+epoch-81, train_loss-0.7802, train_rmse-0.8833, valid_rmse-1.3913, valid_pr-0.6938
+Validation : valid_rmse-1.3913, valid_pr-0.6938, 
+test2013_rmse-1.5387, test2013_pr-0.7622, test2016_rmse-1.4339, test2016_pr-0.7735, test2019_rmse-1.5954, test2019_pr-0.5604
+epoch-82, train_loss-0.7632, train_rmse-0.8736, valid_rmse-1.4183, valid_pr-0.6848
+epoch-83, train_loss-0.7643, train_rmse-0.8742, valid_rmse-1.4247, valid_pr-0.6683
+epoch-84, train_loss-0.7715, train_rmse-0.8784, valid_rmse-1.4130, valid_pr-0.6732
+epoch-85, train_loss-0.7476, train_rmse-0.8646, valid_rmse-1.3946, valid_pr-0.6933
+epoch-86, train_loss-0.7640, train_rmse-0.8741, valid_rmse-1.4749, valid_pr-0.6739
+epoch-87, train_loss-0.7611, train_rmse-0.8724, valid_rmse-1.4394, valid_pr-0.6672
+epoch-88, train_loss-0.7522, train_rmse-0.8673, valid_rmse-1.4587, valid_pr-0.6796
+epoch-89, train_loss-0.7675, train_rmse-0.8760, valid_rmse-1.4587, valid_pr-0.6772
+epoch-90, train_loss-0.6801, train_rmse-0.8247, valid_rmse-1.6199, valid_pr-0.6412
+epoch-91, train_loss-0.7225, train_rmse-0.8500, valid_rmse-1.5150, valid_pr-0.6849
+epoch-92, train_loss-0.7028, train_rmse-0.8383, valid_rmse-1.4438, valid_pr-0.6659
+epoch-93, train_loss-0.7308, train_rmse-0.8549, valid_rmse-1.4271, valid_pr-0.6773
+epoch-94, train_loss-0.6903, train_rmse-0.8309, valid_rmse-1.3915, valid_pr-0.6892
+epoch-95, train_loss-0.6574, train_rmse-0.8108, valid_rmse-1.4270, valid_pr-0.6745
+epoch-96, train_loss-0.6941, train_rmse-0.8331, valid_rmse-1.4341, valid_pr-0.6721
+epoch-97, train_loss-0.7069, train_rmse-0.8408, valid_rmse-1.3936, valid_pr-0.6847
+epoch-98, train_loss-0.6473, train_rmse-0.8045, valid_rmse-1.4030, valid_pr-0.6772
+epoch-99, train_loss-0.6683, train_rmse-0.8175, valid_rmse-1.4290, valid_pr-0.6688
+epoch-100, train_loss-0.6426, train_rmse-0.8016, valid_rmse-1.4282, valid_pr-0.6673
+epoch-101, train_loss-0.6574, train_rmse-0.8108, valid_rmse-1.4832, valid_pr-0.6700
+epoch-102, train_loss-0.6598, train_rmse-0.8123, valid_rmse-1.4168, valid_pr-0.6682
+epoch-103, train_loss-0.6863, train_rmse-0.8284, valid_rmse-1.3922, valid_pr-0.6901
+epoch-104, train_loss-0.6138, train_rmse-0.7834, valid_rmse-1.4696, valid_pr-0.6534
+epoch-105, train_loss-0.6250, train_rmse-0.7906, valid_rmse-1.4341, valid_pr-0.6697
+epoch-106, train_loss-0.6401, train_rmse-0.8000, valid_rmse-1.3781, valid_pr-0.6991
+Validation : valid_rmse-1.3781, valid_pr-0.6991, 
+test2013_rmse-1.4166, test2013_pr-0.8022, test2016_rmse-1.3301, test2016_pr-0.7997, test2019_rmse-1.5720, test2019_pr-0.5634
+epoch-107, train_loss-0.6196, train_rmse-0.7872, valid_rmse-1.4114, valid_pr-0.6727
+epoch-108, train_loss-0.6235, train_rmse-0.7896, valid_rmse-1.3711, valid_pr-0.6939
+Validation : valid_rmse-1.3711, valid_pr-0.6939, 
+test2013_rmse-1.5210, test2013_pr-0.7614, test2016_rmse-1.3282, test2016_pr-0.7914, test2019_rmse-1.5963, test2019_pr-0.5581
+epoch-109, train_loss-0.6418, train_rmse-0.8011, valid_rmse-1.3857, valid_pr-0.6927
+epoch-110, train_loss-0.6082, train_rmse-0.7799, valid_rmse-1.5224, valid_pr-0.6952
+epoch-111, train_loss-0.5922, train_rmse-0.7696, valid_rmse-1.9427, valid_pr-0.6623
+epoch-112, train_loss-0.5817, train_rmse-0.7627, valid_rmse-1.3927, valid_pr-0.6752
+epoch-113, train_loss-0.5836, train_rmse-0.7640, valid_rmse-1.3927, valid_pr-0.6836
+epoch-114, train_loss-0.5980, train_rmse-0.7733, valid_rmse-1.4678, valid_pr-0.7088
+epoch-115, train_loss-0.5827, train_rmse-0.7633, valid_rmse-1.4480, valid_pr-0.6798
+epoch-116, train_loss-0.5749, train_rmse-0.7582, valid_rmse-1.4299, valid_pr-0.6884
+epoch-117, train_loss-0.5865, train_rmse-0.7659, valid_rmse-1.4523, valid_pr-0.7021
+epoch-118, train_loss-0.6008, train_rmse-0.7751, valid_rmse-1.3478, valid_pr-0.6998
+Validation : valid_rmse-1.3478, valid_pr-0.6998, 
+test2013_rmse-1.4887, test2013_pr-0.7679, test2016_rmse-1.3802, test2016_pr-0.7731, test2019_rmse-1.5904, test2019_pr-0.5463
+epoch-119, train_loss-0.5593, train_rmse-0.7478, valid_rmse-1.3655, valid_pr-0.6946
+epoch-120, train_loss-0.5493, train_rmse-0.7412, valid_rmse-1.4450, valid_pr-0.6871
+epoch-121, train_loss-0.5618, train_rmse-0.7495, valid_rmse-1.3480, valid_pr-0.7042
+epoch-122, train_loss-0.5569, train_rmse-0.7463, valid_rmse-1.3805, valid_pr-0.6946
+epoch-123, train_loss-0.5563, train_rmse-0.7459, valid_rmse-1.3921, valid_pr-0.6907
+epoch-124, train_loss-0.5382, train_rmse-0.7336, valid_rmse-1.3803, valid_pr-0.6968
+epoch-125, train_loss-0.5551, train_rmse-0.7450, valid_rmse-1.3592, valid_pr-0.7090
+epoch-126, train_loss-0.5157, train_rmse-0.7181, valid_rmse-1.3619, valid_pr-0.6982
+epoch-127, train_loss-0.5060, train_rmse-0.7113, valid_rmse-1.3901, valid_pr-0.6847
+epoch-128, train_loss-0.5055, train_rmse-0.7110, valid_rmse-1.3722, valid_pr-0.6858
+epoch-129, train_loss-0.5299, train_rmse-0.7280, valid_rmse-1.3716, valid_pr-0.6849
+epoch-130, train_loss-0.5468, train_rmse-0.7394, valid_rmse-1.3331, valid_pr-0.7134
+Validation : valid_rmse-1.3331, valid_pr-0.7134, 
+test2013_rmse-1.4453, test2013_pr-0.7850, test2016_rmse-1.3274, test2016_pr-0.7916, test2019_rmse-1.5570, test2019_pr-0.5664
+epoch-131, train_loss-0.5213, train_rmse-0.7220, valid_rmse-1.3779, valid_pr-0.6879
+epoch-132, train_loss-0.5318, train_rmse-0.7293, valid_rmse-1.3596, valid_pr-0.6953
+epoch-133, train_loss-0.4878, train_rmse-0.6984, valid_rmse-1.3685, valid_pr-0.7032
+epoch-134, train_loss-0.5086, train_rmse-0.7132, valid_rmse-1.3807, valid_pr-0.6940
+epoch-135, train_loss-0.5042, train_rmse-0.7101, valid_rmse-1.3273, valid_pr-0.7122
+Validation : valid_rmse-1.3273, valid_pr-0.7122, 
+test2013_rmse-1.4390, test2013_pr-0.7858, test2016_rmse-1.3629, test2016_pr-0.7804, test2019_rmse-1.5677, test2019_pr-0.5576
+epoch-136, train_loss-0.5278, train_rmse-0.7265, valid_rmse-1.4205, valid_pr-0.7124
+epoch-137, train_loss-0.5387, train_rmse-0.7340, valid_rmse-1.3558, valid_pr-0.6998
+epoch-138, train_loss-0.5157, train_rmse-0.7181, valid_rmse-1.4616, valid_pr-0.6978
+epoch-139, train_loss-0.4743, train_rmse-0.6887, valid_rmse-1.3987, valid_pr-0.6836
+epoch-140, train_loss-0.4856, train_rmse-0.6969, valid_rmse-1.3829, valid_pr-0.6921
+epoch-141, train_loss-0.4868, train_rmse-0.6977, valid_rmse-1.3525, valid_pr-0.6962
+epoch-142, train_loss-0.4708, train_rmse-0.6862, valid_rmse-1.3612, valid_pr-0.7079
+epoch-143, train_loss-0.4804, train_rmse-0.6931, valid_rmse-1.3754, valid_pr-0.6985
+epoch-144, train_loss-0.4723, train_rmse-0.6873, valid_rmse-1.3524, valid_pr-0.7002
+epoch-145, train_loss-0.4616, train_rmse-0.6794, valid_rmse-1.3735, valid_pr-0.7019
+epoch-146, train_loss-0.4704, train_rmse-0.6858, valid_rmse-1.3445, valid_pr-0.7064
+epoch-147, train_loss-0.4780, train_rmse-0.6914, valid_rmse-1.3837, valid_pr-0.6945
+epoch-148, train_loss-0.4432, train_rmse-0.6658, valid_rmse-1.3727, valid_pr-0.6913
+epoch-149, train_loss-0.4521, train_rmse-0.6724, valid_rmse-1.3444, valid_pr-0.7033
+epoch-150, train_loss-0.4491, train_rmse-0.6701, valid_rmse-1.4432, valid_pr-0.7054
+epoch-151, train_loss-0.4600, train_rmse-0.6782, valid_rmse-1.3618, valid_pr-0.6997
+epoch-152, train_loss-0.4881, train_rmse-0.6986, valid_rmse-1.3329, valid_pr-0.7085
+epoch-153, train_loss-0.4365, train_rmse-0.6607, valid_rmse-1.4120, valid_pr-0.7050
+epoch-154, train_loss-0.4481, train_rmse-0.6694, valid_rmse-1.3482, valid_pr-0.7069
+epoch-155, train_loss-0.4399, train_rmse-0.6632, valid_rmse-1.3476, valid_pr-0.7011
+epoch-156, train_loss-0.4798, train_rmse-0.6927, valid_rmse-1.3655, valid_pr-0.6969
+epoch-157, train_loss-0.4279, train_rmse-0.6541, valid_rmse-1.3475, valid_pr-0.6997
+epoch-158, train_loss-0.4705, train_rmse-0.6860, valid_rmse-1.4075, valid_pr-0.7087
+epoch-159, train_loss-0.4423, train_rmse-0.6651, valid_rmse-1.3951, valid_pr-0.7106
+epoch-160, train_loss-0.4324, train_rmse-0.6576, valid_rmse-1.3552, valid_pr-0.7016
+epoch-161, train_loss-0.4358, train_rmse-0.6602, valid_rmse-1.3252, valid_pr-0.7160
+Validation : valid_rmse-1.3252, valid_pr-0.7160, 
+test2013_rmse-1.4105, test2013_pr-0.7971, test2016_rmse-1.3127, test2016_pr-0.7998, test2019_rmse-1.5600, test2019_pr-0.5633
+epoch-162, train_loss-0.4372, train_rmse-0.6612, valid_rmse-1.3600, valid_pr-0.6978
+epoch-163, train_loss-0.4474, train_rmse-0.6689, valid_rmse-1.3368, valid_pr-0.7075
+epoch-164, train_loss-0.4388, train_rmse-0.6624, valid_rmse-1.3538, valid_pr-0.6994
+epoch-165, train_loss-0.4262, train_rmse-0.6529, valid_rmse-1.3683, valid_pr-0.7091
+epoch-166, train_loss-0.4049, train_rmse-0.6363, valid_rmse-1.3191, valid_pr-0.7141
+Validation : valid_rmse-1.3191, valid_pr-0.7141, 
+test2013_rmse-1.4596, test2013_pr-0.7803, test2016_rmse-1.3621, test2016_pr-0.7791, test2019_rmse-1.5669, test2019_pr-0.5553
+epoch-167, train_loss-0.4156, train_rmse-0.6447, valid_rmse-1.3975, valid_pr-0.6971
+epoch-168, train_loss-0.4198, train_rmse-0.6479, valid_rmse-1.3564, valid_pr-0.6978
+epoch-169, train_loss-0.4285, train_rmse-0.6546, valid_rmse-1.3637, valid_pr-0.6902
+epoch-170, train_loss-0.4043, train_rmse-0.6359, valid_rmse-1.3214, valid_pr-0.7156
+epoch-171, train_loss-0.4081, train_rmse-0.6388, valid_rmse-1.3592, valid_pr-0.6967
+epoch-172, train_loss-0.4206, train_rmse-0.6485, valid_rmse-1.3441, valid_pr-0.6996
+epoch-173, train_loss-0.3984, train_rmse-0.6312, valid_rmse-1.3488, valid_pr-0.7040
+epoch-174, train_loss-0.3912, train_rmse-0.6254, valid_rmse-1.3555, valid_pr-0.7187
+epoch-175, train_loss-0.3955, train_rmse-0.6289, valid_rmse-1.3272, valid_pr-0.7135
+epoch-176, train_loss-0.3710, train_rmse-0.6091, valid_rmse-1.3436, valid_pr-0.7035
+epoch-177, train_loss-0.3826, train_rmse-0.6185, valid_rmse-1.3744, valid_pr-0.6992
+epoch-178, train_loss-0.3827, train_rmse-0.6186, valid_rmse-1.3256, valid_pr-0.7103
+epoch-179, train_loss-0.3940, train_rmse-0.6277, valid_rmse-1.3415, valid_pr-0.7141
+epoch-180, train_loss-0.3917, train_rmse-0.6259, valid_rmse-1.3671, valid_pr-0.6916
+epoch-181, train_loss-0.4035, train_rmse-0.6352, valid_rmse-1.4041, valid_pr-0.7027
+epoch-182, train_loss-0.3796, train_rmse-0.6161, valid_rmse-1.3346, valid_pr-0.7055
+epoch-183, train_loss-0.3841, train_rmse-0.6198, valid_rmse-1.3446, valid_pr-0.7039
+epoch-184, train_loss-0.3935, train_rmse-0.6273, valid_rmse-1.3759, valid_pr-0.6842
+epoch-185, train_loss-0.3812, train_rmse-0.6174, valid_rmse-1.3380, valid_pr-0.7141
+epoch-186, train_loss-0.3849, train_rmse-0.6204, valid_rmse-1.4483, valid_pr-0.7076
+epoch-187, train_loss-0.4101, train_rmse-0.6404, valid_rmse-1.3703, valid_pr-0.7003
+epoch-188, train_loss-0.3829, train_rmse-0.6188, valid_rmse-1.3320, valid_pr-0.7066
+epoch-189, train_loss-0.3767, train_rmse-0.6137, valid_rmse-1.3207, valid_pr-0.7070
+epoch-190, train_loss-0.3775, train_rmse-0.6144, valid_rmse-1.3523, valid_pr-0.7083
+epoch-191, train_loss-0.3804, train_rmse-0.6168, valid_rmse-1.3082, valid_pr-0.7189
+Validation : valid_rmse-1.3082, valid_pr-0.7189, 
+test2013_rmse-1.4846, test2013_pr-0.7700, test2016_rmse-1.3458, test2016_pr-0.7876, test2019_rmse-1.5345, test2019_pr-0.5687
+epoch-192, train_loss-0.3494, train_rmse-0.5911, valid_rmse-1.3109, valid_pr-0.7190
+epoch-193, train_loss-0.3631, train_rmse-0.6026, valid_rmse-1.3667, valid_pr-0.7185
+epoch-194, train_loss-0.3753, train_rmse-0.6126, valid_rmse-1.3190, valid_pr-0.7144
+epoch-195, train_loss-0.3562, train_rmse-0.5968, valid_rmse-1.3384, valid_pr-0.7140
+epoch-196, train_loss-0.3527, train_rmse-0.5939, valid_rmse-1.2994, valid_pr-0.7253
+Validation : valid_rmse-1.2994, valid_pr-0.7253, 
+test2013_rmse-1.4540, test2013_pr-0.7855, test2016_rmse-1.3865, test2016_pr-0.7695, test2019_rmse-1.5480, test2019_pr-0.5588
+epoch-197, train_loss-0.3528, train_rmse-0.5939, valid_rmse-1.3194, valid_pr-0.7158
+epoch-198, train_loss-0.3490, train_rmse-0.5907, valid_rmse-1.3372, valid_pr-0.7224
+epoch-199, train_loss-0.3533, train_rmse-0.5944, valid_rmse-1.3173, valid_pr-0.7134
+epoch-200, train_loss-0.3367, train_rmse-0.5803, valid_rmse-1.3349, valid_pr-0.7060
+epoch-201, train_loss-0.3431, train_rmse-0.5857, valid_rmse-1.3238, valid_pr-0.7115
+epoch-202, train_loss-0.3459, train_rmse-0.5881, valid_rmse-1.3042, valid_pr-0.7210
+epoch-203, train_loss-0.3371, train_rmse-0.5806, valid_rmse-1.3434, valid_pr-0.7128
+epoch-204, train_loss-0.3400, train_rmse-0.5831, valid_rmse-1.3313, valid_pr-0.7114
+epoch-205, train_loss-0.3458, train_rmse-0.5880, valid_rmse-1.3816, valid_pr-0.7081
+epoch-206, train_loss-0.3662, train_rmse-0.6051, valid_rmse-1.2982, valid_pr-0.7238
+Validation : valid_rmse-1.2982, valid_pr-0.7238, 
+test2013_rmse-1.4235, test2013_pr-0.7978, test2016_rmse-1.2961, test2016_pr-0.8094, test2019_rmse-1.5413, test2019_pr-0.5643
+epoch-207, train_loss-0.3278, train_rmse-0.5725, valid_rmse-1.3170, valid_pr-0.7133
+epoch-208, train_loss-0.3455, train_rmse-0.5878, valid_rmse-1.3167, valid_pr-0.7143
+epoch-209, train_loss-0.3568, train_rmse-0.5973, valid_rmse-1.4357, valid_pr-0.7021
+epoch-210, train_loss-0.3456, train_rmse-0.5879, valid_rmse-1.3366, valid_pr-0.6999
+epoch-211, train_loss-0.3360, train_rmse-0.5797, valid_rmse-1.3902, valid_pr-0.7061
+epoch-212, train_loss-0.3240, train_rmse-0.5692, valid_rmse-1.3661, valid_pr-0.7024
+epoch-213, train_loss-0.3278, train_rmse-0.5725, valid_rmse-1.3350, valid_pr-0.7079
+epoch-214, train_loss-0.3374, train_rmse-0.5808, valid_rmse-1.3273, valid_pr-0.7073
+epoch-215, train_loss-0.3264, train_rmse-0.5713, valid_rmse-1.3267, valid_pr-0.7085
+epoch-216, train_loss-0.3187, train_rmse-0.5645, valid_rmse-1.3597, valid_pr-0.7006
+epoch-217, train_loss-0.3488, train_rmse-0.5906, valid_rmse-1.3313, valid_pr-0.7052
+epoch-218, train_loss-0.3242, train_rmse-0.5694, valid_rmse-1.2892, valid_pr-0.7250
+Validation : valid_rmse-1.2892, valid_pr-0.7250, 
+test2013_rmse-1.4830, test2013_pr-0.7752, test2016_rmse-1.3323, test2016_pr-0.7901, test2019_rmse-1.5268, test2019_pr-0.5671
+epoch-219, train_loss-0.3268, train_rmse-0.5716, valid_rmse-1.3116, valid_pr-0.7225
+epoch-220, train_loss-0.3109, train_rmse-0.5576, valid_rmse-1.3344, valid_pr-0.7050
+epoch-221, train_loss-0.3355, train_rmse-0.5793, valid_rmse-1.3301, valid_pr-0.7080
+epoch-222, train_loss-0.3161, train_rmse-0.5623, valid_rmse-1.3471, valid_pr-0.7012
+epoch-223, train_loss-0.3091, train_rmse-0.5560, valid_rmse-1.3108, valid_pr-0.7167
+epoch-224, train_loss-0.3144, train_rmse-0.5607, valid_rmse-1.3370, valid_pr-0.7051
+epoch-225, train_loss-0.3112, train_rmse-0.5579, valid_rmse-1.3227, valid_pr-0.7145
+epoch-226, train_loss-0.3339, train_rmse-0.5778, valid_rmse-1.3271, valid_pr-0.7094
+epoch-227, train_loss-0.3064, train_rmse-0.5536, valid_rmse-1.3596, valid_pr-0.7014
+epoch-228, train_loss-0.3229, train_rmse-0.5683, valid_rmse-1.3053, valid_pr-0.7205
+epoch-229, train_loss-0.3192, train_rmse-0.5650, valid_rmse-1.2931, valid_pr-0.7261
+epoch-230, train_loss-0.2946, train_rmse-0.5428, valid_rmse-1.3384, valid_pr-0.7067
+epoch-231, train_loss-0.3072, train_rmse-0.5543, valid_rmse-1.3138, valid_pr-0.7130
+epoch-232, train_loss-0.3200, train_rmse-0.5657, valid_rmse-1.3385, valid_pr-0.7076
+epoch-233, train_loss-0.3134, train_rmse-0.5598, valid_rmse-1.3995, valid_pr-0.6994
+epoch-234, train_loss-0.3153, train_rmse-0.5615, valid_rmse-1.3191, valid_pr-0.7088
+epoch-235, train_loss-0.3133, train_rmse-0.5598, valid_rmse-1.3082, valid_pr-0.7199
+epoch-236, train_loss-0.3069, train_rmse-0.5540, valid_rmse-1.3147, valid_pr-0.7100
+epoch-237, train_loss-0.3139, train_rmse-0.5603, valid_rmse-1.3224, valid_pr-0.7167
+epoch-238, train_loss-0.3130, train_rmse-0.5594, valid_rmse-1.3462, valid_pr-0.7037
+epoch-239, train_loss-0.2943, train_rmse-0.5425, valid_rmse-1.3057, valid_pr-0.7188
+epoch-240, train_loss-0.3004, train_rmse-0.5481, valid_rmse-1.3340, valid_pr-0.7043
+epoch-241, train_loss-0.2935, train_rmse-0.5417, valid_rmse-1.3022, valid_pr-0.7190
+epoch-242, train_loss-0.2928, train_rmse-0.5411, valid_rmse-1.3847, valid_pr-0.7070
+epoch-243, train_loss-0.2829, train_rmse-0.5319, valid_rmse-1.3145, valid_pr-0.7124
+epoch-244, train_loss-0.2938, train_rmse-0.5420, valid_rmse-1.3327, valid_pr-0.7082
+epoch-245, train_loss-0.2966, train_rmse-0.5446, valid_rmse-1.3015, valid_pr-0.7224
+epoch-246, train_loss-0.2875, train_rmse-0.5361, valid_rmse-1.3524, valid_pr-0.7118
+epoch-247, train_loss-0.2903, train_rmse-0.5388, valid_rmse-1.2862, valid_pr-0.7263
+Validation : valid_rmse-1.2862, valid_pr-0.7263, 
+test2013_rmse-1.5011, test2013_pr-0.7666, test2016_rmse-1.3214, test2016_pr-0.7976, test2019_rmse-1.5064, test2019_pr-0.5811
+epoch-248, train_loss-0.2795, train_rmse-0.5286, valid_rmse-1.3261, valid_pr-0.7065
+epoch-249, train_loss-0.3030, train_rmse-0.5505, valid_rmse-1.3107, valid_pr-0.7136
+epoch-250, train_loss-0.2738, train_rmse-0.5233, valid_rmse-1.3182, valid_pr-0.7163
+epoch-251, train_loss-0.2878, train_rmse-0.5365, valid_rmse-1.4048, valid_pr-0.6939
+epoch-252, train_loss-0.2956, train_rmse-0.5437, valid_rmse-1.3296, valid_pr-0.7060
+epoch-253, train_loss-0.3009, train_rmse-0.5486, valid_rmse-1.3146, valid_pr-0.7207
+epoch-254, train_loss-0.2785, train_rmse-0.5277, valid_rmse-1.2948, valid_pr-0.7209
+epoch-255, train_loss-0.2685, train_rmse-0.5182, valid_rmse-1.2969, valid_pr-0.7217
+epoch-256, train_loss-0.2857, train_rmse-0.5345, valid_rmse-1.3375, valid_pr-0.7080
+epoch-257, train_loss-0.2895, train_rmse-0.5380, valid_rmse-1.3277, valid_pr-0.7077
+epoch-258, train_loss-0.2913, train_rmse-0.5397, valid_rmse-1.3373, valid_pr-0.7058
+epoch-259, train_loss-0.3023, train_rmse-0.5498, valid_rmse-1.3409, valid_pr-0.7040
+epoch-260, train_loss-0.2692, train_rmse-0.5188, valid_rmse-1.3099, valid_pr-0.7169
+epoch-261, train_loss-0.2739, train_rmse-0.5233, valid_rmse-1.3093, valid_pr-0.7176
+epoch-262, train_loss-0.2618, train_rmse-0.5116, valid_rmse-1.3196, valid_pr-0.7136
+epoch-263, train_loss-0.2603, train_rmse-0.5102, valid_rmse-1.3062, valid_pr-0.7176
+epoch-264, train_loss-0.2655, train_rmse-0.5153, valid_rmse-1.3121, valid_pr-0.7128
+epoch-265, train_loss-0.2792, train_rmse-0.5284, valid_rmse-1.3783, valid_pr-0.7172
+epoch-266, train_loss-0.2673, train_rmse-0.5170, valid_rmse-1.3101, valid_pr-0.7132
+epoch-267, train_loss-0.2709, train_rmse-0.5204, valid_rmse-1.3073, valid_pr-0.7144
+epoch-268, train_loss-0.2802, train_rmse-0.5294, valid_rmse-1.2974, valid_pr-0.7332
+epoch-269, train_loss-0.2673, train_rmse-0.5170, valid_rmse-1.3064, valid_pr-0.7226
+epoch-270, train_loss-0.2701, train_rmse-0.5197, valid_rmse-1.3020, valid_pr-0.7175
+epoch-271, train_loss-0.2529, train_rmse-0.5029, valid_rmse-1.3710, valid_pr-0.7121
+epoch-272, train_loss-0.2629, train_rmse-0.5128, valid_rmse-1.2983, valid_pr-0.7194
+epoch-273, train_loss-0.2633, train_rmse-0.5132, valid_rmse-1.2870, valid_pr-0.7221
+epoch-274, train_loss-0.2622, train_rmse-0.5120, valid_rmse-1.3424, valid_pr-0.7109
+epoch-275, train_loss-0.2554, train_rmse-0.5054, valid_rmse-1.2974, valid_pr-0.7194
+epoch-276, train_loss-0.2700, train_rmse-0.5196, valid_rmse-1.2810, valid_pr-0.7284
+Validation : valid_rmse-1.2810, valid_pr-0.7284, 
+test2013_rmse-1.4508, test2013_pr-0.7887, test2016_rmse-1.3016, test2016_pr-0.8024, test2019_rmse-1.5022, test2019_pr-0.5794
+epoch-277, train_loss-0.2660, train_rmse-0.5158, valid_rmse-1.3179, valid_pr-0.7111
+epoch-278, train_loss-0.2782, train_rmse-0.5274, valid_rmse-1.3389, valid_pr-0.7083
+epoch-279, train_loss-0.2538, train_rmse-0.5037, valid_rmse-1.3320, valid_pr-0.7139
+epoch-280, train_loss-0.2439, train_rmse-0.4938, valid_rmse-1.3256, valid_pr-0.7176
+epoch-281, train_loss-0.2782, train_rmse-0.5274, valid_rmse-1.2928, valid_pr-0.7181
+epoch-282, train_loss-0.2427, train_rmse-0.4926, valid_rmse-1.3557, valid_pr-0.7147
+epoch-283, train_loss-0.2582, train_rmse-0.5081, valid_rmse-1.3019, valid_pr-0.7140
+epoch-284, train_loss-0.2487, train_rmse-0.4987, valid_rmse-1.3451, valid_pr-0.7099
+epoch-285, train_loss-0.2564, train_rmse-0.5064, valid_rmse-1.2911, valid_pr-0.7199
+epoch-286, train_loss-0.2522, train_rmse-0.5022, valid_rmse-1.2922, valid_pr-0.7192
+epoch-287, train_loss-0.2564, train_rmse-0.5064, valid_rmse-1.3218, valid_pr-0.7133
+epoch-288, train_loss-0.2561, train_rmse-0.5060, valid_rmse-1.2866, valid_pr-0.7270
+epoch-289, train_loss-0.2516, train_rmse-0.5016, valid_rmse-1.3031, valid_pr-0.7155
+epoch-290, train_loss-0.2423, train_rmse-0.4922, valid_rmse-1.3069, valid_pr-0.7120
+epoch-291, train_loss-0.2397, train_rmse-0.4896, valid_rmse-1.3428, valid_pr-0.7158
+epoch-292, train_loss-0.2538, train_rmse-0.5038, valid_rmse-1.3379, valid_pr-0.7148
+epoch-293, train_loss-0.2476, train_rmse-0.4976, valid_rmse-1.3078, valid_pr-0.7161
+epoch-294, train_loss-0.2367, train_rmse-0.4865, valid_rmse-1.3096, valid_pr-0.7147
+epoch-295, train_loss-0.2449, train_rmse-0.4949, valid_rmse-1.3112, valid_pr-0.7144
+epoch-296, train_loss-0.2503, train_rmse-0.5003, valid_rmse-1.3028, valid_pr-0.7159
+epoch-297, train_loss-0.2430, train_rmse-0.4929, valid_rmse-1.2945, valid_pr-0.7203
+epoch-298, train_loss-0.2652, train_rmse-0.5149, valid_rmse-1.3050, valid_pr-0.7267
+epoch-299, train_loss-0.2423, train_rmse-0.4923, valid_rmse-1.2939, valid_pr-0.7201
+epoch-300, train_loss-0.2421, train_rmse-0.4920, valid_rmse-1.2746, valid_pr-0.7324
+Validation : valid_rmse-1.2746, valid_pr-0.7324, 
+test2013_rmse-1.4563, test2013_pr-0.7872, test2016_rmse-1.2911, test2016_pr-0.8058, test2019_rmse-1.5204, test2019_pr-0.5668
+epoch-301, train_loss-0.2423, train_rmse-0.4923, valid_rmse-1.3075, valid_pr-0.7174
+epoch-302, train_loss-0.2409, train_rmse-0.4908, valid_rmse-1.2855, valid_pr-0.7281
+epoch-303, train_loss-0.2326, train_rmse-0.4823, valid_rmse-1.2891, valid_pr-0.7298
+epoch-304, train_loss-0.2384, train_rmse-0.4882, valid_rmse-1.3342, valid_pr-0.7084
+epoch-305, train_loss-0.2439, train_rmse-0.4938, valid_rmse-1.2926, valid_pr-0.7201
+epoch-306, train_loss-0.2441, train_rmse-0.4940, valid_rmse-1.2750, valid_pr-0.7295
+epoch-307, train_loss-0.2200, train_rmse-0.4691, valid_rmse-1.2627, valid_pr-0.7358
+Validation : valid_rmse-1.2627, valid_pr-0.7358, 
+test2013_rmse-1.3982, test2013_pr-0.8114, test2016_rmse-1.3060, test2016_pr-0.8038, test2019_rmse-1.4935, test2019_pr-0.5781
+epoch-308, train_loss-0.2270, train_rmse-0.4765, valid_rmse-1.3042, valid_pr-0.7191
+epoch-309, train_loss-0.2240, train_rmse-0.4733, valid_rmse-1.3176, valid_pr-0.7276
+epoch-310, train_loss-0.2413, train_rmse-0.4912, valid_rmse-1.2629, valid_pr-0.7313
+epoch-311, train_loss-0.2527, train_rmse-0.5027, valid_rmse-1.3018, valid_pr-0.7153
+epoch-312, train_loss-0.2317, train_rmse-0.4814, valid_rmse-1.3130, valid_pr-0.7206
+epoch-313, train_loss-0.2250, train_rmse-0.4743, valid_rmse-1.3223, valid_pr-0.7109
+epoch-314, train_loss-0.2476, train_rmse-0.4976, valid_rmse-1.2833, valid_pr-0.7254
+epoch-315, train_loss-0.2342, train_rmse-0.4840, valid_rmse-1.2819, valid_pr-0.7306
+epoch-316, train_loss-0.2344, train_rmse-0.4841, valid_rmse-1.2788, valid_pr-0.7294
+epoch-317, train_loss-0.2211, train_rmse-0.4702, valid_rmse-1.2750, valid_pr-0.7291
+epoch-318, train_loss-0.2326, train_rmse-0.4823, valid_rmse-1.2915, valid_pr-0.7243
+epoch-319, train_loss-0.2233, train_rmse-0.4725, valid_rmse-1.2907, valid_pr-0.7244
+epoch-320, train_loss-0.2250, train_rmse-0.4744, valid_rmse-1.2998, valid_pr-0.7247
+epoch-321, train_loss-0.2271, train_rmse-0.4765, valid_rmse-1.2856, valid_pr-0.7248
+epoch-322, train_loss-0.2211, train_rmse-0.4702, valid_rmse-1.3191, valid_pr-0.7117
+epoch-323, train_loss-0.2180, train_rmse-0.4669, valid_rmse-1.2906, valid_pr-0.7171
+epoch-324, train_loss-0.2181, train_rmse-0.4670, valid_rmse-1.3518, valid_pr-0.7136
+epoch-325, train_loss-0.2203, train_rmse-0.4694, valid_rmse-1.2834, valid_pr-0.7268
+epoch-326, train_loss-0.2252, train_rmse-0.4746, valid_rmse-1.3367, valid_pr-0.7257
+epoch-327, train_loss-0.2153, train_rmse-0.4640, valid_rmse-1.3087, valid_pr-0.7130
+epoch-328, train_loss-0.2113, train_rmse-0.4597, valid_rmse-1.2921, valid_pr-0.7251
+epoch-329, train_loss-0.2300, train_rmse-0.4796, valid_rmse-1.3042, valid_pr-0.7209
+epoch-330, train_loss-0.2195, train_rmse-0.4685, valid_rmse-1.3207, valid_pr-0.7221
+epoch-331, train_loss-0.2235, train_rmse-0.4728, valid_rmse-1.2633, valid_pr-0.7339
+epoch-332, train_loss-0.2187, train_rmse-0.4677, valid_rmse-1.2912, valid_pr-0.7210
+epoch-333, train_loss-0.2157, train_rmse-0.4645, valid_rmse-1.3327, valid_pr-0.7133
+epoch-334, train_loss-0.2396, train_rmse-0.4894, valid_rmse-1.2903, valid_pr-0.7264
+epoch-335, train_loss-0.2214, train_rmse-0.4705, valid_rmse-1.3484, valid_pr-0.7229
+epoch-336, train_loss-0.2203, train_rmse-0.4694, valid_rmse-1.2793, valid_pr-0.7296
+epoch-337, train_loss-0.2127, train_rmse-0.4612, valid_rmse-1.2704, valid_pr-0.7298
+epoch-338, train_loss-0.2297, train_rmse-0.4792, valid_rmse-1.3018, valid_pr-0.7219
+epoch-339, train_loss-0.2190, train_rmse-0.4680, valid_rmse-1.2940, valid_pr-0.7234
+epoch-340, train_loss-0.2050, train_rmse-0.4527, valid_rmse-1.2934, valid_pr-0.7224
+epoch-341, train_loss-0.2140, train_rmse-0.4626, valid_rmse-1.2915, valid_pr-0.7277
+epoch-342, train_loss-0.2149, train_rmse-0.4636, valid_rmse-1.2942, valid_pr-0.7230
+epoch-343, train_loss-0.2055, train_rmse-0.4533, valid_rmse-1.2728, valid_pr-0.7308
+epoch-344, train_loss-0.2102, train_rmse-0.4584, valid_rmse-1.2831, valid_pr-0.7306
+epoch-345, train_loss-0.2066, train_rmse-0.4545, valid_rmse-1.2916, valid_pr-0.7211
+epoch-346, train_loss-0.2108, train_rmse-0.4591, valid_rmse-1.2972, valid_pr-0.7276
+epoch-347, train_loss-0.2051, train_rmse-0.4529, valid_rmse-1.3284, valid_pr-0.7149
+epoch-348, train_loss-0.1921, train_rmse-0.4383, valid_rmse-1.2773, valid_pr-0.7269
+epoch-349, train_loss-0.2179, train_rmse-0.4668, valid_rmse-1.3204, valid_pr-0.7223
+epoch-350, train_loss-0.2082, train_rmse-0.4563, valid_rmse-1.3025, valid_pr-0.7225
+epoch-351, train_loss-0.2071, train_rmse-0.4551, valid_rmse-1.2642, valid_pr-0.7334
+epoch-352, train_loss-0.1998, train_rmse-0.4470, valid_rmse-1.3169, valid_pr-0.7308
+epoch-353, train_loss-0.1982, train_rmse-0.4452, valid_rmse-1.2682, valid_pr-0.7367
+epoch-354, train_loss-0.2096, train_rmse-0.4578, valid_rmse-1.2672, valid_pr-0.7319
+epoch-355, train_loss-0.1945, train_rmse-0.4410, valid_rmse-1.3078, valid_pr-0.7262
+epoch-356, train_loss-0.2045, train_rmse-0.4522, valid_rmse-1.2926, valid_pr-0.7211
+epoch-357, train_loss-0.1991, train_rmse-0.4462, valid_rmse-1.2791, valid_pr-0.7345
+epoch-358, train_loss-0.1892, train_rmse-0.4349, valid_rmse-1.2840, valid_pr-0.7297
+epoch-359, train_loss-0.1608, train_rmse-0.4010, valid_rmse-1.2840, valid_pr-0.7335
+epoch-360, train_loss-0.1512, train_rmse-0.3889, valid_rmse-1.2834, valid_pr-0.7316
+epoch-361, train_loss-0.1449, train_rmse-0.3807, valid_rmse-1.2510, valid_pr-0.7395
+Validation : valid_rmse-1.2510, valid_pr-0.7395, 
+test2013_rmse-1.4192, test2013_pr-0.8022, test2016_rmse-1.2625, test2016_pr-0.8195, test2019_rmse-1.4818, test2019_pr-0.5833
+epoch-362, train_loss-0.1406, train_rmse-0.3750, valid_rmse-1.2518, valid_pr-0.7395
+epoch-363, train_loss-0.1430, train_rmse-0.3782, valid_rmse-1.2637, valid_pr-0.7381
+epoch-364, train_loss-0.1415, train_rmse-0.3761, valid_rmse-1.2537, valid_pr-0.7382
+epoch-365, train_loss-0.1442, train_rmse-0.3797, valid_rmse-1.2613, valid_pr-0.7345
+epoch-366, train_loss-0.1404, train_rmse-0.3747, valid_rmse-1.2617, valid_pr-0.7373
+epoch-367, train_loss-0.1394, train_rmse-0.3734, valid_rmse-1.2629, valid_pr-0.7335
+epoch-368, train_loss-0.1445, train_rmse-0.3801, valid_rmse-1.2607, valid_pr-0.7343
+epoch-369, train_loss-0.1374, train_rmse-0.3707, valid_rmse-1.2590, valid_pr-0.7345
+epoch-370, train_loss-0.1408, train_rmse-0.3752, valid_rmse-1.2804, valid_pr-0.7275
+epoch-371, train_loss-0.1384, train_rmse-0.3720, valid_rmse-1.2559, valid_pr-0.7399
+epoch-372, train_loss-0.1416, train_rmse-0.3763, valid_rmse-1.2807, valid_pr-0.7274
+epoch-373, train_loss-0.1452, train_rmse-0.3810, valid_rmse-1.2695, valid_pr-0.7330
+epoch-374, train_loss-0.1358, train_rmse-0.3686, valid_rmse-1.2625, valid_pr-0.7345
+epoch-375, train_loss-0.1443, train_rmse-0.3798, valid_rmse-1.2579, valid_pr-0.7369
+epoch-376, train_loss-0.1355, train_rmse-0.3681, valid_rmse-1.2555, valid_pr-0.7364
+epoch-377, train_loss-0.1356, train_rmse-0.3683, valid_rmse-1.2703, valid_pr-0.7300
+epoch-378, train_loss-0.1372, train_rmse-0.3704, valid_rmse-1.2648, valid_pr-0.7320
+epoch-379, train_loss-0.1326, train_rmse-0.3642, valid_rmse-1.2700, valid_pr-0.7303
+epoch-380, train_loss-0.1351, train_rmse-0.3676, valid_rmse-1.2617, valid_pr-0.7341
+epoch-381, train_loss-0.1359, train_rmse-0.3686, valid_rmse-1.2656, valid_pr-0.7318
+epoch-382, train_loss-0.1352, train_rmse-0.3677, valid_rmse-1.2497, valid_pr-0.7424
+Validation : valid_rmse-1.2497, valid_pr-0.7424, 
+test2013_rmse-1.3820, test2013_pr-0.8143, test2016_rmse-1.2437, test2016_pr-0.8227, test2019_rmse-1.4919, test2019_pr-0.5824
+epoch-383, train_loss-0.1390, train_rmse-0.3728, valid_rmse-1.2568, valid_pr-0.7378
+epoch-384, train_loss-0.1386, train_rmse-0.3723, valid_rmse-1.2814, valid_pr-0.7296
+epoch-385, train_loss-0.1393, train_rmse-0.3733, valid_rmse-1.2851, valid_pr-0.7266
+epoch-386, train_loss-0.1366, train_rmse-0.3695, valid_rmse-1.2687, valid_pr-0.7322
+epoch-387, train_loss-0.1357, train_rmse-0.3684, valid_rmse-1.2676, valid_pr-0.7314
+epoch-388, train_loss-0.1322, train_rmse-0.3636, valid_rmse-1.2635, valid_pr-0.7351
+epoch-389, train_loss-0.1310, train_rmse-0.3620, valid_rmse-1.2557, valid_pr-0.7389
+epoch-390, train_loss-0.1370, train_rmse-0.3702, valid_rmse-1.2685, valid_pr-0.7342
+epoch-391, train_loss-0.1401, train_rmse-0.3743, valid_rmse-1.2627, valid_pr-0.7342
+epoch-392, train_loss-0.1350, train_rmse-0.3674, valid_rmse-1.2605, valid_pr-0.7372
+epoch-393, train_loss-0.1420, train_rmse-0.3769, valid_rmse-1.2617, valid_pr-0.7347
+epoch-394, train_loss-0.1416, train_rmse-0.3764, valid_rmse-1.2477, valid_pr-0.7419
+Validation : valid_rmse-1.2477, valid_pr-0.7419, 
+test2013_rmse-1.4412, test2013_pr-0.7929, test2016_rmse-1.3041, test2016_pr-0.8067, test2019_rmse-1.4877, test2019_pr-0.5795
+epoch-395, train_loss-0.1334, train_rmse-0.3653, valid_rmse-1.2739, valid_pr-0.7317
+epoch-396, train_loss-0.1364, train_rmse-0.3694, valid_rmse-1.2881, valid_pr-0.7299
+epoch-397, train_loss-0.1306, train_rmse-0.3614, valid_rmse-1.2715, valid_pr-0.7331
+epoch-398, train_loss-0.1356, train_rmse-0.3682, valid_rmse-1.2634, valid_pr-0.7352
+epoch-399, train_loss-0.1351, train_rmse-0.3675, valid_rmse-1.2604, valid_pr-0.7341
+epoch-400, train_loss-0.1351, train_rmse-0.3676, valid_rmse-1.2638, valid_pr-0.7326
+epoch-401, train_loss-0.1311, train_rmse-0.3621, valid_rmse-1.2647, valid_pr-0.7344
+epoch-402, train_loss-0.1348, train_rmse-0.3672, valid_rmse-1.2764, valid_pr-0.7282
+epoch-403, train_loss-0.1298, train_rmse-0.3603, valid_rmse-1.2668, valid_pr-0.7327
+epoch-404, train_loss-0.1342, train_rmse-0.3663, valid_rmse-1.2685, valid_pr-0.7309
+epoch-405, train_loss-0.1285, train_rmse-0.3585, valid_rmse-1.2523, valid_pr-0.7386
+epoch-406, train_loss-0.1313, train_rmse-0.3624, valid_rmse-1.2751, valid_pr-0.7319
+epoch-407, train_loss-0.1308, train_rmse-0.3617, valid_rmse-1.2594, valid_pr-0.7342
+epoch-408, train_loss-0.1271, train_rmse-0.3565, valid_rmse-1.2723, valid_pr-0.7291
+epoch-409, train_loss-0.1298, train_rmse-0.3602, valid_rmse-1.2636, valid_pr-0.7374
+epoch-410, train_loss-0.1289, train_rmse-0.3590, valid_rmse-1.2869, valid_pr-0.7252
+epoch-411, train_loss-0.1309, train_rmse-0.3618, valid_rmse-1.2769, valid_pr-0.7326
+epoch-412, train_loss-0.1334, train_rmse-0.3652, valid_rmse-1.2653, valid_pr-0.7318
+epoch-413, train_loss-0.1291, train_rmse-0.3593, valid_rmse-1.2733, valid_pr-0.7300
+epoch-414, train_loss-0.1275, train_rmse-0.3571, valid_rmse-1.2747, valid_pr-0.7304
+epoch-415, train_loss-0.1267, train_rmse-0.3559, valid_rmse-1.2703, valid_pr-0.7311
+epoch-416, train_loss-0.1287, train_rmse-0.3588, valid_rmse-1.2703, valid_pr-0.7301
+epoch-417, train_loss-0.1381, train_rmse-0.3717, valid_rmse-1.2577, valid_pr-0.7374
+epoch-418, train_loss-0.1337, train_rmse-0.3657, valid_rmse-1.2749, valid_pr-0.7322
+epoch-419, train_loss-0.1300, train_rmse-0.3605, valid_rmse-1.2566, valid_pr-0.7364
+epoch-420, train_loss-0.1340, train_rmse-0.3661, valid_rmse-1.2695, valid_pr-0.7293
+epoch-421, train_loss-0.1266, train_rmse-0.3557, valid_rmse-1.2757, valid_pr-0.7284
+epoch-422, train_loss-0.1277, train_rmse-0.3573, valid_rmse-1.2708, valid_pr-0.7336
+epoch-423, train_loss-0.1254, train_rmse-0.3542, valid_rmse-1.2636, valid_pr-0.7325
+epoch-424, train_loss-0.1250, train_rmse-0.3535, valid_rmse-1.2594, valid_pr-0.7346
+epoch-425, train_loss-0.1321, train_rmse-0.3635, valid_rmse-1.2708, valid_pr-0.7287
+epoch-426, train_loss-0.1332, train_rmse-0.3649, valid_rmse-1.2819, valid_pr-0.7267
+epoch-427, train_loss-0.1315, train_rmse-0.3626, valid_rmse-1.2644, valid_pr-0.7327
+epoch-428, train_loss-0.1270, train_rmse-0.3564, valid_rmse-1.2753, valid_pr-0.7271
+epoch-429, train_loss-0.1266, train_rmse-0.3559, valid_rmse-1.2627, valid_pr-0.7342
+epoch-430, train_loss-0.1258, train_rmse-0.3547, valid_rmse-1.2625, valid_pr-0.7322
+epoch-431, train_loss-0.1247, train_rmse-0.3531, valid_rmse-1.2595, valid_pr-0.7379
+epoch-432, train_loss-0.1260, train_rmse-0.3549, valid_rmse-1.2750, valid_pr-0.7281
+epoch-433, train_loss-0.1313, train_rmse-0.3623, valid_rmse-1.2716, valid_pr-0.7299
+epoch-434, train_loss-0.1260, train_rmse-0.3550, valid_rmse-1.2640, valid_pr-0.7317
+epoch-435, train_loss-0.1256, train_rmse-0.3543, valid_rmse-1.3075, valid_pr-0.7324
+epoch-436, train_loss-0.1218, train_rmse-0.3489, valid_rmse-1.2633, valid_pr-0.7330
+epoch-437, train_loss-0.1240, train_rmse-0.3521, valid_rmse-1.2662, valid_pr-0.7322
+epoch-438, train_loss-0.1298, train_rmse-0.3603, valid_rmse-1.2586, valid_pr-0.7369
+epoch-439, train_loss-0.1233, train_rmse-0.3511, valid_rmse-1.2559, valid_pr-0.7361
+epoch-440, train_loss-0.1239, train_rmse-0.3519, valid_rmse-1.2669, valid_pr-0.7311
+epoch-441, train_loss-0.1263, train_rmse-0.3554, valid_rmse-1.2805, valid_pr-0.7338
+epoch-442, train_loss-0.1223, train_rmse-0.3497, valid_rmse-1.2666, valid_pr-0.7341
+epoch-443, train_loss-0.1297, train_rmse-0.3601, valid_rmse-1.2567, valid_pr-0.7373
+epoch-444, train_loss-0.1270, train_rmse-0.3564, valid_rmse-1.2746, valid_pr-0.7329
+epoch-445, train_loss-0.1234, train_rmse-0.3513, valid_rmse-1.2737, valid_pr-0.7280
+epoch-446, train_loss-0.1124, train_rmse-0.3352, valid_rmse-1.2545, valid_pr-0.7378
+epoch-447, train_loss-0.1020, train_rmse-0.3193, valid_rmse-1.2468, valid_pr-0.7396
+Validation : valid_rmse-1.2468, valid_pr-0.7396, 
+test2013_rmse-1.4069, test2013_pr-0.8101, test2016_rmse-1.2732, test2016_pr-0.8173, test2019_rmse-1.4594, test2019_pr-0.5907
+epoch-448, train_loss-0.1045, train_rmse-0.3233, valid_rmse-1.2515, valid_pr-0.7385
+epoch-449, train_loss-0.1003, train_rmse-0.3166, valid_rmse-1.2528, valid_pr-0.7374
+epoch-450, train_loss-0.1028, train_rmse-0.3206, valid_rmse-1.2517, valid_pr-0.7388
+epoch-451, train_loss-0.1016, train_rmse-0.3187, valid_rmse-1.2494, valid_pr-0.7388
+epoch-452, train_loss-0.0999, train_rmse-0.3161, valid_rmse-1.2581, valid_pr-0.7380
+epoch-453, train_loss-0.1064, train_rmse-0.3262, valid_rmse-1.2653, valid_pr-0.7365
+epoch-454, train_loss-0.1047, train_rmse-0.3235, valid_rmse-1.2586, valid_pr-0.7350
+epoch-455, train_loss-0.1002, train_rmse-0.3165, valid_rmse-1.2523, valid_pr-0.7379
+epoch-456, train_loss-0.0998, train_rmse-0.3159, valid_rmse-1.2592, valid_pr-0.7348
+epoch-457, train_loss-0.0986, train_rmse-0.3139, valid_rmse-1.2551, valid_pr-0.7374
+epoch-458, train_loss-0.0950, train_rmse-0.3082, valid_rmse-1.2621, valid_pr-0.7350
+epoch-459, train_loss-0.0933, train_rmse-0.3054, valid_rmse-1.2618, valid_pr-0.7335
+epoch-460, train_loss-0.0968, train_rmse-0.3111, valid_rmse-1.2623, valid_pr-0.7354
+epoch-461, train_loss-0.1003, train_rmse-0.3167, valid_rmse-1.2641, valid_pr-0.7335
+epoch-462, train_loss-0.1028, train_rmse-0.3207, valid_rmse-1.2640, valid_pr-0.7337
+epoch-463, train_loss-0.0993, train_rmse-0.3151, valid_rmse-1.2549, valid_pr-0.7364
+epoch-464, train_loss-0.0973, train_rmse-0.3120, valid_rmse-1.2651, valid_pr-0.7354
+epoch-465, train_loss-0.1004, train_rmse-0.3169, valid_rmse-1.2586, valid_pr-0.7386
+epoch-466, train_loss-0.1001, train_rmse-0.3163, valid_rmse-1.2578, valid_pr-0.7368
+epoch-467, train_loss-0.0969, train_rmse-0.3113, valid_rmse-1.2555, valid_pr-0.7365
+epoch-468, train_loss-0.1012, train_rmse-0.3181, valid_rmse-1.2557, valid_pr-0.7374
+epoch-469, train_loss-0.0992, train_rmse-0.3150, valid_rmse-1.2587, valid_pr-0.7355
+epoch-470, train_loss-0.0966, train_rmse-0.3108, valid_rmse-1.2548, valid_pr-0.7367
+epoch-471, train_loss-0.0980, train_rmse-0.3131, valid_rmse-1.2544, valid_pr-0.7368
+epoch-472, train_loss-0.1016, train_rmse-0.3187, valid_rmse-1.2550, valid_pr-0.7360
+epoch-473, train_loss-0.1096, train_rmse-0.3311, valid_rmse-1.2618, valid_pr-0.7362
+epoch-474, train_loss-0.0992, train_rmse-0.3149, valid_rmse-1.2538, valid_pr-0.7380
+epoch-475, train_loss-0.1006, train_rmse-0.3172, valid_rmse-1.2500, valid_pr-0.7390
+epoch-476, train_loss-0.0981, train_rmse-0.3132, valid_rmse-1.2532, valid_pr-0.7369
+epoch-477, train_loss-0.0948, train_rmse-0.3079, valid_rmse-1.2552, valid_pr-0.7361
+epoch-478, train_loss-0.0959, train_rmse-0.3097, valid_rmse-1.2543, valid_pr-0.7371
+epoch-479, train_loss-0.0956, train_rmse-0.3092, valid_rmse-1.2603, valid_pr-0.7338
+epoch-480, train_loss-0.0983, train_rmse-0.3135, valid_rmse-1.2743, valid_pr-0.7309
+epoch-481, train_loss-0.0977, train_rmse-0.3126, valid_rmse-1.2591, valid_pr-0.7347
+epoch-482, train_loss-0.0974, train_rmse-0.3120, valid_rmse-1.2531, valid_pr-0.7377
+epoch-483, train_loss-0.0984, train_rmse-0.3137, valid_rmse-1.2505, valid_pr-0.7387
+epoch-484, train_loss-0.0983, train_rmse-0.3135, valid_rmse-1.2646, valid_pr-0.7344
+epoch-485, train_loss-0.0965, train_rmse-0.3107, valid_rmse-1.2640, valid_pr-0.7335
+epoch-486, train_loss-0.0964, train_rmse-0.3105, valid_rmse-1.2613, valid_pr-0.7384
+epoch-487, train_loss-0.0956, train_rmse-0.3092, valid_rmse-1.2713, valid_pr-0.7345
+epoch-488, train_loss-0.0983, train_rmse-0.3135, valid_rmse-1.2606, valid_pr-0.7342
+epoch-489, train_loss-0.0990, train_rmse-0.3146, valid_rmse-1.2638, valid_pr-0.7323
+epoch-490, train_loss-0.1014, train_rmse-0.3184, valid_rmse-1.2622, valid_pr-0.7337
+epoch-491, train_loss-0.0970, train_rmse-0.3114, valid_rmse-1.2514, valid_pr-0.7377
+epoch-492, train_loss-0.0935, train_rmse-0.3059, valid_rmse-1.2565, valid_pr-0.7363
+epoch-493, train_loss-0.0972, train_rmse-0.3118, valid_rmse-1.2544, valid_pr-0.7363
+epoch-494, train_loss-0.0949, train_rmse-0.3081, valid_rmse-1.2635, valid_pr-0.7331
+epoch-495, train_loss-0.0975, train_rmse-0.3123, valid_rmse-1.2611, valid_pr-0.7362
+epoch-496, train_loss-0.1004, train_rmse-0.3168, valid_rmse-1.2559, valid_pr-0.7381
+epoch-497, train_loss-0.0991, train_rmse-0.3148, valid_rmse-1.2556, valid_pr-0.7372
+epoch-498, train_loss-0.0978, train_rmse-0.3128, valid_rmse-1.2619, valid_pr-0.7337
+epoch-499, train_loss-0.0911, train_rmse-0.3018, valid_rmse-1.2566, valid_pr-0.7359
+epoch-500, train_loss-0.0864, train_rmse-0.2940, valid_rmse-1.2546, valid_pr-0.7373
+epoch-501, train_loss-0.0861, train_rmse-0.2934, valid_rmse-1.2572, valid_pr-0.7380
+epoch-502, train_loss-0.0867, train_rmse-0.2945, valid_rmse-1.2553, valid_pr-0.7359
+epoch-503, train_loss-0.0856, train_rmse-0.2926, valid_rmse-1.2536, valid_pr-0.7371
+epoch-504, train_loss-0.0865, train_rmse-0.2941, valid_rmse-1.2546, valid_pr-0.7368
+epoch-505, train_loss-0.0884, train_rmse-0.2973, valid_rmse-1.2591, valid_pr-0.7363
+epoch-506, train_loss-0.0858, train_rmse-0.2930, valid_rmse-1.2573, valid_pr-0.7357
+epoch-507, train_loss-0.0885, train_rmse-0.2975, valid_rmse-1.2541, valid_pr-0.7369
+epoch-508, train_loss-0.0856, train_rmse-0.2925, valid_rmse-1.2589, valid_pr-0.7350
+epoch-509, train_loss-0.0887, train_rmse-0.2979, valid_rmse-1.2579, valid_pr-0.7359
+epoch-510, train_loss-0.0843, train_rmse-0.2904, valid_rmse-1.2608, valid_pr-0.7356
+epoch-511, train_loss-0.0871, train_rmse-0.2952, valid_rmse-1.2563, valid_pr-0.7361
+epoch-512, train_loss-0.0841, train_rmse-0.2900, valid_rmse-1.2549, valid_pr-0.7373
+epoch-513, train_loss-0.0878, train_rmse-0.2963, valid_rmse-1.2602, valid_pr-0.7343
+epoch-514, train_loss-0.0848, train_rmse-0.2912, valid_rmse-1.2619, valid_pr-0.7349
+epoch-515, train_loss-0.0853, train_rmse-0.2920, valid_rmse-1.2584, valid_pr-0.7356
+epoch-516, train_loss-0.0896, train_rmse-0.2993, valid_rmse-1.2599, valid_pr-0.7348
+epoch-517, train_loss-0.0848, train_rmse-0.2911, valid_rmse-1.2560, valid_pr-0.7368
+epoch-518, train_loss-0.0848, train_rmse-0.2912, valid_rmse-1.2540, valid_pr-0.7373
+epoch-519, train_loss-0.0902, train_rmse-0.3003, valid_rmse-1.2551, valid_pr-0.7360
+epoch-520, train_loss-0.0834, train_rmse-0.2889, valid_rmse-1.2522, valid_pr-0.7376
+epoch-521, train_loss-0.0859, train_rmse-0.2931, valid_rmse-1.2603, valid_pr-0.7366
+epoch-522, train_loss-0.0840, train_rmse-0.2898, valid_rmse-1.2565, valid_pr-0.7359
+epoch-523, train_loss-0.0843, train_rmse-0.2904, valid_rmse-1.2509, valid_pr-0.7386
+epoch-524, train_loss-0.0864, train_rmse-0.2940, valid_rmse-1.2483, valid_pr-0.7397
+epoch-525, train_loss-0.0838, train_rmse-0.2895, valid_rmse-1.2585, valid_pr-0.7352
+epoch-526, train_loss-0.0866, train_rmse-0.2943, valid_rmse-1.2566, valid_pr-0.7367
+epoch-527, train_loss-0.0828, train_rmse-0.2878, valid_rmse-1.2565, valid_pr-0.7372
+epoch-528, train_loss-0.0852, train_rmse-0.2919, valid_rmse-1.2589, valid_pr-0.7357
+epoch-529, train_loss-0.0858, train_rmse-0.2929, valid_rmse-1.2591, valid_pr-0.7360
+epoch-530, train_loss-0.0855, train_rmse-0.2924, valid_rmse-1.2561, valid_pr-0.7371
+epoch-531, train_loss-0.0848, train_rmse-0.2911, valid_rmse-1.2556, valid_pr-0.7371
+epoch-532, train_loss-0.0836, train_rmse-0.2891, valid_rmse-1.2517, valid_pr-0.7383
+epoch-533, train_loss-0.0856, train_rmse-0.2926, valid_rmse-1.2519, valid_pr-0.7399
+epoch-534, train_loss-0.0865, train_rmse-0.2941, valid_rmse-1.2576, valid_pr-0.7357
+epoch-535, train_loss-0.0843, train_rmse-0.2903, valid_rmse-1.2517, valid_pr-0.7379
+epoch-536, train_loss-0.0845, train_rmse-0.2906, valid_rmse-1.2526, valid_pr-0.7388
+epoch-537, train_loss-0.0820, train_rmse-0.2864, valid_rmse-1.2522, valid_pr-0.7393
+epoch-538, train_loss-0.0825, train_rmse-0.2872, valid_rmse-1.2529, valid_pr-0.7377
+epoch-539, train_loss-0.0845, train_rmse-0.2906, valid_rmse-1.2613, valid_pr-0.7355
+epoch-540, train_loss-0.0827, train_rmse-0.2876, valid_rmse-1.2548, valid_pr-0.7367
+epoch-541, train_loss-0.0831, train_rmse-0.2883, valid_rmse-1.2571, valid_pr-0.7368
+epoch-542, train_loss-0.0848, train_rmse-0.2911, valid_rmse-1.2599, valid_pr-0.7347
+epoch-543, train_loss-0.0850, train_rmse-0.2915, valid_rmse-1.2598, valid_pr-0.7344
+epoch-544, train_loss-0.0841, train_rmse-0.2900, valid_rmse-1.2568, valid_pr-0.7361
+epoch-545, train_loss-0.0860, train_rmse-0.2932, valid_rmse-1.2616, valid_pr-0.7336
+epoch-546, train_loss-0.0835, train_rmse-0.2889, valid_rmse-1.2587, valid_pr-0.7356
+epoch-547, train_loss-0.0816, train_rmse-0.2857, valid_rmse-1.2562, valid_pr-0.7359
+epoch-548, train_loss-0.0847, train_rmse-0.2911, valid_rmse-1.2578, valid_pr-0.7365
+early stop in epoch 548
+best_rmse: 1.2468
+valid_rmse-1.2468, valid_pr-0.7396, test2013_rmse-1.4069, test2013_pr-0.8101, test2016_rmse-1.2732, test2016_pr-0.8173, test2019_rmse-1.4594, test2019_pr-0.5907

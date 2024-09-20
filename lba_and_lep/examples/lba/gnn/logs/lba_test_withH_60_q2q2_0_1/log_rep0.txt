@@ -1,0 +1,8 @@
+seed: 854
+GIGN params # : 1390215
+Best model saved at epoch 1 with val rmse: 1.9249398
+Epoch: 001, Train RMSE: 3.2208330, Val RMSE: 1.9249398, Pearson R: 0.5125681, Spearman R: 0.5344712
+Best model saved at epoch 2 with val rmse: 1.6634866
+Epoch: 002, Train RMSE: 1.8095135, Val RMSE: 1.6634866, Pearson R: 0.5881973, Spearman R: 0.5855338
+Best model saved at epoch 3 with val rmse: 1.6113100
+Epoch: 003, Train RMSE: 1.6771717, Val RMSE: 1.6113100, Pearson R: 0.5876381, Spearman R: 0.6016732

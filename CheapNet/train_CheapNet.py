@@ -14,10 +14,8 @@ import numpy as np
 from utils import *
 from sklearn.metrics import mean_squared_error
 from CheapNet import scheduler_bool, lr, explain, num_clusters, only_rep
-from cosine_annealing_warmup import CosineAnnealingWarmupRestarts
 # from torch.utils.tensorboard import SummaryWriter
 # os.environ["CUDA_VISIBLE_DEVICES"] = "0"
-from fvcore.nn import FlopCountAnalysis
 
 def val(model, dataloader, device):
     model.eval()
@@ -62,11 +60,12 @@ if __name__ == '__main__':
 
         
     for rep in range(10):
-        seed_always = [418, 714, 444, 598]
+        seed_always = [191, 191, 191]
+        # seed_always = [418, 714, 444, 598]
         seed_random = []
         l = [i for i in range(1000) if i not in seed_always]
-        # for repeat, seed in enumerate(seed_always + list(np.random.choice(seed_random, size=3-len(seed_always), replace=False))):
-        for repeat, seed in enumerate(np.random.choice(l, size=3, replace=False)):
+        for repeat, seed in enumerate(seed_always + list(np.random.choice(seed_random, size=3-len(seed_always), replace=False))):
+        # for repeat, seed in enumerate(np.random.choice(l, size=3, replace=False)):
         # for repeat, seed in enumerate(np.random.randint(0, 1000, size=3)):
             if only_rep is not None and repeat not in only_rep:
                 continue
@@ -100,8 +99,8 @@ if __name__ == '__main__':
 
             train_loader = PLIDataLoader(train_set, batch_size=batch_size, shuffle=True, num_workers=4)
             valid_loader = PLIDataLoader(valid_set, batch_size=batch_size, shuffle=False, num_workers=4)
-            test2016_loader = PLIDataLoader(test2016_set, batch_size=batch_size, shuffle=False, num_workers=4)
             test2013_loader = PLIDataLoader(test2013_set, batch_size=batch_size, shuffle=False, num_workers=4)
+            test2016_loader = PLIDataLoader(test2016_set, batch_size=batch_size, shuffle=False, num_workers=4)
             test2019_loader = PLIDataLoader(test2019_set, batch_size=batch_size, shuffle=False, num_workers=4)
 
             logger = TrainLogger(args, cfg, save_dir, create=True)

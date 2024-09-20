@@ -13,7 +13,6 @@ from model import GIGN, explain
 from data import GNNTransformLBA
 from atom3d.datasets import LMDBDataset, PTGDataset
 from scipy.stats import spearmanr
-from cosine_annealing_warmup import CosineAnnealingWarmupRestarts
 import warnings
 os.environ['CUDA_LAUNCH_BLOCKING'] = "1"
 warnings.filterwarnings("ignore")
@@ -158,7 +157,6 @@ def train(args, device, log_dir, rep=None, test_mode=False):
     optimizer = torch.optim.Adam(model.parameters(), lr=args.learning_rate, weight_decay=1e-6)
     if args.use_scheduler:
         scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.5, patience=50, verbose=True)
-        # scheduler = CosineAnnealingWarmupRestarts(optimizer, first_cycle_steps=args.first_cycle_steps, cycle_mult=1, max_lr=args.learning_rate, min_lr=0, warmup_steps=args.warmup_steps, gamma=0.9)
     else:
         scheduler = None
     count = 0
@@ -240,8 +238,6 @@ if __name__=="__main__":
     parser.add_argument('--early_stop_patience', type=int, default=100)
     parser.add_argument('--GPU_NUM', type=int, default=None)
     parser.add_argument('--use_scheduler', type=int, default=1)
-    parser.add_argument('--warmup_steps', type=int, default=5)
-    parser.add_argument('--first_cycle_steps', type=int, default=50)
     parser.add_argument('--seed_set', type=int, default=0)
     parser.add_argument('--rep', type=int, default=None)
     args = parser.parse_args()
@@ -272,7 +268,7 @@ if __name__=="__main__":
                     seed_always = [370, 679, 261]
                 elif args.seqid == 60:
                     seed_random = []
-                    seed_always = [898, 261, 230]
+                    seed_always = [437, 245, 927]
                 iter_list = seed_always + list(np.random.choice(seed_random, size=3-len(seed_always), replace=False))
             else:
                 iter_list = np.random.randint(0, 1000, size=3)

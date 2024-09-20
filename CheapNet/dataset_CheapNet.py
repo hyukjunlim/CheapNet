@@ -175,8 +175,8 @@ class GraphDataset(Dataset):
 
 if __name__ == '__main__':
     data_root = './data'
-    toy_dir = os.path.join(data_root, 'csar')
-    toy_df = pd.read_csv(os.path.join(data_root, "csar.csv"))
+    toy_dir = os.path.join(data_root, 'casestudy')
+    toy_df = pd.read_csv(os.path.join(data_root, "casestudy.csv"))
     toy_set = GraphDataset(toy_dir, toy_df, graph_type='Graph_GIGN', dis_threshold=5, create=True)
     train_loader = PLIDataLoader(toy_set, batch_size=128, shuffle=True, num_workers=4)
 
