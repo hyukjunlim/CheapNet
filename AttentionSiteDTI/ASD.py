@@ -14,10 +14,10 @@ import os
     
 def gnn_norm(x, norm):
 
-    num_nodes, num_channels = x.size()
+    batch_size, num_nodes, num_channels = x.size()
     x = x.view(-1, num_channels)
     x = norm(x)
-    x = x.view(num_nodes, num_channels)
+    x = x.view(batch_size, num_nodes, num_channels)
 
     return x
 
@@ -136,36 +136,35 @@ class AttentionBlock(nn.Module):
         return x, attention
 
     
-class ASD(nn.Module):
+class CheapNetASD(nn.Module):
 
     def __init__(self, node_dim, hidden_dim):
-        super(ASD, self).__init__()
+        super(CheapNetASD, self).__init__()
 
-        self.protein_graph_conv = nn.ModuleList()
-        for _ in range(5):
-            self.protein_graph_conv.append(GCNConv(node_dim, node_dim))
-
-        self.ligand_graph_conv = nn.ModuleList()
-        for _ in range(5):
-            self.ligand_graph_conv.append(GCNConv(node_dim, node_dim))
+        self.conv1 = GCNConv(node_dim, hidden_dim)
+        self.bn1 = nn.BatchNorm1d(hidden_dim)
+        self.conv2 = GCNConv(hidden_dim, hidden_dim*2)
+        self.bn2 = nn.BatchNorm1d(hidden_dim*2)
+        self.conv3 = GCNConv(hidden_dim*2, hidden_dim*4)
+        self.bn3 = nn.BatchNorm1d(hidden_dim*4)
+        self.conv4 = GCNConv(hidden_dim*4, hidden_dim*2)
+        self.bn4 = nn.BatchNorm1d(hidden_dim*2)
+        self.conv5 = GCNConv(hidden_dim*2, node_dim)
+        self.bn5 = nn.BatchNorm1d(node_dim)
 
         self.dropout = 0.2
 
         self.bilstm = nn.LSTM(node_dim, node_dim, num_layers=1, bidirectional=True, dropout=self.dropout)
 
-        self.fc_in = nn.Sequential(
-            nn.Linear(9800, 4340),
-            nn.BatchNorm1d(4340),
-            nn.Mish(),
-        )
+        self.fc_in = nn.Linear(9800, 4340)
 
         self.fc_out = nn.Linear(4340, 1)
         self.attention = MultiHeadAttention(node_dim * 2, node_dim * 2)
 
-        self.diffpool1 = DiffPool(hidden_dim, hidden_dim, 600, num_clusters[0], "intra_lig", 0.1)
-        self.diffpool2 = DiffPool(hidden_dim, hidden_dim, 600, num_clusters[1], "intra_pro", 0.1)
-        self.attblock1 = AttentionBlock(hidden_dim, 1, 0.1)
-        self.attblock2 = AttentionBlock(hidden_dim, 1, 0.1)
+        self.diffpool1 = DiffPool(node_dim, node_dim, 600, num_clusters[0], "intra_lig", 0.1)
+        self.diffpool2 = DiffPool(node_dim, node_dim, 600, num_clusters[1], "intra_pro", 0.1)
+        self.attblock1 = AttentionBlock(node_dim, 1, 0.1)
+        self.attblock2 = AttentionBlock(node_dim, 1, 0.1)
         self.max_num = 600
 
     def make_edge_index(self, data):
@@ -177,21 +176,25 @@ class ASD(nn.Module):
         
         x = data.x
         self.make_edge_index(data)
+        edge_index = torch.cat([data.edge_index_intra, data.edge_index_inter], dim=1)
 
-        for i in range(len(self.protein_graph_conv)):
-            if i == 0:
-                feature_protein = F.relu(self.protein_graph_conv[i](x, data.edge_index_intra_pro))
-            else:
-                feature_protein = F.relu(self.protein_graph_conv[i](feature_protein, data.edge_index_intra_pro))
+        x = self.conv1(x, edge_index)
+        x = F.relu(x)
+        x = self.bn1(x)
+        x = self.conv2(x, edge_index)
+        x = F.relu(x)
+        x = self.bn2(x)
+        x = self.conv3(x, edge_index)
+        x = F.relu(x)
+        x = self.bn3(x)
+        x = self.conv4(x, edge_index)
+        x = self.bn4(x)
+        x = F.relu(x)
+        x = self.conv5(x, edge_index)
+        x = self.bn5(x)
 
-        for i in range(len(self.ligand_graph_conv)):
-            if i == 0:
-                feature_smile = F.relu(self.ligand_graph_conv[i](x, data.edge_index_intra_lig))
-            else:
-                feature_smile = F.relu(self.ligand_graph_conv[i](feature_smile, data.edge_index_intra_lig))
-        
-        x_lig, _ = self.diffpool1(feature_protein, data)
-        x_pro, _  = self.diffpool2(feature_smile, data)
+        x_lig, _ = self.diffpool1(x, data)
+        x_pro, _  = self.diffpool2(x, data)
         ligand_rep, _ = self.attblock1(x_lig, x_pro, x_pro)
         protein_rep, _ = self.attblock2(x_pro, x_lig, x_lig)
 
@@ -219,20 +222,103 @@ class ASD(nn.Module):
         out = self.attention(output, mask=mask)
         
         # Flatten and fully connected layer
-        out = self.fc_in(out.view(batch_size, -1))
+        out = F.relu(self.fc_in(out.view(batch_size, -1)))
 
         # Output layer
         out = self.fc_out(out)
         
         return out.view(-1)
 
+class ASD(nn.Module):
+
+    def __init__(self, node_dim, hidden_dim):
+        super(ASD, self).__init__()
+
+        self.conv1 = GCNConv(node_dim, hidden_dim)
+        self.bn1 = nn.BatchNorm1d(hidden_dim)
+        self.conv2 = GCNConv(hidden_dim, hidden_dim*2)
+        self.bn2 = nn.BatchNorm1d(hidden_dim*2)
+        self.conv3 = GCNConv(hidden_dim*2, hidden_dim*4)
+        self.bn3 = nn.BatchNorm1d(hidden_dim*4)
+        self.conv4 = GCNConv(hidden_dim*4, hidden_dim*2)
+        self.bn4 = nn.BatchNorm1d(hidden_dim*2)
+        self.conv5 = GCNConv(hidden_dim*2, node_dim)
+        self.bn5 = nn.BatchNorm1d(node_dim)
+
+        self.dropout = 0.2
+
+        self.bilstm = nn.LSTM(node_dim, node_dim, num_layers=1, bidirectional=True, dropout=self.dropout)
+
+        self.fc_in = nn.Linear(9800, 4340)
+
+        self.fc_out = nn.Linear(4340, 1)
+        self.attention = MultiHeadAttention(node_dim * 2, node_dim * 2)
+
+    def make_edge_index(self, data):
+
+        data.edge_index_intra_lig = data.edge_index_intra[:, data.split[data.edge_index_intra[0, :]] == 0]
+        data.edge_index_intra_pro = data.edge_index_intra[:, data.split[data.edge_index_intra[0, :]] == 1]
+
+    def forward(self, data):
+        
+        x = data.x
+        self.make_edge_index(data)
+        edge_index = torch.cat([data.edge_index_intra, data.edge_index_inter], dim=1)
+
+        x = self.conv1(x, edge_index)
+        x = F.relu(x)
+        x = self.bn1(x)
+        x = self.conv2(x, edge_index)
+        x = F.relu(x)
+        x = self.bn2(x)
+        x = self.conv3(x, edge_index)
+        x = F.relu(x)
+        x = self.bn3(x)
+        x = self.conv4(x, edge_index)
+        x = self.bn4(x)
+        x = F.relu(x)
+        x = self.conv5(x, edge_index)
+        x = self.bn5(x)
+
+        protein_rep = global_add_pool(x[data.split == 1], data.batch[data.split == 1])
+        ligand_rep = global_add_pool(x[data.split == 0], data.batch[data.split == 0])
+
+        batch_size = protein_rep.size(0)
+        sequence = torch.cat((ligand_rep, protein_rep), dim=1).view(batch_size, -1, 35)
+        
+        mask = torch.eye(140, dtype=torch.uint8).unsqueeze(0).repeat(batch_size, 1, 1).cuda()
+        mask[:, sequence.size()[1]:140, :] = 0
+        mask[:, :, sequence.size()[1]:140] = 0
+        mask[:, :, sequence.size()[1] - 1] = 1
+        mask[:, sequence.size()[1] - 1, :] = 1
+        mask[:,  sequence.size()[1] - 1,  sequence.size()[1] - 1] = 0
+        sequence = F.pad(input=sequence, pad=(0, 0, 0, 140 - sequence.size()[1]), mode='constant', value=0)
+        sequence = sequence.permute(1, 0, 2)
+        
+        h_0 = Variable(torch.zeros(2, batch_size, 35).cuda())
+        c_0 = Variable(torch.zeros(2, batch_size, 35).cuda())
+
+        output, _ = self.bilstm(sequence, (h_0, c_0))
+        output = output.permute(1, 0, 2)
+
+        out = self.attention(output, mask=mask)
+        
+        # Flatten and fully connected layer
+        out = F.relu(self.fc_in(out.view(batch_size, -1)))
+
+        # Output layer
+        out = self.fc_out(out)
+        
+        return out.view(-1)
+    
 
 scheduler_bool = True
 lr = 1e-3
 explain = 'ASD'
 num_clusters = [28, 156]
 only_rep = [0, 1, 2]
-os.environ["CUDA_VISIBLE_DEVICES"] = "1"
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+# os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 
 
 

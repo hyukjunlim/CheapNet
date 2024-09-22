@@ -7,7 +7,7 @@
         "graph_type" : "Graph_GIGN",
         "repeat" : 3,
         "fold" : 0,
-        "epochs" : 800,
+        "epochs" : 5,
         "batch_size" : 128,
         "early_stop_epoch" : 100,
         "save_model": true, 

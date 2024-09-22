@@ -124,8 +124,8 @@ for red_node in [1]:
             new_row = {
                 'Model': md.split('/')[2] + " | " + md[-1],
                 'casf2016 RMSE': casf2016_rmse,
-                'casf2016 R': csar_coff,
-                'casf2016 Spea': csar_spea,
+                'casf2016 R': casf2016_coff,
+                'casf2016 Spea': casf2016_spea,
             }
 
             # new_row = {

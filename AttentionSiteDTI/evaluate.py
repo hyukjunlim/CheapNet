@@ -3,8 +3,8 @@ import pandas as pd
 from collections import defaultdict
 from glob import glob
 
-path = 'model'
-# path = 'save/g-d-c/q2q2'
+# path = 'model'
+path = 'save'
 
 # Get all subdirectories in the path directory
 model_directories = [d for d in os.listdir(path) if os.path.isdir(os.path.join(path, d))]

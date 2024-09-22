@@ -6,7 +6,7 @@ import torch.optim as optim
 import pandas as pd
 import random
 from utils import AverageMeter
-from ASD import ASD
+from ASD import ASD, CheapNetASD
 from dataset_ASD import GraphDataset, PLIDataLoader
 from config.config_dict import Config
 from log.train_logger import TrainLogger
@@ -112,7 +112,8 @@ if __name__ == '__main__':
 
             device = "cuda" if torch.cuda.is_available() else "cpu"
             
-            model = ASD(35, 256)
+            # model = CheapNetASD(35, 64)
+            model = ASD(35, 64)
             model.cuda()
             logger.info(f"GIGN params # : {sum(p.numel() for p in model.parameters() if p.requires_grad)}")
             optimizer = optim.Adam(model.parameters(), lr=lr, weight_decay=1e-6)

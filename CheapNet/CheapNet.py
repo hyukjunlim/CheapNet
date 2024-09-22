@@ -259,8 +259,8 @@ num_clusters = [q_lig[q_i_lig], q_pro[q_i_pro]]
 
 scheduler_bool = True
 lr = 10e-4
-# x = 0
-x = 1
+x = 0
+# x = 1
 os.environ["CUDA_VISIBLE_DEVICES"] = f'{x}'
 explain = f"ours-lrs-{lr}-{num_clusters[0]}-{num_clusters[1]}-{x}"
 only_rep = [0, 1, 2]
