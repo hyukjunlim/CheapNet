@@ -301,3 +301,4 @@ Epoch: 277, Train RMSE: 0.3552218, Val RMSE: 1.2229721, Pearson R: 0.7746767, Sp
 Epoch: 278, Train RMSE: 0.3667639, Val RMSE: 1.2387584, Pearson R: 0.7740980, Spearman R: 0.7861022
 Epoch: 279, Train RMSE: 0.3637165, Val RMSE: 1.2398919, Pearson R: 0.7728501, Spearman R: 0.7832766
 Epoch: 280, Train RMSE: 0.3646059, Val RMSE: 1.2381198, Pearson R: 0.7709883, Spearman R: 0.7842045
+Epoch: 281, Train RMSE: 0.3448232, Val RMSE: 1.2367006, Pearson R: 0.7687775, Spearman R: 0.7826585
