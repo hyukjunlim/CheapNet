@@ -112,8 +112,8 @@ if __name__ == '__main__':
 
             device = "cuda" if torch.cuda.is_available() else "cpu"
             
-            # model = CheapNetASD(35, 64)
-            model = ASD(35, 64)
+            model = CheapNetASD(35, 64)
+            # model = ASD(35, 64)
             model.cuda()
             logger.info(f"GIGN params # : {sum(p.numel() for p in model.parameters() if p.requires_grad)}")
             optimizer = optim.Adam(model.parameters(), lr=lr, weight_decay=1e-6)

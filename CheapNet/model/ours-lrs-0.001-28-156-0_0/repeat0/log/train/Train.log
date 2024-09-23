@@ -96,3 +96,85 @@ epoch-2, train_loss-2.4815, train_rmse-1.5753, valid_rmse-1.6796, valid_pr-0.553
 epoch-3, train_loss-2.2302, train_rmse-1.4934, valid_rmse-1.4757, valid_pr-0.6258
 epoch-4, train_loss-2.0483, train_rmse-1.4312, valid_rmse-1.4453, valid_pr-0.6394
 valid_rmse-1.4453, valid_pr-0.6394, test2013_rmse-1.4209, test2013_pr-0.8042, test2016_rmse-1.3916, test2016_pr-0.7741, test2019_rmse-1.4228, test2019_pr-0.6321
+ours-lrs-0.001-28-156-0, lr=0.001, seed=191
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+GIGN params # : 1331241
+ours-lrs-0.001-28-156-0, lr=0.001, seed=191
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+ours-lrs-0.001-28-156-0, lr=0.001, seed=191
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+GIGN params # : 1331241
+ours-lrs-0.001-28-156-0, lr=0.001, seed=191
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+ours-lrs-0.001-28-156-0, lr=0.001, seed=191
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+ours-lrs-0.001-28-156-0, lr=0.001, seed=191
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+GIGN params # : 1331241
+ours-lrs-0.001-28-156-0, lr=0.001, seed=191
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+GIGN params # : 1331241
+epoch-0, train_loss-15.9579, train_rmse-3.9947, valid_rmse-1.6409, valid_pr-0.5536
+ours-lrs-0.001-28-156-0, lr=0.001, seed=191
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+ours-lrs-0.001-28-156-0, lr=0.001, seed=191
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+ours-lrs-0.001-28-156-0, lr=0.001, seed=191
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+ours-lrs-0.001-28-156-0, lr=0.001, seed=191
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366

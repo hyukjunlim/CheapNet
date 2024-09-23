@@ -161,10 +161,10 @@ class CheapNetASD(nn.Module):
         self.fc_out = nn.Linear(4340, 1)
         self.attention = MultiHeadAttention(node_dim * 2, node_dim * 2)
 
-        self.diffpool1 = DiffPool(node_dim, node_dim, 600, num_clusters[0], "intra_lig", 0.1)
-        self.diffpool2 = DiffPool(node_dim, node_dim, 600, num_clusters[1], "intra_pro", 0.1)
-        self.attblock1 = AttentionBlock(node_dim, 1, 0.1)
-        self.attblock2 = AttentionBlock(node_dim, 1, 0.1)
+        self.diffpool1 = DiffPool(node_dim, node_dim, 600, num_clusters[0], "intra_lig", 0.2)
+        self.diffpool2 = DiffPool(node_dim, node_dim, 600, num_clusters[1], "intra_pro", 0.2)
+        self.attblock1 = AttentionBlock(node_dim, 1, 0.2)
+        self.attblock2 = AttentionBlock(node_dim, 1, 0.2)
         self.max_num = 600
 
     def make_edge_index(self, data):
@@ -314,7 +314,8 @@ class ASD(nn.Module):
 
 scheduler_bool = True
 lr = 1e-3
-explain = 'ASD'
+explain = 'CheapNet-ASD'
+# explain = 'ASD'
 num_clusters = [28, 156]
 only_rep = [0, 1, 2]
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
