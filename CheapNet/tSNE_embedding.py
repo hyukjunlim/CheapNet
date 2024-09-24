@@ -1,0 +1,348 @@
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+import matplotlib.pyplot as plt
+import networkx as nx
+from CheapNet import CheapNet
+from dataset_CheapNet import GraphDataset, PLIDataLoader
+import numpy as np
+import pandas as pd
+import os
+import torch_geometric.utils
+from mpl_toolkits.mplot3d import Axes3D
+import time
+from sklearn.manifold import TSNE
+
+def visualize_complex_with_edges(data, x, ligand_diffpool_layer, protein_diffpool_layer, attention_weights_lig, attention_weights_pro, threshold=0.1, save_path="complex_clusters_with_edges.png"):
+    """
+    Visualizes the clustering of both ligand and protein atoms with edges in a 3D plot after DiffPool and saves the plot as an image.
+    Additionally, highlights the protein atoms that are clustered in the cluster with the highest attention score.
+    """
+    
+    def plot_diffpool(data, x, diffpool_layer, ax, color_map, label, top_attention_cluster=None):
+
+        s = diffpool_layer(x, data)[1]
+        batch_size, num_nodes, _ = s.size()
+        x, mask = torch_geometric.utils.to_dense_batch(x, data.batch, fill_value=0, max_num_nodes=diffpool_layer.max_num)
+        mask = mask.view(batch_size, num_nodes, 1).to(x.dtype)
+        num_nodes = mask.sum(dim=1).squeeze(1).long()
+
+        # asdf = s.squeeze(0).cpu().detach().numpy()
+        # if label == "Ligand":
+        #     print(asdf[:,9])
+        #     print(asdf[:,25])
+        # else:
+        #     print(asdf[:,145])
+        clusters = s.argmax(dim=2).squeeze(0)[:num_nodes]
+        
+        batch_idx = 0
+        pos = data.pos[data.batch == batch_idx]
+        pos_ = pos[data.split == 0] if label == "Ligand" else pos[data.split == 1]
+        pos = pos.cpu().numpy()
+        pos_ = pos_.cpu().numpy()
+        clusters = clusters[data.split == 0] if label == "Ligand" else clusters[data.split == 1]
+
+        b, n1, n2 = s.size()
+        color_map = plt.cm.Set1 if label == "Ligand" else plt.cm.get_cmap('plasma', n2)
+
+        node_positions = {i: pos[i] for i in range(len(pos))}
+        node_positions_ = {i: pos_[i] for i in range(len(pos_))}
+        node_clusters = {i: clusters[i].item() for i in range(len(pos_))}
+        
+        # # unique number of clusters
+        # print(f"Unique number of clusters in {label}: {len(set(node_clusters.values()))}")
+        
+        # # unique value of clusters
+        # print(f"Unique clusters in {label}: {set(node_clusters.values())}")
+        
+        for node, (x, y, z) in node_positions_.items():
+            cluster_id = node_clusters[node]
+            if top_attention_cluster is not None and cluster_id in top_attention_cluster:
+                # print(f"Node: {node}, Cluster: {cluster_id}", top_attention_cluster) if cluster_id in top_attention_cluster else None
+                # color = 'cyan' if label == "Ligand" else 'magenta'
+                color = plt.cm.Blues(cluster_id / (n2 - 1)) if label == "Ligand" else plt.cm.autumn(cluster_id / (n2 - 1))
+                ax.scatter(x, y, z, color=color, s=50, edgecolor='k', label=f"{label} Top Attention" if node == 0 else "")
+            else:
+                color = color_map(cluster_id / (n2 - 1))
+                ax.scatter(x, y, z, color=color, s=10, edgecolor='k', label=label if node == 0 else "")
+
+        # Plot intra-ligand edges
+        if label == "Ligand":
+            G = nx.Graph()
+            ra_lig = data.edge_index_intra_lig[:, data.batch[data.edge_index_intra_lig[0, :]] == batch_idx].cpu().numpy()
+            G.add_edges_from(ra_lig.T)
+
+            for edge in G.edges():
+                x_coords = [node_positions[edge[0]][0], node_positions[edge[1]][0]]
+                y_coords = [node_positions[edge[0]][1], node_positions[edge[1]][1]]
+                z_coords = [node_positions[edge[0]][2], node_positions[edge[1]][2]]
+                ax.plot(x_coords, y_coords, z_coords, color='y', alpha=0.8)
+        else:
+            # Plot intra-protein edges
+            G = nx.Graph()
+            ra_pro = data.edge_index_intra_pro[:, data.batch[data.edge_index_intra_pro[0, :]] == batch_idx].cpu().numpy()
+            G.add_edges_from(ra_pro.T)
+
+            for edge in G.edges():
+                x_coords = [node_positions[edge[0]][0], node_positions[edge[1]][0]]
+                y_coords = [node_positions[edge[0]][1], node_positions[edge[1]][1]]
+                z_coords = [node_positions[edge[0]][2], node_positions[edge[1]][2]]
+                ax.plot(x_coords, y_coords, z_coords, color='r', alpha=0.8)
+
+        # Plot inter edges
+        if label == "Ligand":
+            G = nx.Graph()
+            er = data.edge_index_inter[:, data.batch[data.edge_index_inter[0, :]] == batch_idx].cpu().numpy()
+            G.add_edges_from(er.T)
+
+            for edge in G.edges():
+                x_coords = [node_positions[edge[0]][0], node_positions[edge[1]][0]]
+                y_coords = [node_positions[edge[0]][1], node_positions[edge[1]][1]]
+                z_coords = [node_positions[edge[0]][2], node_positions[edge[1]][2]]
+                ax.plot(x_coords, y_coords, z_coords, color='gray', alpha=0.1)
+
+    # Identify the top 1 attention score cluster for ligand
+    attention_scores_lig = attention_weights_lig.mean(dim=1).squeeze(0).cpu().detach().numpy()
+    # top_attention_cluster_lig = [np.argmax(attention_scores_lig.mean(axis=0), axis=-1)]
+    top_attention_cluster_lig = np.where(attention_scores_lig.max(axis=0) > 0.15)[0]
+    print(f"Top attention cluster for ligand: {top_attention_cluster_lig}")
+
+    # Identify the top 1 attention score cluster for protein
+    attention_scores_pro = attention_weights_pro.mean(dim=1).squeeze(0).cpu().detach().numpy()
+    # top_attention_cluster_pro = [np.argmax(attention_scores_pro.mean(axis=0), axis=-1)]
+    top_attention_cluster_pro = np.where(attention_scores_pro.max(axis=0) > 0.1)[0]
+    print(f"Top attention cluster for protein: {top_attention_cluster_pro}")
+
+    # Initialize the 3D plot
+    fig = plt.figure(figsize=(12, 8))
+    ax = fig.add_subplot(111, projection='3d')
+    ax.view_init(elev=10, azim=30)
+
+    # Plot ligand clusters with a blue color map, highlighting the top attention cluster
+    plot_diffpool(data, x, ligand_diffpool_layer, ax, plt.cm.Reds, "Ligand", top_attention_cluster=top_attention_cluster_lig)
+
+    # Plot protein clusters with a red color map, highlighting the top attention cluster
+    plot_diffpool(data, x, protein_diffpool_layer, ax, plt.cm.Blues, "Protein", top_attention_cluster=top_attention_cluster_pro)
+
+    # Set labels
+    ax.set_xlabel('X')
+    ax.set_ylabel('Y')
+    ax.set_zlabel('Z')
+
+    # Add legend
+    handles, labels = ax.get_legend_handles_labels()
+    unique_labels = dict(zip(labels, handles))
+    ax.legend(unique_labels.values(), unique_labels.keys())
+
+    # Save the plot
+    plt.savefig(save_path)
+    plt.savefig('ablation_study_3prs_vis.pdf', format='pdf', bbox_inches='tight')
+    plt.close()
+
+
+def create_cluster_heatmap(attention_weights, label, save_path="attention_heatmap.png"):
+    """
+    Creates and saves a heatmap of the attention scores between ligand and protein clusters.
+    """
+    # Average over the heads dimension and squeeze to get [seqlen_q, seqlen_k]
+    # attention_matrix = attention_weights.mean(dim=1).squeeze(0).cpu().detach().numpy()
+    attention_matrix = attention_weights.squeeze(0).cpu().detach().numpy()
+    # attended_clusters = np.where(attention_matrix.sum(axis=0) > 0.1)[0]
+    # print(f"Attended clusters for {label}: {attended_clusters}")
+    # # sum over the attended clusters
+    # attention_matrix = attention_matrix[:, attended_clusters]
+    # sum_attention = attention_matrix.sum(axis=1)
+    # print(f"Sum of attention scores for {label}: {sum_attention}")
+
+    # Plot the heatmap
+    plt.figure(figsize=(8, 6))
+    plt.imshow(attention_matrix, cmap='viridis', aspect='auto')
+    plt.colorbar(label="Attention Score")
+    plt.title("Attention Map Between Ligand and Protein Clusters") if label == "Protein" else plt.title("Attention Map Between Protein and Ligand Clusters")
+    plt.xlabel("Protein Cluster Index") if label == "Protein" else plt.xlabel("Ligand Cluster Index")
+    plt.ylabel("Ligand Cluster Index") if label == "Protein" else plt.ylabel("Protein Cluster Index")
+    plt.savefig(save_path)
+    plt.close()
+
+def create_attention_heatmap(attention_weights, label, save_path="attention_heatmap.png"):
+    """
+    Creates and saves a heatmap of the attention scores between ligand and protein clusters.
+    """
+    # Average over the heads dimension and squeeze to get [seqlen_q, seqlen_k]
+    attention_matrix = attention_weights.mean(dim=1).squeeze(0).cpu().detach().numpy()
+    # attended_clusters = np.where(attention_matrix.sum(axis=0) > 0.1)[0]
+    # print(f"Attended clusters for {label}: {attended_clusters}")
+    # # sum over the attended clusters
+    # attention_matrix = attention_matrix[:, attended_clusters]
+    # sum_attention = attention_matrix.sum(axis=1)
+    # print(f"Sum of attention scores for {label}: {sum_attention}")
+
+    # Plot the heatmap
+    plt.figure(figsize=(8, 6))
+    plt.imshow(attention_matrix, cmap='viridis', aspect='auto')
+    plt.colorbar(label="Attention Score")
+    plt.title("Attention Map Between Ligand and Protein Clusters") if label == "Protein" else plt.title("Attention Map Between Protein and Ligand Clusters")
+    plt.xlabel("Protein Cluster Index") if label == "Protein" else plt.xlabel("Ligand Cluster Index")
+    plt.ylabel("Ligand Cluster Index") if label == "Protein" else plt.ylabel("Protein Cluster Index")
+    plt.savefig(save_path)
+    plt.close()
+
+def create_cross_attention_heatmap(att_lig, att_pro, s_lig, s_pro, save_path="cross_attention_heatmap.png"):
+    """
+    Creates and saves a heatmap of the cross-attention scores between ligand and protein clusters.
+    att_lig: Attention weights from ligand to protein clusters [batch_size, num_heads, num_clusters_lig, num_clusters_pro]
+    att_pro: Attention weights from protein to ligand clusters [batch_size, num_heads, num_clusters_pro, num_clusters_lig]
+    s_lig: Cluster assignments for ligand clusters [batch_size, max_node, num_clusters_lig]
+    s_pro: Cluster assignments for protein clusters [batch_size, max_node, num_clusters_pro]
+    """
+
+    att_lig = att_lig.mean(dim=1).squeeze(0) 
+    att_pro = att_pro.mean(dim=1).squeeze(0)
+    s_lig = s_lig.squeeze(0)
+    s_pro = s_pro.squeeze(0)
+    att_1 = torch.matmul(torch.matmul(s_lig, att_lig), s_pro.transpose(0, 1))
+    # att_2 = torch.matmul(torch.matmul(s_pro, att_pro), s_lig.transpose(0, 1))
+    # mat = (att_1 + att_2) / 2
+    mat = att_1
+
+    mat = mat.cpu().detach().numpy()
+    # Plot the heatmap
+    plt.figure(figsize=(8, 6))
+    plt.imshow(mat, cmap='viridis', aspect='auto')
+    plt.colorbar(label="Attention Score")
+    plt.title("Cross-Attention Map Between Ligand and Protein Clusters")
+    plt.xlabel("Protein Cluster Index")
+    plt.ylabel("Ligand Cluster Index")
+    plt.savefig(save_path)
+    plt.close()
+
+def tSNE_embedding(data, x, ligand_diffpool_layer, protein_diffpool_layer, attention_weights_lig, attention_weights_pro, save_path="tSNE_embedding.png"):
+    # Apply DiffPool to obtain new node embeddings and cluster assignments for ligand and protein
+    s_lig = ligand_diffpool_layer(x, data)[1]
+    batch_size, num_nodes, _ = s_lig.size()
+    x_lig, mask = torch_geometric.utils.to_dense_batch(x, data.batch, fill_value=0, max_num_nodes=ligand_diffpool_layer.max_num)
+    mask = mask.view(batch_size, num_nodes, 1).to(x.dtype)
+    num_nodes = mask.sum(dim=1).squeeze(1).long()
+    clusters = s_lig.argmax(dim=2).squeeze(0)[:num_nodes]
+    cluster_assignments_ligand = clusters[data.split == 0].detach().cpu().numpy()
+    x_lig = x_lig.squeeze(0)[:num_nodes, :][data.split == 0, :]
+
+    s_pro = protein_diffpool_layer(x, data)[1]
+    batch_size, num_nodes, _ = s_pro.size()
+    x_pro, mask = torch_geometric.utils.to_dense_batch(x, data.batch, fill_value=0, max_num_nodes=protein_diffpool_layer.max_num)
+    mask = mask.view(batch_size, num_nodes, 1).to(x.dtype)
+    num_nodes = mask.sum(dim=1).squeeze(1).long()
+    clusters = s_pro.argmax(dim=2).squeeze(0)[:num_nodes]
+    cluster_assignments_protein = clusters[data.split == 1].detach().cpu().numpy()
+    x_pro = x_pro.squeeze(0)[:num_nodes, :][data.split == 1, :]
+
+    attention_scores_lig = attention_weights_lig.mean(dim=1).squeeze(0).cpu().detach().numpy()
+    attention_scores_pro = attention_weights_pro.mean(dim=1).squeeze(0).cpu().detach().numpy()
+    top_attention_cluster_lig = np.where(attention_scores_pro.max(axis=0) > 0.15)[0]
+    print(f"Top attention cluster for ligand: {top_attention_cluster_lig}")
+    top_attention_cluster_pro = np.where(attention_scores_lig.max(axis=0) > 0.1)[0]
+    print(f"Top attention cluster for protein: {top_attention_cluster_pro}")
+
+    # Detach embeddings and move to CPU for further processing with numpy
+    ligand_embeddings = x_lig.detach().cpu().numpy()  # [num_ligand_nodes, num_features]
+    protein_embeddings = x_pro.detach().cpu().numpy()  # [num_protein_nodes, num_features]
+    num_ligand_nodes = len(ligand_embeddings)
+    combined_embeddings = np.vstack([ligand_embeddings, protein_embeddings])
+
+    # Combine cluster assignments for coloring
+    combined_cluster_assignments = np.hstack([cluster_assignments_ligand, cluster_assignments_protein])
+    cluster_assignments_ligand = [i for i in cluster_assignments_ligand]
+    cluster_assignments_protein = [i for i in cluster_assignments_protein]
+    
+    # Define the number of unique clusters
+    unique_values = np.unique(cluster_assignments_ligand)
+    equispaced_values = np.arange(len(unique_values))
+    value_map = dict(zip(unique_values, equispaced_values))
+    color_ligand = np.array([value_map[val] for val in cluster_assignments_ligand])
+    print(color_ligand)
+
+    unique_values = np.unique(cluster_assignments_protein)
+    equispaced_values = np.arange(len(unique_values))
+    value_map = dict(zip(unique_values, equispaced_values))
+    color_protein = np.array([value_map[val] for val in cluster_assignments_protein])
+
+    # Set sizes for atoms in top-attention clusters
+    size_ligand = np.array([150 or i in cluster_assignments_ligand])
+    size_protein = np.array([150 for i in cluster_assignments_protein])
+
+    # Apply t-SNE for dimensionality reduction to 2D space
+    tsne = TSNE(n_components=2, random_state=42)
+    embeddings_2d = tsne.fit_transform(combined_embeddings)
+
+    # Plotting the t-SNE embeddings
+    plt.figure(figsize=(8, 6))
+
+    # Scatter plot for ligand nodes, colored by their cluster assignments and with adjusted size
+    plt.scatter(embeddings_2d[:num_ligand_nodes, 0], embeddings_2d[:num_ligand_nodes, 1], 
+                c=color_ligand, cmap='rainbow', alpha=1, s=size_ligand)
+
+    # # Scatter plot for protein nodes, colored by their cluster assignments and with adjusted size
+    # plt.scatter(embeddings_2d[num_ligand_nodes:, 0], embeddings_2d[num_ligand_nodes:, 1], 
+    #             c=color_protein, cmap='rainbow', alpha=1, s=size_protein)
+
+    # Add plot details
+    plt.title("t-SNE Projection Ligand Node Embeddings (Colored by Clusters)")
+
+    # Save the figure and display it
+    plt.savefig(save_path)
+    plt.show()
+
+
+
+
+
+# Load the saved GIGN model
+num_clusters = [28, 156]
+model = CheapNet(35, 256, num_clusters).to("cuda" if torch.cuda.is_available() else "cpu")
+# model_name = '/home/dlagurwns03/dlagurwns03_link/GIGN/codes/Diffpool_GIGN/save/g-d-c/q2q2/ours-lrs-0.001-28-156_0/repeat0/model/epoch-643, train_loss-0.0814, train_rmse-0.2853, valid_rmse-1.1860, valid_pr-0.7674.pt'
+model_name = '/home/dlagurwns03/dlagurwns03_link/GIGN/codes/Diffpool_GIGN/save/g-d-c/q2q2/ours-lrs-0.001-28-156_0/repeat1/model/epoch-748, train_loss-0.0778, train_rmse-0.2788, valid_rmse-1.2007, valid_pr-0.7604.pt'
+# model_name = '/home/dlagurwns03/dlagurwns03_link/GIGN/codes/Diffpool_GIGN/save/g-d-c/q2q2/ours-lrs-0.001-28-156_0/repeat2/model/epoch-627, train_loss-0.0857, train_rmse-0.2927, valid_rmse-1.1922, valid_pr-0.7643.pt'
+# slice mode name from /model
+model_name = model_name.split('Diffpool_GIGN/')[1]
+model.load_state_dict(torch.load(model_name))
+model.eval()
+
+
+# Load the dataset and select the first complex
+data_root = 'data'  # Update with the actual path
+casestudy_dir = os.path.join(data_root, 'casestudy')
+casestudy_df = pd.read_csv(os.path.join(data_root, 'casestudy.csv'))
+
+casestudy_set = GraphDataset(casestudy_dir, casestudy_df, graph_type='Graph_GIGN', create=False)
+casestudy_loader = PLIDataLoader(casestudy_set, batch_size=1, shuffle=False, num_workers=4)
+
+for i, data in enumerate(casestudy_loader):
+    data = data.to("cuda" if torch.cuda.is_available() else "cpu")
+    print('-' * 30)
+    print(f"Processing complex {i + 1}...")
+    model.make_edge_index(data)
+    # Pass through the GIGN blocks
+    x = model.embedding(data.x)
+    model.make_edge_index(data)
+    x = model.GIGNBlock1(x, data)
+    x = model.GIGNBlock2(x, data)
+    x = model.GIGNBlock3(x, data)
+    
+    # Visualize the entire complex (both ligand and protein) with edges and save as an image
+    
+    # Obtain the ligand and protein embeddings after diffpool layers
+    # Run through the AttentionBlock and capture attention weights
+    x_lig, s_lig = model.diffpool1(x, data)
+    x_pro, s_pro = model.diffpool2(x, data)
+    l2p, att_lig = model.attblock1(x_lig, x_pro, x_pro)  # Forward pass to capture attention weights
+    p2l, att_pro = model.attblock2(x_pro, x_lig, x_lig)  # Forward pass to capture attention weights
+    tSNE_embedding(data, x, model.diffpool1, model.diffpool2, att_lig, att_pro, save_path=f'tSNE_embedding_{i}.png')
+    out = l2p + p2l
+    out = model.fc(out)
+    out = out.view(-1)
+    y = data.y.view(-1)
+    print(f'Predicted: {out.item():.4f}')
+    print(f'True: {y.item():.4f}')
+    print(f'RMSE: {F.mse_loss(out, y).sqrt().item():.4f}')
+
+

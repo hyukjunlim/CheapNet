@@ -140,7 +140,7 @@ def collate_lba_siamese(batch):
     return new_batch
 
 
-def initialize_lba_data(args, datadir, splits = {'train':'train', 'valid':'val', 'test':'test'}):                        
+def initialize_lba_data(args, datadir, splits = {'valid':'val'}):                        
     """
     Initialize datasets.
 
@@ -184,12 +184,12 @@ def initialize_lba_data(args, datadir, splits = {'train':'train', 'valid':'val',
     _msg = 'All datasets must have same included_species! {}'.format({key: data.included_species for key, data in datasets.items()})
     assert (len(set(tuple(data.included_species.tolist()) for data in datasets.values())) == 1), _msg
     # These parameters are necessary to initialize the network
-    num_species = datasets['train'].num_species
-    max_charge = datasets['train'].max_charge
+    num_species = datasets['valid'].num_species
+    max_charge = datasets['valid'].max_charge
     # Now, update the number of training/test/validation sets in args
-    args.num_train = datasets['train'].num_pts
-    args.num_valid = datasets['valid'].num_pts
-    args.num_test = datasets['test'].num_pts
+    # args.num_train = datasets['train'].num_pts
+    # args.num_valid = datasets['valid'].num_pts
+    # args.num_test = datasets['test'].num_pts
     return args, datasets, num_species, max_charge
 
 

@@ -314,12 +314,12 @@ class ASD(nn.Module):
 
 scheduler_bool = True
 lr = 1e-3
-explain = 'CheapNet-ASD'
-# explain = 'ASD'
+# explain = 'CheapNet-ASD'
+explain = 'ASD'
 num_clusters = [28, 156]
 only_rep = [0, 1, 2]
-os.environ["CUDA_VISIBLE_DEVICES"] = "0"
-# os.environ["CUDA_VISIBLE_DEVICES"] = "1"
+# os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 
 
 

@@ -75,9 +75,6 @@ class ENN(CGModule):
             # Add the N-body level.
             atom_lvl = CormorantAtomLevel(tau_atom, tau_edge, maxl[level], num_channels[level+1],
                                           level_gain[level], weight_init, 
-                                          cgprod_bounded=cgprod_bounded,
-                                          cg_agg_normalization=cg_agg_normalization, 
-                                          cg_pow_normalization=cg_pow_normalization,
                                           device=device, dtype=dtype, cg_dict=cg_dict)
             atom_levels.append(atom_lvl)
             tau_atom = atom_lvl.tau

@@ -1,0 +1,2 @@
+seed: 706
+GIGN params # : 376705

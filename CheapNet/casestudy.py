@@ -16,7 +16,7 @@ def visualize_complex_with_edges(data, x, ligand_diffpool_layer, protein_diffpoo
     Visualizes the clustering of both ligand and protein atoms with edges in a 3D plot after DiffPool and saves the plot as an image.
     Additionally, highlights the protein atoms that are clustered in the cluster with the highest attention score.
     """
-    
+    d = {}
     def plot_diffpool(data, x, diffpool_layer, ax, color_map, label, top_attention_cluster=None):
 
         s = diffpool_layer(x, data)[1]
@@ -60,9 +60,11 @@ def visualize_complex_with_edges(data, x, ligand_diffpool_layer, protein_diffpoo
                 # color = 'cyan' if label == "Ligand" else 'magenta'
                 color = plt.cm.Blues(cluster_id / (n2 - 1)) if label == "Ligand" else plt.cm.autumn(cluster_id / (n2 - 1))
                 ax.scatter(x, y, z, color=color, s=50, edgecolor='k', label=f"{label} Top Attention" if node == 0 else "")
+                d[node] = ((x, y, z), cluster_id)
             else:
                 color = color_map(cluster_id / (n2 - 1))
                 ax.scatter(x, y, z, color=color, s=10, edgecolor='k', label=label if node == 0 else "")
+                d[-node] = ((x, y, z), cluster_id)
 
         # Plot intra-ligand edges
         if label == "Ligand":
@@ -88,7 +90,7 @@ def visualize_complex_with_edges(data, x, ligand_diffpool_layer, protein_diffpoo
                 ax.plot(x_coords, y_coords, z_coords, color='r', alpha=0.8)
 
         # Plot inter edges
-        if label == "Ligand":
+        if label == "Protein":
             G = nx.Graph()
             er = data.edge_index_inter[:, data.batch[data.edge_index_inter[0, :]] == batch_idx].cpu().numpy()
             G.add_edges_from(er.T)
@@ -102,25 +104,29 @@ def visualize_complex_with_edges(data, x, ligand_diffpool_layer, protein_diffpoo
     # Identify the top 1 attention score cluster for ligand
     attention_scores_lig = attention_weights_lig.mean(dim=1).squeeze(0).cpu().detach().numpy()
     # top_attention_cluster_lig = [np.argmax(attention_scores_lig.mean(axis=0), axis=-1)]
-    top_attention_cluster_lig = np.where(attention_scores_lig.max(axis=0) > 0.15)[0]
+    top_attention_cluster_lig = attention_scores_lig.mean(axis=0)
+    top_attention_cluster_lig = np.argsort(top_attention_cluster_lig)[::-1][:5]
     print(f"Top attention cluster for ligand: {top_attention_cluster_lig}")
+    a = attention_scores_lig.max(axis=0)
+    print(f"Attention scores for ligand: {a[a > 0.15]}")
 
     # Identify the top 1 attention score cluster for protein
     attention_scores_pro = attention_weights_pro.mean(dim=1).squeeze(0).cpu().detach().numpy()
     # top_attention_cluster_pro = [np.argmax(attention_scores_pro.mean(axis=0), axis=-1)]
-    top_attention_cluster_pro = np.where(attention_scores_pro.max(axis=0) > 0.1)[0]
+    top_attention_cluster_pro = attention_scores_pro.max(axis=0)
+    top_attention_cluster_pro = np.argsort(top_attention_cluster_pro)[::-1][:5]
     print(f"Top attention cluster for protein: {top_attention_cluster_pro}")
 
     # Initialize the 3D plot
     fig = plt.figure(figsize=(12, 8))
     ax = fig.add_subplot(111, projection='3d')
-    ax.view_init(elev=10, azim=30)
+    ax.view_init(elev=30, azim=30)
 
     # Plot ligand clusters with a blue color map, highlighting the top attention cluster
     plot_diffpool(data, x, ligand_diffpool_layer, ax, plt.cm.Reds, "Ligand", top_attention_cluster=top_attention_cluster_lig)
 
     # Plot protein clusters with a red color map, highlighting the top attention cluster
-    plot_diffpool(data, x, protein_diffpool_layer, ax, plt.cm.Blues, "Protein", top_attention_cluster=top_attention_cluster_pro)
+    # plot_diffpool(data, x, protein_diffpool_layer, ax, plt.cm.Blues, "Protein", top_attention_cluster=top_attention_cluster_pro)
 
     # Set labels
     ax.set_xlabel('X')
@@ -131,12 +137,36 @@ def visualize_complex_with_edges(data, x, ligand_diffpool_layer, protein_diffpoo
     handles, labels = ax.get_legend_handles_labels()
     unique_labels = dict(zip(labels, handles))
     ax.legend(unique_labels.values(), unique_labels.keys())
-
+    print(d)
     # Save the plot
     plt.savefig(save_path)
     plt.savefig('ablation_study_3prs_vis.pdf', format='pdf', bbox_inches='tight')
     plt.close()
 
+
+def create_cluster_heatmap(attention_weights, label, save_path="attention_heatmap.png"):
+    """
+    Creates and saves a heatmap of the attention scores between ligand and protein clusters.
+    """
+    # Average over the heads dimension and squeeze to get [seqlen_q, seqlen_k]
+    # attention_matrix = attention_weights.mean(dim=1).squeeze(0).cpu().detach().numpy()
+    attention_matrix = attention_weights.squeeze(0).cpu().detach().numpy()
+    # attended_clusters = np.where(attention_matrix.sum(axis=0) > 0.1)[0]
+    # print(f"Attended clusters for {label}: {attended_clusters}")
+    # # sum over the attended clusters
+    # attention_matrix = attention_matrix[:, attended_clusters]
+    # sum_attention = attention_matrix.sum(axis=1)
+    # print(f"Sum of attention scores for {label}: {sum_attention}")
+
+    # Plot the heatmap
+    plt.figure(figsize=(8, 6))
+    plt.imshow(attention_matrix, cmap='viridis', aspect='auto')
+    plt.colorbar(label="Attention Score")
+    plt.title("Attention Map Between Ligand and Protein Clusters") if label == "Protein" else plt.title("Attention Map Between Protein and Ligand Clusters")
+    plt.xlabel("Protein Cluster Index") if label == "Protein" else plt.xlabel("Ligand Cluster Index")
+    plt.ylabel("Ligand Cluster Index") if label == "Protein" else plt.ylabel("Protein Cluster Index")
+    plt.savefig(save_path)
+    plt.close()
 
 def create_attention_heatmap(attention_weights, label, save_path="attention_heatmap.png"):
     """
@@ -243,6 +273,9 @@ for i, data in enumerate(casestudy_loader):
     visualize_complex_with_edges(data, x, model.diffpool1, model.diffpool2, att_pro, att_lig, save_path="complex_clusters_with_edges.png")
     create_attention_heatmap(att_pro, 'Ligand', save_path="attention_heatmap_lig.png")
     create_attention_heatmap(att_lig, 'Protein', save_path="attention_heatmap_pro.png")
+    create_cluster_heatmap(s_pro, 'Protein', save_path="cluster_heatmap_pro.png")
+    create_cluster_heatmap(s_lig, 'Ligand', save_path="cluster_heatmap_lig.png")
+
     create_cross_attention_heatmap(att_lig, att_pro, s_lig, s_pro, save_path="cross_attention_heatmap.png")
     # time.sleep(3)
 

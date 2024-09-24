@@ -3,6 +3,10 @@ import logging
 import torch
 from torch.utils.data import DataLoader
 # Cormorant modules and functions
+import os
+import sys
+sys.path.append(os.path.abspath('/data/project/dlagurwns03/GIGN/codes/lba_and_lep/cormorant/src'))
+sys.path.append(os.path.abspath('/data/project/dlagurwns03/GIGN/codes/lba_and_lep'))
 from cormorant.data.utils import initialize_datasets
 from cormorant.engine import Engine
 from cormorant.engine import init_logger, init_cuda
@@ -30,32 +34,24 @@ def main():
     # Initialize device and data type
     device, dtype = init_cuda(args)
     # Initialize dataloader
-    args, datasets, num_species, charge_scale = initialize_lba_data(args, args.datadir)        
+    args, datasets, num_species, charge_scale = initialize_lba_data(args, '../../../dataset/split-by-sequence-identity-30/data')        
+    print(num_species, charge_scale)
     # Further differences for Siamese networks
-    if args.siamese:
-        collate_fn = collate_lba_siamese
-    else:
-        collate_fn = collate_lba
-    # Construct PyTorch dataloaders from datasets
-    dataloaders = {split: DataLoader(dataset, batch_size=args.batch_size,
-                                     shuffle=args.shuffle if (split == 'train') else False,
-                                     num_workers=args.num_workers, collate_fn=collate_fn)
-                   for split, dataset in datasets.items()}
+    # if args.siamese:
+    #     collate_fn = collate_lba_siamese
+    # else:
+    #     collate_fn = collate_lba
+    # # Construct PyTorch dataloaders from datasets
+    # dataloaders = {split: DataLoader(dataset, batch_size=args.batch_size,
+    #                                  shuffle=args.shuffle if (split == 'train') else False,
+    #                                  num_workers=args.num_workers, collate_fn=collate_fn)
+    #                for split, dataset in datasets.items()}
     # Initialize model
-    if args.siamese:
-        model = ENN_LBA_Siamese(args.maxl, args.max_sh, args.num_cg_levels, args.num_channels, num_species,
+    model = ENN_LBA(args.maxl, args.max_sh, args.num_cg_levels, args.num_channels, num_species,
                         args.cutoff_type, args.hard_cut_rad, args.soft_cut_rad, args.soft_cut_width,
                         args.weight_init, args.level_gain, args.charge_power, args.basis_set,
-                        charge_scale, args.gaussian_mask, cgprod_bounded=args.cgprod_bounded,
-                        cg_pow_normalization=args.cg_pow_normalization, cg_agg_normalization=args.cg_agg_normalization,
-                        device=device, dtype=dtype)
-    else:
-        model = ENN_LBA(args.maxl, args.max_sh, args.num_cg_levels, args.num_channels, num_species,
-                        args.cutoff_type, args.hard_cut_rad, args.soft_cut_rad, args.soft_cut_width,
-                        args.weight_init, args.level_gain, args.charge_power, args.basis_set,
-                        charge_scale, args.gaussian_mask, cgprod_bounded=args.cgprod_bounded,
-                        cg_pow_normalization=args.cg_pow_normalization, cg_agg_normalization=args.cg_agg_normalization,
-                        device=device, dtype=dtype)
+                        charge_scale,device=device, dtype=dtype)
+    print(f'number of parameters: {sum(p.numel() for p in model.parameters() if p.requires_grad)}')
     # Initialize the scheduler and optimizer
     optimizer = init_optimizer(args, model)
     scheduler, restart_epochs = init_scheduler(args, optimizer)

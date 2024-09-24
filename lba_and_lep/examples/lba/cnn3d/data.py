@@ -1,4 +1,6 @@
 import os
+import sys
+sys.path.append(os.path.abspath('/data/project/dlagurwns03/GIGN/codes/lba_and_lep'))
 
 import dotenv as de
 import numpy as np
@@ -62,7 +64,7 @@ class CNN3D_TransformLBA(object):
 
 
 if __name__=="__main__":
-    dataset_path = os.path.join(os.environ['LBA_DATA'], 'val')
+    dataset_path = os.path.join('../../../dataset/split-by-sequence-identity-30/data', 'val')
     dataset = LMDBDataset(dataset_path, transform=CNN3D_TransformLBA(radius=10.0))
     dataloader = DataLoader(dataset, batch_size=8, shuffle=False)
 

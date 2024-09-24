@@ -10,6 +10,7 @@ import torch
 import torch.nn.functional as F
 from torch_geometric.data import DataLoader
 from model import GIGN, explain
+from pre_model import GNN_LBA
 from data import GNNTransformLBA
 from atom3d.datasets import LMDBDataset, PTGDataset
 from scipy.stats import spearmanr
@@ -90,7 +91,8 @@ def train(args, device, log_dir, rep=None, test_mode=False):
         break
     
     num_clusters = [25, 372] if args.seqid == 30 else [24, 362]
-    model = GIGN(num_features, hidden_dim=args.hidden_dim, num_clusters=num_clusters).to(device)
+    model = GNN_LBA(num_features, hidden_dim=64)
+    # model = GIGN(num_features, hidden_dim=args.hidden_dim, num_clusters=num_clusters).to(device)
     model.to(device)
     print(F'GIGN params # : {sum(p.numel() for p in model.parameters() if p.requires_grad)}')
     logger.info(f"GIGN params # : {sum(p.numel() for p in model.parameters() if p.requires_grad)}")

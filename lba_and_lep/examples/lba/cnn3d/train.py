@@ -4,7 +4,8 @@ import json
 import os
 import time
 import tqdm
-
+import sys
+sys.path.append(os.path.abspath('/data/project/dlagurwns03/GIGN/codes/lba_and_lep'))
 import numpy as np
 import pandas as pd
 import torch
@@ -16,7 +17,6 @@ from scipy.stats import spearmanr
 
 from model import CNN3D_LBA
 from data import CNN3D_TransformLBA
-
 
 # Construct model
 def conv_model(in_channels, spatial_size, args):
@@ -106,32 +106,33 @@ def train(args, device, test_mode=False):
     print("Training model with config:")
     print(str(json.dumps(args.__dict__, indent=4)) + "\n")
 
-    # Save config
-    with open(os.path.join(args.output_dir, 'config.json'), 'w') as f:
-        json.dump(args.__dict__, f, indent=4)
+    # # Save config
+    # with open(os.path.join(args.output_dir, 'config.json'), 'w') as f:
+    #     json.dump(args.__dict__, f, indent=4)
 
-    np.random.seed(args.random_seed)
-    torch.manual_seed(args.random_seed)
+    # np.random.seed(args.random_seed)
+    # torch.manual_seed(args.random_seed)
 
-    train_dataset = LMDBDataset(os.path.join(args.data_dir, 'train'),
-                                transform=CNN3D_TransformLBA(random_seed=args.random_seed))
-    val_dataset = LMDBDataset(os.path.join(args.data_dir, 'val'),
-                              transform=CNN3D_TransformLBA(random_seed=args.random_seed))
-    test_dataset = LMDBDataset(os.path.join(args.data_dir, 'test'),
-                               transform=CNN3D_TransformLBA(random_seed=args.random_seed))
+    # train_dataset = LMDBDataset(os.path.join(args.data_dir, 'train'),
+    #                             transform=CNN3D_TransformLBA(random_seed=args.random_seed))
+    # val_dataset = LMDBDataset(os.path.join(args.data_dir, 'val'),
+    #                           transform=CNN3D_TransformLBA(random_seed=args.random_seed))
+    # test_dataset = LMDBDataset(os.path.join(args.data_dir, 'test'),
+    #                            transform=CNN3D_TransformLBA(random_seed=args.random_seed))
 
-    train_loader = DataLoader(train_dataset, args.batch_size, shuffle=True)
-    val_loader = DataLoader(val_dataset, args.batch_size, shuffle=False)
-    test_loader = DataLoader(test_dataset, args.batch_size, shuffle=False)
+    # train_loader = DataLoader(train_dataset, args.batch_size, shuffle=True)
+    # val_loader = DataLoader(val_dataset, args.batch_size, shuffle=False)
+    # test_loader = DataLoader(test_dataset, args.batch_size, shuffle=False)
 
-    for data in train_loader:
-        in_channels, spatial_size = data['feature'].size()[1:3]
-        print('num channels: {:}, spatial size: {:}'.format(in_channels, spatial_size))
-        break
+    # for data in train_loader:
+    #     in_channels, spatial_size = data['feature'].size()[1:3]
+    #     print('num channels: {:}, spatial size: {:}'.format(in_channels, spatial_size))
+    #     break
 
-    model = conv_model(in_channels, spatial_size, args)
+    model = conv_model(5, 21, args)
     print(model)
     model.to(device)
+    print(f'number of parameters: {sum(p.numel() for p in model.parameters() if p.requires_grad)}')
 
     best_val_loss = np.Inf
     best_rp = 0
@@ -170,11 +171,11 @@ def train(args, device, test_mode=False):
 
 if __name__=="__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('--data_dir', type=str, default=os.environ['LBA_DATA'])
-    parser.add_argument('--mode', type=str, default='test',
-                        choices=['train', 'test'])
-    parser.add_argument('--output_dir', type=str, default=os.environ['LOG_DIR'])
-    parser.add_argument('--unobserved', action='store_true', default=False)
+    # parser.add_argument('--data_dir', type=str, default=os.environ['LBA_DATA'])
+    # parser.add_argument('--mode', type=str, default='test',
+    #                     choices=['train', 'test'])
+    # parser.add_argument('--output_dir', type=str, default=os.environ['LOG_DIR'])
+    # parser.add_argument('--unobserved', action='store_true', default=False)
 
     parser.add_argument('--learning_rate', type=float, default=0.001)
     parser.add_argument('--conv_drop_rate', type=float, default=0.1)
@@ -185,31 +186,31 @@ if __name__=="__main__":
     parser.add_argument('--batch_norm', action='store_true', default=False)
     parser.add_argument('--no_dropout', action='store_true', default=False)
 
-    parser.add_argument('--batch_size', type=int, default=16)
-    parser.add_argument('--random_seed', type=int, default=int(np.random.randint(1, 10e6)))
+    # parser.add_argument('--batch_size', type=int, default=16)
+    # parser.add_argument('--random_seed', type=int, default=int(np.random.randint(1, 10e6)))
 
     args = parser.parse_args()
 
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-    # Set up output dir
-    args.output_dir = os.path.join(args.output_dir, 'lba')
-    assert args.output_dir != None
-    if args.unobserved:
-        args.output_dir = os.path.join(args.output_dir, 'None')
-        os.makedirs(args.output_dir, exist_ok=True)
-    else:
-        num = 0
-        while True:
-            dirpath = os.path.join(args.output_dir, str(num))
-            if os.path.exists(dirpath):
-                num += 1
-            else:
-                args.output_dir = dirpath
-                print('Creating output directory {:}'.format(args.output_dir))
-                os.makedirs(args.output_dir)
-                break
+    # # Set up output dir
+    # args.output_dir = os.path.join(args.output_dir, 'lba')
+    # assert args.output_dir != None
+    # if args.unobserved:
+    #     args.output_dir = os.path.join(args.output_dir, 'None')
+    #     os.makedirs(args.output_dir, exist_ok=True)
+    # else:
+    #     num = 0
+    #     while True:
+    #         dirpath = os.path.join(args.output_dir, str(num))
+    #         if os.path.exists(dirpath):
+    #             num += 1
+    #         else:
+    #             args.output_dir = dirpath
+    #             print('Creating output directory {:}'.format(args.output_dir))
+    #             os.makedirs(args.output_dir)
+    #             break
 
-    print(f"Running mode {args.mode:} with seed {args.random_seed:} "
-          f"and output dir {args.output_dir}")
-    train(args, device, args.mode=='test')
+    # print(f"Running mode {args.mode:} with seed {args.random_seed:} "
+    #       f"and output dir {args.output_dir}")
+    train(args, device)
