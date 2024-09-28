@@ -49,7 +49,6 @@ ax.plot(x, y, color='green')
 x = [0, 0.1]
 y = [21911 / 1024, 24]
 ax.plot(x, y, color='blue')
-
 # Set labels and title
 ax.set_xlabel('Batch Size')
 ax.set_ylabel('Memory Usage (GB)')
@@ -57,6 +56,9 @@ ax.set_title('Memory Footprint Experiment of Attention-based Models')
 ax.set_ylim(0, 25)
 ax.legend()
 
+plt.xticks([0, 1, 2, 3, 4, 5, 6, 7, 8], [1, 2, 4, 8, 16, 32, 64, 128, 256])
+# make y axis step by 4
+plt.yticks(np.arange(0, 25, 4))
 # Display the plot
 plt.tight_layout()
 
