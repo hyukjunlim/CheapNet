@@ -192,3 +192,410 @@ valid data: 1000
 test2013 data: 107
 test2016 data: 285
 test2019 data: 4366
+ours-lrs-0.001-28-156-0, lr=0.001, seed=191
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+GIGN params # : 1331241
+ours-lrs-0.001-28-156-0, lr=0.001, seed=191
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+GIGN params # : 1331241
+epoch-0, train_loss-9.8079, train_rmse-3.1318, valid_rmse-1.6934, valid_pr-0.5329
+epoch-1, train_loss-2.6479, train_rmse-1.6272, valid_rmse-1.6286, valid_pr-0.4799
+epoch-2, train_loss-2.4082, train_rmse-1.5518, valid_rmse-1.4661, valid_pr-0.6081
+epoch-3, train_loss-2.2453, train_rmse-1.4984, valid_rmse-1.4420, valid_pr-0.6249
+epoch-4, train_loss-2.1423, train_rmse-1.4637, valid_rmse-1.6466, valid_pr-0.5988
+valid_rmse-1.4420, valid_pr-0.6249, test2013_rmse-1.5506, test2013_pr-0.7958, test2016_rmse-1.4837, test2016_pr-0.7652, test2019_rmse-1.4349, test2019_pr-0.5954
+ours-lrs-0.001-28-156-0, lr=0.001, seed=191
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+GIGN params # : 1331241
+epoch-0, train_loss-9.8214, train_rmse-3.1339, valid_rmse-1.5875, valid_pr-0.5421
+ours-lrs-0.001-28-156-0, lr=0.001, seed=191
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+GIGN params # : 1331241
+epoch-0, train_loss-6.7651, train_rmse-2.6010, valid_rmse-1.6560, valid_pr-0.5276
+ours-lrs-0.001-28-156-0, lr=0.001, seed=191
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+GIGN params # : 1331241
+train start
+train end
+train time: 33.05653667449951
+ours-lrs-0.001-28-156-0, lr=0.001, seed=191
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+GIGN params # : 1331241
+train start
+ours-lrs-0.001-28-156-0, lr=0.001, seed=191
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+GIGN params # : 1331241
+train start
+train end
+train time: 15.53985321521759
+train end
+train time: 15.009527921676636
+ours-lrs-0.001-28-156-0, lr=0.001, seed=191
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+GIGN params # : 1331241
+train end
+train end
+train end
+train end
+train end
+train end
+train end
+train end
+train end
+train end
+train end
+train end
+train end
+train end
+train end
+train end
+train end
+train end
+train end
+train end
+train end
+train end
+train end
+train end
+ours-lrs-0.001-28-156-0, lr=0.001, seed=191
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+GIGN params # : 1331241
+ours-lrs-0.001-28-156-0, lr=0.001, seed=191
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+GIGN params # : 1331241
+ours-lrs-0.001-28-156-0, lr=0.001, seed=0
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+GIGN params # : 1331241
+ours-lrs-0.001-28-156-0, lr=0.001, seed=0
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+GIGN params # : 1331241
+ours-lrs-0.001-28-156-0, lr=0.001, seed=0
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+GIGN params # : 1331241
+ours-lrs-0.001-28-156-0, lr=0.001, seed=0
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+GIGN params # : 1331241
+ours-lrs-0.001-28-156-0, lr=0.001, seed=0
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+GIGN params # : 1331241
+ours-lrs-0.001-28-156-0, lr=0.001, seed=0
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+GIGN params # : 1331241
+ours-lrs-0.001-28-156-0, lr=0.001, seed=0
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+GIGN params # : 1331241
+ours-lrs-0.001-28-156-0, lr=0.001, seed=0
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+GIGN params # : 1331241
+ours-lrs-0.001-28-156-0, lr=0.001, seed=0
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+GIGN params # : 1331241
+ours-lrs-0.001-28-156-0, lr=0.001, seed=0
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+GIGN params # : 1331241
+ours-lrs-0.001-28-156-0, lr=0.001, seed=0
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+GIGN params # : 1331241
+ours-lrs-0.001-28-156-0, lr=0.001, seed=0
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+ours-lrs-0.001-28-156-0, lr=0.001, seed=0
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+GIGN params # : 1331241
+ours-lrs-0.001-28-156-0, lr=0.001, seed=0
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+GIGN params # : 1331241
+ours-lrs-0.001-28-156-0, lr=0.001, seed=0
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+GIGN params # : 1331241
+ours-lrs-0.001-28-156-0, lr=0.001, seed=0
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+GIGN params # : 1331241
+ours-lrs-0.001-28-156-0, lr=0.001, seed=0
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+GIGN params # : 1331241
+ours-lrs-0.001-28-156-0, lr=0.001, seed=0
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+GIGN params # : 1331241
+ours-lrs-0.001-28-156-0, lr=0.001, seed=0
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+GIGN params # : 1331241
+ours-lrs-0.001-28-156-0, lr=0.001, seed=0
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+GIGN params # : 1331241
+ours-lrs-0.001-28-156-0, lr=0.001, seed=0
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+GIGN params # : 1331241
+ours-lrs-0.001-28-156-0, lr=0.001, seed=0
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+GIGN params # : 1331241
+ours-lrs-0.001-28-156-0, lr=0.001, seed=0
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+GIGN params # : 1331241
+ours-lrs-0.001-28-156-0, lr=0.001, seed=0
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+ours-lrs-0.001-28-156-0, lr=0.001, seed=0
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+GIGN params # : 1331241
+ours-lrs-0.001-28-156-0, lr=0.001, seed=0
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+GIGN params # : 1331241
+ours-lrs-0.001-28-156-0, lr=0.001, seed=0
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+GIGN params # : 1331241
+ours-lrs-0.001-28-156-0, lr=0.001, seed=0
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+GIGN params # : 1331241
+ours-lrs-0.001-28-156-0, lr=0.001, seed=0
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+GIGN params # : 1331241
+ours-lrs-0.001-28-156-0, lr=0.001, seed=0
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+GIGN params # : 1331241
+ours-lrs-0.001-28-156-0, lr=0.001, seed=0
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+GIGN params # : 1331241
+ours-lrs-0.001-28-156-0, lr=0.001, seed=0
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+GIGN params # : 1331241
+ours-lrs-0.001-28-156-0, lr=0.001, seed=0
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+GIGN params # : 1331241
+ours-lrs-0.001-28-156-0, lr=0.001, seed=0
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+GIGN params # : 1331241
+ours-lrs-0.001-28-156-0, lr=0.001, seed=0
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+GIGN params # : 1331241
+ours-lrs-0.001-28-156-0, lr=0.001, seed=0
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+GIGN params # : 1331241

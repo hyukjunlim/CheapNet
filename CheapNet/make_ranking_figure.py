@@ -1,24 +1,5 @@
-# import matplotlib.pyplot as plt
-
-# # Data for the plot
-# models = ['ΔvinaRF20', 'CheapNet', 'GIGN', 'PLANET', 'IGN', 'EGNN', 'ChemPLP@GOLD', r'$DrugScore^{CSD}$', 'LUDI2@DS', 'LUDI1@DS']
-# spearman_coefficients = [0.750, 0.744, 0.709, 0.682, 0.660, 0.649, 0.633, 0.630, 0.629, 0.612]
-
-# # # Data for the plot
-# # models = ['ΔvinaRF20', 'CheapNet', 'GIGN', 'PLANET', 'IGN', 'EGNN', 'ChemPLP@GOLD', r'$DrugScore^{CSD}$', 'LUDI2@DS', 'LUDI1@DS', 
-# #           'LigScore2@DS', 'DrugScore2018', 'Affinity-dG@MOE', 'X-Score', 'X-ScoreHM', 
-# #           'LigScore1@DS', 'ChemScore@SYBYL', 'London-dG@MOE', 'G-Score@SYBYL', 'PLP2@DS', 'ΔSAS', 'PLP1@DS', 
-# #           'D-Score@SYBYL', 'X-ScoreHP', 'ASP@GOLD', 'X-ScoreHS', 'PMF@DS', 'Alpha-HB@MOE', 'LUDI3@DS', 
-# #           'Autodock Vina', 'ChemScore@GOLD', 'Jain@DS', 'GBVI/WSA-dG@MOE', 'PMF04@DS', 'PMF@SYBYL', 'ASE@MOE', 
-# #           'GlideScoreSP', 'GoldScore@GOLD', 'GlideScore-XP']
-# # spearman_coefficients = [0.750, 0.744, 0.709, 0.682, 0.660, 0.649, 0.633, 0.630, 0.629, 0.612, 0.608, 0.607, 
-# #                          0.604, 0.604, 0.603, 0.599, 0.593, 0.593, 0.591, 0.589, 0.588, 
-# #                          0.582, 0.577, 0.573, 0.553, 0.547, 0.537, 0.535, 0.532, 0.528, 0.526, 0.521, 0.489, 0.481, 
-# #                          0.449, 0.439, 0.419, 0.284, 0.257]
-
 import matplotlib.pyplot as plt
 import pandas as pd
-
 model_pairs = [
     ('CheapNet', 0.761, 0.870),
     ('ConBAP', 0.719, 0.864),
@@ -81,45 +62,52 @@ model_pairs = [
     ('GoldScore@GOLD', 0.284, 0.416),
     ('GlideScore-XP', 0.257, 0.467)
 ]
-# Convert the list of tuples into a DataFrame
+
+# Convert list to DataFrame
 df = pd.DataFrame(model_pairs, columns=['Model', 'Spearman', 'Pearson'])
+
+# Filtering
 df_filtered_spearman = df[df['Spearman'] != -1]
 df_filtered_pearson = df[df['Pearson'] != -1]
-# Function to plot the correlations
-def plot_correlation(df, correlation_column, title, file_prefix, top_n=None):
+
+# Plot function
+def plot_correlation_subplot(ax, df, correlation_column, title, top_n=None):
     if top_n:  # Plot only the top_n values if specified
         df = df.nlargest(top_n, correlation_column)
-    df = df.sort_values(correlation_column)  # Sort the values for plotting
-    # Create the figure
-    plt.figure(figsize=(6, 4) if top_n else (6, 10))
+    df = df.sort_values(correlation_column)  # Sort values for plotting
     
     # Assign colors (Red for CheapNet, Gray for others)
     colors = ['red' if 'CheapNet' in model else 'gray' for model in df['Model']]
     
     # Create the horizontal bar chart
-    bars = plt.barh(df['Model'], df[correlation_column], color=colors, edgecolor='black')
+    bars = ax.barh(df['Model'], df[correlation_column], color=colors, edgecolor='black')
     
-    # Add correlation values next to the bars
+    # Add correlation values next to bars
     for bar in bars:
-        plt.text(bar.get_width() + 0.01, bar.get_y() + bar.get_height()/2, f'{bar.get_width():.3f}', va='center', fontsize=10)
+        ax.text(bar.get_width() + 0.01, bar.get_y() + bar.get_height()/2, f'{bar.get_width():.3f}', va='center', fontsize=10)
     
     # Set labels and title
-    plt.xlabel(f'{correlation_column} Correlation Coefficient', fontsize=12)
-    plt.title(title, fontsize=14)
-    plt.xlim(0, 0.9 if correlation_column == 'Spearman' else 1)  # Adjust xlim based on the column
+    ax.set_xlabel(f'{correlation_column} Correlation Coefficient', fontsize=12)
+    ax.set_title(title, fontsize=14)
+    ax.set_xlim(0, 1)
     
-    # Remove the grid for a cleaner look
-    plt.grid(False)
+    # Remove grid for a cleaner look
+    ax.grid(False)
     
-    # Use tight layout and adjust bbox_inches to ensure text fits
-    plt.tight_layout()
-    
-    # Save the figure in both PNG and PDF formats
-    plt.savefig(f'figure/{file_prefix}.png', format='png', bbox_inches='tight')
-    plt.savefig(f'figure/{file_prefix}.pdf', format='pdf', bbox_inches='tight')
-    
-# Plot the top 10 and full Spearman correlation
-plot_correlation(df_filtered_spearman, 'Spearman', 'Top 10 Ranking Power (Spearman)', 'spearman_correlation_paper_figure_top10', top_n=10)
-plot_correlation(df_filtered_spearman, 'Spearman', 'Ranking Power (Spearman)', 'spearman_correlation_paper_figure_full')
-plot_correlation(df_filtered_pearson, 'Pearson', 'Top 10 Scoring Power (Pearson)', 'pearson_correlation_paper_figure_top10', top_n=10)
-plot_correlation(df_filtered_pearson, 'Pearson', 'Scoring Power (Pearson)', 'pearson_correlation_paper_figure_full')
+    # Change tick params for the axis (font size)
+    ax.tick_params(axis='x', labelsize=12)
+    ax.tick_params(axis='y', labelsize=10)
+
+fig, axes = plt.subplots(1, 2, figsize=(12, 3))
+plot_correlation_subplot(axes[0], df_filtered_spearman, 'Spearman', 'Top 10 Ranking Power', top_n=10)
+plot_correlation_subplot(axes[1], df_filtered_pearson, 'Pearson', 'Top 10 Scoring Power', top_n=10)
+plt.tight_layout()
+plt.savefig('figure/ranking_scoring_top10.png', format='png', bbox_inches='tight')
+plt.savefig('figure/ranking_scoring_top10.pdf', format='pdf', bbox_inches='tight')
+
+fig, axes = plt.subplots(1, 2, figsize=(12, 12))
+plot_correlation_subplot(axes[0], df_filtered_spearman, 'Spearman', 'Ranking Power')
+plot_correlation_subplot(axes[1], df_filtered_pearson, 'Pearson', 'Scoring Power')
+plt.tight_layout()
+plt.savefig('figure/ranking_scoring_full.png', format='png', bbox_inches='tight')
+plt.savefig('figure/ranking_scoring_full.pdf', format='pdf', bbox_inches='tight')

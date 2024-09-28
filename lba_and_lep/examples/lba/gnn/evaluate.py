@@ -5,7 +5,7 @@ import numpy as np
 import torch
 import atom3d.util.results as res
 import atom3d.util.metrics as met
-seqid = 30
+seqid = 60
 
 # Define the training run 
 for rep in range(1):

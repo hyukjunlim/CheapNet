@@ -64,19 +64,22 @@ if __name__ == '__main__':
         # seed_always = [418, 714, 444, 598]
         seed_random = []
         l = [i for i in range(1000) if i not in seed_always]
-        for repeat, seed in enumerate(seed_always + list(np.random.choice(seed_random, size=3-len(seed_always), replace=False))):
+        # for repeat, seed in enumerate(seed_always + list(np.random.choice(seed_random, size=3-len(seed_always), replace=False))):
         # for repeat, seed in enumerate(np.random.choice(l, size=3, replace=False)):
         # for repeat, seed in enumerate(np.random.randint(0, 1000, size=3)):
-            if only_rep is not None and repeat not in only_rep:
-                continue
-            else:
-                pass   
+            # if only_rep is not None and repeat not in only_rep:
+            #     continue
+            # else:
+            #     pass   
+        for batch_size in [2]:
+            repeat = 0
+            seed = 0
             seed_everything(seed)
             save_dir = f"./model/{explain}_{rep}"
             msg_info = f"{explain}, lr={lr}, seed={seed}"
         
             # # writer = SummaryWriter()
-            
+            print(f'bacth_size: {batch_size}')
             args['repeat'] = repeat
 
             train_dir = os.path.join(data_root, 'train')
@@ -188,15 +191,14 @@ if __name__ == '__main__':
             #     q3 = np.percentile(pro_list, 75)
             #     q4 = np.percentile(pro_list, 100)
             #     print(f'PRO: {q1}, {q2}, {q3}, {q4}')
+            import time
             l = []
-            # import time
-            # logger.info(f"train start")
-            # start = time.time()
             for epoch in range(epochs):
+                print(f'Epoch {epoch}')
                 for batch_idx, data in enumerate(train_loader):
+                    start = time.time()
                     data = data.to(device)
                     pred = model(data)
-                    l.append(torch.cuda.memory_allocated() / 1024 /1024)
                     label = data.y
                     MSE_loss = criterion(pred, label)
                     loss = MSE_loss
@@ -205,53 +207,53 @@ if __name__ == '__main__':
                     optimizer.step()
                     running_loss.update(loss.item(), label.size(0)) 
                 
-                epoch_loss = running_loss.get_average()
-                epoch_rmse = np.sqrt(epoch_loss)
-                running_loss.reset()
+                # epoch_loss = running_loss.get_average()
+                # epoch_rmse = np.sqrt(epoch_loss)
+                # running_loss.reset()
 
-                # start validating
-                valid_rmse, valid_pr = val(model, valid_loader, device)
-                msg = "epoch-%d, train_loss-%.4f, train_rmse-%.4f, valid_rmse-%.4f, valid_pr-%.4f" \
-                        % (epoch, epoch_loss, epoch_rmse, valid_rmse, valid_pr)
-                logger.info(msg)
-                if scheduler_bool:
-                    scheduler.step(valid_rmse)
+                # # start validating
+                # valid_rmse, valid_pr = val(model, valid_loader, device)
+                # msg = "epoch-%d, train_loss-%.4f, train_rmse-%.4f, valid_rmse-%.4f, valid_pr-%.4f" \
+                #         % (epoch, epoch_loss, epoch_rmse, valid_rmse, valid_pr)
+                # logger.info(msg)
+                # if scheduler_bool:
+                #     scheduler.step(valid_rmse)
 
-                if valid_rmse < running_best_mse.get_best():
-                    running_best_mse.update(valid_rmse)
-                    if save_model:
-                        # test2013_rmse, test2013_pr = val(model, test2013_loader, device)
-                        # test2016_rmse, test2016_pr = val(model, test2016_loader, device)
-                        # test2019_rmse, test2019_pr = val(model, test2019_loader, device)
-                        # msg_train = f"Validation : valid_rmse-{valid_rmse:.4f}, valid_pr-{valid_pr:.4f}, \ntest2013_rmse-{test2013_rmse:.4f}, test2013_pr-{test2013_pr:.4f}, test2016_rmse-{test2016_rmse:.4f}, test2016_pr-{test2016_pr:.4f}, test2019_rmse-{test2019_rmse:.4f}, test2019_pr-{test2019_pr:.4f}"
-                        # logger.info(msg_train)
-                        msg = "epoch-%d, train_loss-%.4f, train_rmse-%.4f, valid_rmse-%.4f, valid_pr-%.4f" \
-                        % (epoch, epoch_loss, epoch_rmse, valid_rmse, valid_pr)
-                        model_path = os.path.join(logger.get_model_dir(), msg + '.pt')
-                        best_model_list.append(model_path)
-                        save_model_dict(model, logger.get_model_dir(), msg)
+                # if valid_rmse < running_best_mse.get_best():
+                #     running_best_mse.update(valid_rmse)
+                #     if save_model:
+                #         # test2013_rmse, test2013_pr = val(model, test2013_loader, device)
+                #         # test2016_rmse, test2016_pr = val(model, test2016_loader, device)
+                #         # test2019_rmse, test2019_pr = val(model, test2019_loader, device)
+                #         # msg_train = f"Validation : valid_rmse-{valid_rmse:.4f}, valid_pr-{valid_pr:.4f}, \ntest2013_rmse-{test2013_rmse:.4f}, test2013_pr-{test2013_pr:.4f}, test2016_rmse-{test2016_rmse:.4f}, test2016_pr-{test2016_pr:.4f}, test2019_rmse-{test2019_rmse:.4f}, test2019_pr-{test2019_pr:.4f}"
+                #         # logger.info(msg_train)
+                #         msg = "epoch-%d, train_loss-%.4f, train_rmse-%.4f, valid_rmse-%.4f, valid_pr-%.4f" \
+                #         % (epoch, epoch_loss, epoch_rmse, valid_rmse, valid_pr)
+                #         model_path = os.path.join(logger.get_model_dir(), msg + '.pt')
+                #         best_model_list.append(model_path)
+                #         save_model_dict(model, logger.get_model_dir(), msg)
                         
-                else:
-                    count = running_best_mse.counter()
-                    if count > early_stop_epoch:
-                        best_mse = running_best_mse.get_best()
-                        msg = "best_rmse: %.4f" % best_mse
-                        logger.info(f"early stop in epoch {epoch}")
-                        logger.info(msg)
-                        break_flag = True
-                        break
-            # logger.info(f"train end")
-            # end = time.time()
-            # logger.info(f"train time: {(end - start) / epochs}")
+                # else:
+                #     count = running_best_mse.counter()
+                #     if count > early_stop_epoch:
+                #         best_mse = running_best_mse.get_best()
+                #         msg = "best_rmse: %.4f" % best_mse
+                #         logger.info(f"early stop in epoch {epoch}")
+                #         logger.info(msg)
+                #         break_flag = True
+                #         break
+                    end = time.time()
+                    if epoch > 0:
+                        l.append(end - start)
             print(np.mean(l))
-            # final testing
-            load_model_dict(model, best_model_list[-1])
-            valid_rmse, valid_pr = val(model, valid_loader, device)
-            test2013_rmse, test2013_pr = val(model, test2013_loader, device)
-            test2016_rmse, test2016_pr = val(model, test2016_loader, device)
-            test2019_rmse, test2019_pr = val(model, test2019_loader, device)
-            msg_test = f"valid_rmse-{valid_rmse:.4f}, valid_pr-{valid_pr:.4f}, test2013_rmse-{test2013_rmse:.4f}, test2013_pr-{test2013_pr:.4f}, test2016_rmse-{test2016_rmse:.4f}, test2016_pr-{test2016_pr:.4f}, test2019_rmse-{test2019_rmse:.4f}, test2019_pr-{test2019_pr:.4f}"
-            logger.info(msg_test)
+            # # final testing
+            # load_model_dict(model, best_model_list[-1])
+            # valid_rmse, valid_pr = val(model, valid_loader, device)
+            # test2013_rmse, test2013_pr = val(model, test2013_loader, device)
+            # test2016_rmse, test2016_pr = val(model, test2016_loader, device)
+            # test2019_rmse, test2019_pr = val(model, test2019_loader, device)
+            # msg_test = f"valid_rmse-{valid_rmse:.4f}, valid_pr-{valid_pr:.4f}, test2013_rmse-{test2013_rmse:.4f}, test2013_pr-{test2013_pr:.4f}, test2016_rmse-{test2016_rmse:.4f}, test2016_pr-{test2016_pr:.4f}, test2019_rmse-{test2019_rmse:.4f}, test2019_pr-{test2019_pr:.4f}"
+            # logger.info(msg_test)
             
             
             # writer.close()

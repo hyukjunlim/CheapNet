@@ -33,9 +33,9 @@ def val(model, model2, dataloader, device):
             # i wanna find a row that pred is the closest to label and pred2 is the farthest from label
             pred_diff = torch.abs(pred - label)
             pred2_diff = torch.abs(pred2 - label)
-            closest_pred_idx = torch.argmax(pred2_diff-pred_diff)
+            closest_pred_idx = torch.argmin(pred_diff)
 
-            closest_pred = (128 * i + closest_pred_idx - 1, pred[closest_pred_idx], label[closest_pred_idx], pred2[closest_pred_idx], pred2[closest_pred_idx] / pred[closest_pred_idx])
+            closest_pred = (64 * i + closest_pred_idx - 1, pred[closest_pred_idx], label[closest_pred_idx], pred2[closest_pred_idx], pred2[closest_pred_idx] / pred[closest_pred_idx])
 
             print(f'Row {i}')
             print(f"Closest prediction to label: {closest_pred}")
@@ -58,7 +58,7 @@ def val(model, model2, dataloader, device):
 # %%
 data_root = './data'
 graph_type = 'Graph_GIGN'
-batch_size = 128
+batch_size = 64
 
 for red_node in [1]:
 
