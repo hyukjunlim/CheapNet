@@ -4,6 +4,8 @@ import json
 import os
 import time
 import tqdm
+import sys
+sys.path.append(os.path.abspath('/data/project/dlagurwns03/GIGN/codes/lba_and_lep'))
 
 import numpy as np
 import pandas as pd
@@ -175,6 +177,7 @@ def train(args, device, test_mode=False):
 
     model = conv_model(in_channels, spatial_size, args)
     print(model)
+    print(f"Number of parameters: {sum(p.numel() for p in model.parameters() if p.requires_grad)}")
     model.to(device)
 
     prev_val_loss = np.Inf
@@ -224,10 +227,10 @@ def train(args, device, test_mode=False):
 
 if __name__=="__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('--data_dir', type=str, default=os.environ['LEP_DATA'])
+    parser.add_argument('--data_dir', type=str, default='../../../dataset_lep/split-by-protein/data')
     parser.add_argument('--mode', type=str, default='test',
                         choices=['train', 'test'])
-    parser.add_argument('--output_dir', type=str, default=os.environ['LOG_DIR'])
+    parser.add_argument('--output_dir', type=str, default='./logs')
     parser.add_argument('--unobserved', action='store_true', default=False)
 
     parser.add_argument('--learning_rate', type=float, default=0.00001)

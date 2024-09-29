@@ -11,6 +11,11 @@ import os
 import torch_geometric.utils
 from mpl_toolkits.mplot3d import Axes3D
 import time
+from utils import load_model_dict
+
+# big font size
+plt.rcParams.update({'font.size': 14})
+
 def visualize_complex_with_edges(data, x, ligand_diffpool_layer, protein_diffpool_layer, att_map, threshold=0.1, save_path="complex_clusters_with_edges.png"):
     """
     Visualizes the clustering of both ligand and protein atoms with edges in a 3D plot after DiffPool and saves the plot as an image.
@@ -222,44 +227,56 @@ def create_cross_attention_heatmap(data, att_lig, att_pro, s_lig, s_pro, num_nod
 
     mat_cpu = mat.cpu().detach().numpy()
     # Plot the heatmap
-    plt.figure(figsize=(8, 6))
+    plt.figure(figsize=(11, 6))
     # wanna make the fontsize bigger
-    plt.rcParams.update({'font.size': 14})
+    plt.rcParams.update({'font.size': 18})
     plt.imshow(mat_cpu, cmap='viridis', aspect='auto')
     plt.colorbar(label="Attention Score")
-    plt.title("Cross-Attention Map Between Ligand and Protein Atoms")
+    plt.title("Cross-Attention Map Between Protein and Ligand Atoms", fontsize=24)
     plt.xlabel("Protein Atom Index")
     plt.ylabel("Ligand Atom Index")
+    # yticks in 5 intervals
+    plt.yticks(np.arange(0, mat_cpu.shape[0], 5))
     # save with high resolution
+    plt.tight_layout()
     plt.savefig(save_path, dpi=300)
     plt.close()
 
     return mat
 
 # Load the saved GIGN model
+device = "cuda" if torch.cuda.is_available() else "cpu"
 num_clusters = [28, 156]
 model = CheapNet(35, 256, num_clusters).to("cuda" if torch.cuda.is_available() else "cpu")
-model_name = '/home/dlagurwns03/dlagurwns03_link/GIGN/codes/Diffpool_GIGN/save/g-d-c/q2q2/ours-lrs-0.001-28-156_0/repeat0/model/epoch-643, train_loss-0.0814, train_rmse-0.2853, valid_rmse-1.1860, valid_pr-0.7674.pt'
-# model_name = '/home/dlagurwns03/dlagurwns03_link/GIGN/codes/Diffpool_GIGN/save/g-d-c/q2q2/ours-lrs-0.001-28-156_0/repeat1/model/epoch-748, train_loss-0.0778, train_rmse-0.2788, valid_rmse-1.2007, valid_pr-0.7604.pt'
-# model_name = '/home/dlagurwns03/dlagurwns03_link/GIGN/codes/Diffpool_GIGN/save/g-d-c/q2q2/ours-lrs-0.001-28-156_0/repeat2/model/epoch-627, train_loss-0.0857, train_rmse-0.2927, valid_rmse-1.1922, valid_pr-0.7643.pt'
-# slice mode name from /model
-model_name = model_name.split('Diffpool_GIGN/')[1]
-model.load_state_dict(torch.load(model_name))
+# model_name = '/home/dlagurwns03/dlagurwns03_link/GIGN/codes/CheapNet/save/g-d-c/q2q2/ours-lrs-0.001-28-156_0/repeat0/model/epoch-643, train_loss-0.0814, train_rmse-0.2853, valid_rmse-1.1860, valid_pr-0.7674.pt'
+# model_name = '/home/dlagurwns03/dlagurwns03_link/GIGN/codes/CheapNet/save/g-d-c/q2q2/ours-lrs-0.001-28-156_0/repeat1/model/epoch-748, train_loss-0.0778, train_rmse-0.2788, valid_rmse-1.2007, valid_pr-0.7604.pt'
+model_name = '/home/dlagurwns03/dlagurwns03_link/GIGN/codes/CheapNet/save/g-d-c/q2q2/ours-lrs-0.001-28-156_0/repeat2/model/epoch-627, train_loss-0.0857, train_rmse-0.2927, valid_rmse-1.1922, valid_pr-0.7643.pt'
+model_name = model_name.split('CheapNet/')[1]
+load_model_dict(model, model_name)
+model = model.cuda()
 model.eval()
-
+from GIGN import GIGN
+GIGN_path = 'GIGN_model/20221121_074758_GIGN_repeat0/model/epoch-532, train_loss-0.1162, train_rmse-0.3408, valid_rmse-1.1564, valid_pr-0.7813.pt'
+model2 = GIGN(35, 256)
+load_model_dict(model2, GIGN_path)
+model2 = model2.cuda()
+model2.eval()
 
 # Load the dataset and select the first complex
 data_root = 'data'  # Update with the actual path
-casestudy_dir = os.path.join(data_root, 'casestudy')
-casestudy_df = pd.read_csv(os.path.join(data_root, 'casestudy.csv'))
+casestudy_dir = os.path.join(data_root, 'test2016')
+casestudy_df = pd.read_csv(os.path.join(data_root, 'pred_repeat2.csv'))
 
 casestudy_set = GraphDataset(casestudy_dir, casestudy_df, graph_type='Graph_GIGN', create=False)
 casestudy_loader = PLIDataLoader(casestudy_set, batch_size=1, shuffle=False, num_workers=4)
 
 for i, data in enumerate(casestudy_loader):
+    if i != 1:
+        continue
     data = data.to("cuda" if torch.cuda.is_available() else "cpu")
     print('-' * 30)
-    print(f"Processing complex {i + 1}...")
+    print(f"Processing complex {casestudy_df.iloc[i]['pdbid']}...")
+    gign_pred = model2(data)
     model.make_edge_index(data)
     # Pass through the GIGN blocks
     x = model.embedding(data.x)
@@ -288,17 +305,19 @@ for i, data in enumerate(casestudy_loader):
     mask = mask.view(batch_size, num_nodes, 1).to(x.dtype)
     num_nodes = mask.sum(dim=1).squeeze(1).long()
     
-    print(f'Predicted: {out.item():.4f}')
     print(f'True: {y.item():.4f}')
+    print(f'Predicted: {out.item():.4f}')
     print(f'RMSE: {F.mse_loss(out, y).sqrt().item():.4f}')
+    print(f'GIGN Predicted: {gign_pred.item():.4f}')
 
     # Create and save the heatmap
-    att_map = create_cross_attention_heatmap(data, att_lig, att_pro, s_lig, s_pro, num_nodes, save_path="cross_attention_heatmap.png")
-    visualize_complex_with_edges(data, x, model.diffpool1, model.diffpool2, att_map, save_path="complex_clusters_with_edges.png")
-    create_attention_heatmap(att_pro, 'Ligand', save_path="attention_heatmap_lig.png")
-    create_attention_heatmap(att_lig, 'Protein', save_path="attention_heatmap_pro.png")
-    create_cluster_heatmap(s_pro, 'Protein', save_path="cluster_heatmap_pro.png")
-    create_cluster_heatmap(s_lig, 'Ligand', save_path="cluster_heatmap_lig.png")
+    att_map = create_cross_attention_heatmap(data, att_lig, att_pro, s_lig, s_pro, num_nodes, save_path=f"cross_attention_heatmap.png")
+    visualize_complex_with_edges(data, x, model.diffpool1, model.diffpool2, att_map, save_path=f"complex_clusters_with_edges.png")
+    # create_attention_heatmap(att_pro, 'Ligand', save_path="attention_heatmap_lig.png")
+    # create_attention_heatmap(att_lig, 'Protein', save_path="attention_heatmap_pro.png")
+    # create_cluster_heatmap(s_pro, 'Protein', save_path="cluster_heatmap_pro.png")
+    # create_cluster_heatmap(s_lig, 'Ligand', save_path="cluster_heatmap_lig.png")
 
     # time.sleep(3)
+    break
 

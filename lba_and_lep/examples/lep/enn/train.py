@@ -4,6 +4,11 @@ import gc
 import torch
 from torch.utils.data import DataLoader
 # Cormorant modules and functions
+import sys
+import os
+sys.path.append(os.path.abspath('/data/project/dlagurwns03/GIGN/codes/lba_and_lep/cormorant/src'))
+sys.path.append(os.path.abspath('/data/project/dlagurwns03/GIGN/codes/lba_and_lep'))
+
 from cormorant.engine import Engine
 from cormorant.engine import init_logger, init_cuda
 from cormorant.engine import init_optimizer, init_scheduler
@@ -29,8 +34,10 @@ def main():
     init_logger(args)
     # Initialize device and data type
     device, dtype = init_cuda(args)
+    args.datadir = '/data/project/dlagurwns03/GIGN/codes/lba_and_lep/dataset_lep/split-by-protein/data'
     # Initialize dataloader
     args, datasets, num_species, charge_scale = initialize_lep_data(args, args.datadir)
+    print()
     # Construct PyTorch dataloaders from datasets
     dataloaders = {split: DataLoader(dataset, batch_size=args.batch_size,
                                      shuffle=args.shuffle if (split == 'train') else False,

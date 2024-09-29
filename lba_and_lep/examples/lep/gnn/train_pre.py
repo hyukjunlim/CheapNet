@@ -14,7 +14,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torch_geometric.data import DataLoader as PTGDataLoader
 from torch.utils.data import DataLoader
-from model import GIGN, MLP_LEP, explain
+from pre_model import GNN_LEP, MLP_LEP
 from data import CollaterLEP
 from atom3d.util.transforms import PairedGraphTransform
 from atom3d.datasets import LMDBDataset, PTGDataset
@@ -109,7 +109,7 @@ def train(args, device, log_dir, rep=None, test_mode=False):
         break
 
     num_clusters = [49, 312]
-    gcn_model = GIGN(num_features1, hidden_dim=args.hidden_dim, num_clusters=num_clusters)
+    gcn_model = GNN_LEP(num_features1, hidden_dim=64)
     gcn_model.to(device)
     ff_model = MLP_LEP(args.hidden_dim).to(device)
     num_params_gcn = sum(p.numel() for p in gcn_model.parameters() if p.requires_grad)
@@ -117,93 +117,57 @@ def train(args, device, log_dir, rep=None, test_mode=False):
     num_params = num_params_gcn + num_params_ff
     print(F'GIGN params # : {num_params} ({num_params_gcn} + {num_params_ff})')
     logger.info(f"GIGN params # : {num_params}({num_params_gcn}, {num_params_ff})")
-    print(f'Total samples : {len(train_dataset) + len(val_dataset) + len(test_dataset)}')
 
     best_val_loss = 999
     best_val_auroc = 0
 
-    maxnum = 0
-    maxnum_lig = 0
-    maxnum_pro = 0
-    for j in [test_loader, val_loader, train_loader]:
-        sum_intra = 0
-        sum_lig = 0
-        sum_pro = 0
-        lig_list = []
-        pro_list = []
-        total_list = []
-        for i, (data, data2) in enumerate(j):
-            data = data.to(device)
-            for i in range(data.batch.max().item() + 1):
+    # maxnum = 0
+    # maxnum_lig = 0
+    # maxnum_pro = 0
+    # for j in [test_loader, val_loader, train_loader]:
+    #     sum_intra = 0
+    #     sum_lig = 0
+    #     sum_pro = 0
+    #     lig_list = []
+    #     pro_list = []
+    #     for i, (data, data2) in enumerate(j):
+    #         data = data.to(device)
+    #         for i in range(data.batch.max().item() + 1):
                 
-                mask = data.batch[data.edge_index_intra[0, :]] == i
-                mask_lig = data.split[data.edge_index_intra[0, :]] == 0
-                mask_pro = data.split[data.edge_index_intra[0, :]] == 1
-                comb_lig = mask & mask_lig
-                comb_pro = mask & mask_pro
-                edge_index_lig = data.edge_index_intra[:, comb_lig]
-                edge_index_pro = data.edge_index_intra[:, comb_pro]
-                unique_nodes_lig = torch.unique(edge_index_lig)
-                unique_nodes_pro = torch.unique(edge_index_pro)
+    #             mask = data.batch[data.edge_index_intra[0, :]] == i
+    #             mask_lig = data.split[data.edge_index_intra[0, :]] == 0
+    #             mask_pro = data.split[data.edge_index_intra[0, :]] == 1
+    #             comb_lig = mask & mask_lig
+    #             comb_pro = mask & mask_pro
+    #             edge_index_lig = data.edge_index_intra[:, comb_lig]
+    #             edge_index_pro = data.edge_index_intra[:, comb_pro]
+    #             unique_nodes_lig = torch.unique(edge_index_lig)
+    #             unique_nodes_pro = torch.unique(edge_index_pro)
 
-                maxnum_lig = max(maxnum_lig, unique_nodes_lig.size(0))
-                maxnum_pro = max(maxnum_pro, unique_nodes_pro.size(0))
-                maxnum = max(maxnum, unique_nodes_lig.size(0) + unique_nodes_pro.size(0))
-                sum_intra += unique_nodes_lig.size(0) + unique_nodes_pro.size(0)
-                sum_lig += unique_nodes_lig.size(0)
-                sum_pro += unique_nodes_pro.size(0)
-                lig_list.append(unique_nodes_lig.size(0))
-                pro_list.append(unique_nodes_pro.size(0))
-                total_list.append(unique_nodes_lig.size(0) + unique_nodes_pro.size(0))
-
-                mask = data2.batch[data2.edge_index_intra[0, :]] == i
-                mask_lig = data2.split[data2.edge_index_intra[0, :]] == 0
-                mask_pro = data2.split[data2.edge_index_intra[0, :]] == 1
-                comb_lig = mask & mask_lig
-                comb_pro = mask & mask_pro
-                edge_index_lig = data2.edge_index_intra[:, comb_lig]
-                edge_index_pro = data2.edge_index_intra[:, comb_pro]
-                unique_nodes_lig = torch.unique(edge_index_lig)
-                unique_nodes_pro = torch.unique(edge_index_pro)
-
-                maxnum_lig = max(maxnum_lig, unique_nodes_lig.size(0))
-                maxnum_pro = max(maxnum_pro, unique_nodes_pro.size(0))
-                maxnum = max(maxnum, unique_nodes_lig.size(0) + unique_nodes_pro.size(0))
-                sum_intra += unique_nodes_lig.size(0) + unique_nodes_pro.size(0)
-                sum_lig += unique_nodes_lig.size(0)
-                sum_pro += unique_nodes_pro.size(0)
-                lig_list.append(unique_nodes_lig.size(0))
-                pro_list.append(unique_nodes_pro.size(0))
-                total_list.append(unique_nodes_lig.size(0) + unique_nodes_pro.size(0))
-
-    # print(sum_intra / args.batch_size / len(j))
-    # print(sum_lig / args.batch_size / len(j))
-    # print(sum_pro / args.batch_size / len(j))
-    # print(maxnum, maxnum_lig, maxnum_pro)
-    lig_list = np.array(lig_list)
-    q1 = np.percentile(lig_list, 25)
-    q2 = np.percentile(lig_list, 50)
-    q3 = np.percentile(lig_list, 75)
-    q4 = np.percentile(lig_list, 100)
-    avg = np.mean(lig_list)
-    std = np.std(lig_list)
-    print(f'LIG: {q1}, {q2}, {q3}, {q4}, {avg:.2f}, {std:.2f}')
-    pro_list = np.array(pro_list)
-    q1 = np.percentile(pro_list, 25)
-    q2 = np.percentile(pro_list, 50)
-    q3 = np.percentile(pro_list, 75)
-    q4 = np.percentile(pro_list, 100)
-    avg = np.mean(pro_list)
-    std = np.std(pro_list)
-    print(f'PRO: {q1}, {q2}, {q3}, {q4}, {avg:.2f}, {std:.2f}')
-    total_list = np.array(total_list)
-    q1 = np.percentile(total_list, 25)
-    q2 = np.percentile(total_list, 50)
-    q3 = np.percentile(total_list, 75)
-    q4 = np.percentile(total_list, 100)
-    avg = np.mean(total_list)
-    std = np.std(total_list)
-    print(f'TOTAL: {q1}, {q2}, {q3}, {q4}, {avg:.2f}, {std:.2f}')
+    #             maxnum_lig = max(maxnum_lig, unique_nodes_lig.size(0))
+    #             maxnum_pro = max(maxnum_pro, unique_nodes_pro.size(0))
+    #             maxnum = max(maxnum, unique_nodes_lig.size(0) + unique_nodes_pro.size(0))
+    #             sum_intra += unique_nodes_lig.size(0) + unique_nodes_pro.size(0)
+    #             sum_lig += unique_nodes_lig.size(0)
+    #             sum_pro += unique_nodes_pro.size(0)
+    #             lig_list.append(unique_nodes_lig.size(0))
+    #             pro_list.append(unique_nodes_pro.size(0))
+    #     print(sum_intra / args.batch_size / len(j))
+    #     print(sum_lig / args.batch_size / len(j))
+    #     print(sum_pro / args.batch_size / len(j))
+    #     print(maxnum, maxnum_lig, maxnum_pro)
+    #     lig_list = np.array(lig_list)
+    #     q1 = np.percentile(lig_list, 25)
+    #     q2 = np.percentile(lig_list, 50)
+    #     q3 = np.percentile(lig_list, 75)
+    #     q4 = np.percentile(lig_list, 100)
+    #     print(f'LIG: {q1}, {q2}, {q3}, {q4}')
+    #     pro_list = np.array(pro_list)
+    #     q1 = np.percentile(pro_list, 25)
+    #     q2 = np.percentile(pro_list, 50)
+    #     q3 = np.percentile(pro_list, 75)
+    #     q4 = np.percentile(pro_list, 100)
+    #     print(f'PRO: {q1}, {q2}, {q3}, {q4}')
 
     params = [x for x in gcn_model.parameters()] + [x for x in ff_model.parameters()]
     criterion = nn.BCELoss()
@@ -276,17 +240,17 @@ def seed_everything(seed):
     torch.manual_seed(seed)
     torch.cuda.manual_seed(seed)
     torch.cuda.manual_seed_all(seed)
-
+explain = ''
 if __name__=="__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('--data_dir', type=str, default=f"/data/project/dlagurwns03/GIGN/codes/lba_and_lep/examples/lep/gnn/dataset")
+    parser.add_argument('--data_dir', type=str, default=f"/data/project/dlagurwns03/GIGN/codes/lba_and_lep/dataset_lep/split-by-protein/data")
     parser.add_argument('--mode', type=str, default='test')
     parser.add_argument('--batch_size', type=int, default=4)
     parser.add_argument('--hidden_dim', type=int, default=256)
     parser.add_argument('--num_epochs', type=int, default=10)
     parser.add_argument('--learning_rate', type=float, default=1e-3)
     parser.add_argument('--log_dir', type=str, default=None)
-    parser.add_argument('--precomputed', type=bool, default=True)
+    parser.add_argument('--precomputed', type=bool, default=False)
     parser.add_argument('--early_stop_patience', type=int, default=100)
     parser.add_argument('--GPU_NUM', type=int, default=0)
     parser.add_argument('--use_scheduler', type=int, default=0)

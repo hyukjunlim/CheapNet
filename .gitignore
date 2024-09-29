@@ -3,13 +3,10 @@
 *.mol2
 *.pdb
 CheapNet/data/
-Atom3D/data/
-AttentionSiteDTI/data/
 lba_and_lep/dataset
 lba_and_lep/dataset_lep
 lba_and_lep/dataset_DUDE
 lba_and_lep/examples/vir/gnn/all
 lba_and_lep/examples/vir/gnn/dataset
 lba_and_lep/tests/test_data
-DEattentionDTA/data/
-
+lba_and_lep/cormorant

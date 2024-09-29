@@ -26,7 +26,6 @@ def val(model, dataloader, device):
         with torch.no_grad():
             pred = model(data)
             label = data.y
-            print(pred, label)
 
             pred_list.append(pred.detach().cpu().numpy())
             label_list.append(label.detach().cpu().numpy())
@@ -35,11 +34,11 @@ def val(model, dataloader, device):
     label = np.concatenate(label_list, axis=0)
 
     rmse = np.sqrt(mean_squared_error(label, pred))
-    mae = mean_absolute_error(label, pred)
+    pr = np.corrcoef(label, pred)[0, 1]
 
     model.train()
 
-    return rmse, mae
+    return rmse, pr
     
 # %%
 data_root = './data'
@@ -48,11 +47,11 @@ batch_size = 128
 
 for red_node in [1]:
 
-    casestudy_dir = os.path.join(data_root, 'casestudy')
-    casestudy_df = pd.read_csv(os.path.join(data_root, 'casestudy.csv'))
+    casestudy_dir = os.path.join(data_root, 'csar')
+    casestudy_df = pd.read_csv(os.path.join(data_root, 'csar.csv'))
     casestudy_set = GraphDataset(casestudy_dir, casestudy_df, graph_type=graph_type, create=False)
     casestudy_loader = PLIDataLoader(casestudy_set, batch_size=batch_size, shuffle=False, num_workers=4)
-    columns = ['Model', '1hvr RMSE', '1hvr MAE']
+    columns = ['Model', 'casestudy RMSE', 'casestudy MAE']
     results_df = pd.DataFrame(columns=columns)
 
     models = ['GIGN']

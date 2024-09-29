@@ -91,71 +91,86 @@ def train(args, device, log_dir, rep=None, test_mode=False):
         break
     
     num_clusters = [25, 372] if args.seqid == 30 else [24, 362]
-    model = GNN_LBA(num_features, hidden_dim=64)
-    # model = GIGN(num_features, hidden_dim=args.hidden_dim, num_clusters=num_clusters).to(device)
+    # model = GNN_LBA(num_features, hidden_dim=64)
+    model = GIGN(num_features, hidden_dim=args.hidden_dim, num_clusters=num_clusters).to(device)
     model.to(device)
     print(F'GIGN params # : {sum(p.numel() for p in model.parameters() if p.requires_grad)}')
     logger.info(f"GIGN params # : {sum(p.numel() for p in model.parameters() if p.requires_grad)}")
+    print(f'Total samples : {len(train_dataset) + len(val_dataset) + len(test_dataset)}')
 
     best_val_loss = 999
     best_rp = 0
     best_rs = 0
 
-    # maxnum = 0
-    # maxnum_lig = 0
-    # maxnum_pro = 0
-    # for j in [test_loader, val_loader, train_loader]:
-    #     sum_intra = 0
-    #     sum_lig = 0
-    #     sum_pro = 0
-    #     lig_list = []
-    #     pro_list = []
-    #     for i, data in enumerate(j):
-    #         data = data.to(device)
-    #         for i in range(data.batch.max().item() + 1):
+    maxnum = 0
+    maxnum_lig = 0
+    maxnum_pro = 0
+    for j in [train_loader, val_loader, test_loader]:
+        sum_intra = 0
+        sum_lig = 0
+        sum_pro = 0
+        lig_list = []
+        pro_list = []
+        total_list = []
+        for i, data in enumerate(j):
+            data = data.to(device)
+            for i in range(data.batch.max().item() + 1):
                 
-    #             mask = data.batch[data.edge_index_intra[0, :]] == i
-    #             mask_lig = data.split[data.edge_index_intra[0, :]] == 0
-    #             mask_pro = data.split[data.edge_index_intra[0, :]] == 1
-    #             comb_lig = mask & mask_lig
-    #             comb_pro = mask & mask_pro
-    #             edge_index_lig = data.edge_index_intra[:, comb_lig]
-    #             edge_index_pro = data.edge_index_intra[:, comb_pro]
-    #             unique_nodes_lig = torch.unique(edge_index_lig)
-    #             unique_nodes_pro = torch.unique(edge_index_pro)
+                mask = data.batch[data.edge_index_intra[0, :]] == i
+                mask_lig = data.split[data.edge_index_intra[0, :]] == 0
+                mask_pro = data.split[data.edge_index_intra[0, :]] == 1
+                comb_lig = mask & mask_lig
+                comb_pro = mask & mask_pro
+                edge_index_lig = data.edge_index_intra[:, comb_lig]
+                edge_index_pro = data.edge_index_intra[:, comb_pro]
+                unique_nodes_lig = torch.unique(edge_index_lig)
+                unique_nodes_pro = torch.unique(edge_index_pro)
 
-    #             # pocket_nodes = torch.unique(data.edge_index_inter)
-    #             # intra_lig_edges = edge_index_lig[:, torch.isin(edge_index_lig[0, :], pocket_nodes) & torch.isin(edge_index_lig[1, :], pocket_nodes)]
-    #             # intra_pro_edges = edge_index_pro[:, torch.isin(edge_index_pro[0, :], pocket_nodes) & torch.isin(edge_index_pro[1, :], pocket_nodes)]
-    #             # edge_index_pocket = torch.cat([intra_lig_edges, data.edge_index_inter, intra_pro_edges], dim=1)
-    #             # edge_index_pocket = edge_index_pocket[:, data.batch[edge_index_pocket[0, :]] == i]
-    #             # unique_nodes_pocket = torch.unique(edge_index_pocket)
+                # pocket_nodes = torch.unique(data.edge_index_inter)
+                # intra_lig_edges = edge_index_lig[:, torch.isin(edge_index_lig[0, :], pocket_nodes) & torch.isin(edge_index_lig[1, :], pocket_nodes)]
+                # intra_pro_edges = edge_index_pro[:, torch.isin(edge_index_pro[0, :], pocket_nodes) & torch.isin(edge_index_pro[1, :], pocket_nodes)]
+                # edge_index_pocket = torch.cat([intra_lig_edges, data.edge_index_inter, intra_pro_edges], dim=1)
+                # edge_index_pocket = edge_index_pocket[:, data.batch[edge_index_pocket[0, :]] == i]
+                # unique_nodes_pocket = torch.unique(edge_index_pocket)
 
-    #             maxnum_lig = max(maxnum_lig, unique_nodes_lig.size(0))
-    #             maxnum_pro = max(maxnum_pro, unique_nodes_pro.size(0))
-    #             maxnum = max(maxnum, unique_nodes_lig.size(0) + unique_nodes_pro.size(0))
-    #             sum_intra += unique_nodes_lig.size(0) + unique_nodes_pro.size(0)
-    #             sum_lig += unique_nodes_lig.size(0)
-    #             sum_pro += unique_nodes_pro.size(0)
-    #             lig_list.append(unique_nodes_lig.size(0))
-    #             pro_list.append(unique_nodes_pro.size(0))
-    #     print(sum_intra / args.batch_size / len(j))
-    #     print(sum_lig / args.batch_size / len(j))
-    #     print(sum_pro / args.batch_size / len(j))
-    #     print(maxnum, maxnum_lig, maxnum_pro)
-    #     lig_list = np.array(lig_list)
-    #     q1 = np.percentile(lig_list, 25)
-    #     q2 = np.percentile(lig_list, 50)
-    #     q3 = np.percentile(lig_list, 75)
-    #     q4 = np.percentile(lig_list, 100)
-    #     print(f'LIG: {q1}, {q2}, {q3}, {q4}')
-    #     pro_list = np.array(pro_list)
-    #     q1 = np.percentile(pro_list, 25)
-    #     q2 = np.percentile(pro_list, 50)
-    #     q3 = np.percentile(pro_list, 75)
-    #     q4 = np.percentile(pro_list, 100)
-    #     print(f'PRO: {q1}, {q2}, {q3}, {q4}')
-
+                maxnum_lig = max(maxnum_lig, unique_nodes_lig.size(0))
+                maxnum_pro = max(maxnum_pro, unique_nodes_pro.size(0))
+                maxnum = max(maxnum, unique_nodes_lig.size(0) + unique_nodes_pro.size(0))
+                sum_intra += unique_nodes_lig.size(0) + unique_nodes_pro.size(0)
+                sum_lig += unique_nodes_lig.size(0)
+                sum_pro += unique_nodes_pro.size(0)
+                lig_list.append(unique_nodes_lig.size(0))
+                pro_list.append(unique_nodes_pro.size(0))
+                total_list.append(unique_nodes_lig.size(0) + unique_nodes_pro.size(0))
+        # print(sum_intra / args.batch_size / len(j))
+        # print(sum_lig / args.batch_size / len(j))
+        # print(sum_pro / args.batch_size / len(j))
+        # print(maxnum, maxnum_lig, maxnum_pro)
+    lig_list = np.array(lig_list)
+    q1 = np.percentile(lig_list, 25)
+    q2 = np.percentile(lig_list, 50)
+    q3 = np.percentile(lig_list, 75)
+    q4 = np.percentile(lig_list, 100)
+    avg = np.mean(lig_list)
+    std = np.std(lig_list)
+    print(f'LIG: {q1}, {q2}, {q3}, {q4}, {avg:.2f}, {std:.2f}')
+    pro_list = np.array(pro_list)
+    q1 = np.percentile(pro_list, 25)
+    q2 = np.percentile(pro_list, 50)
+    q3 = np.percentile(pro_list, 75)
+    q4 = np.percentile(pro_list, 100)
+    avg = np.mean(pro_list)
+    std = np.std(pro_list)
+    print(f'PRO: {q1}, {q2}, {q3}, {q4}, {avg:.2f}, {std:.2f}')
+    total_list = np.array(total_list)
+    q1 = np.percentile(total_list, 25)
+    q2 = np.percentile(total_list, 50)
+    q3 = np.percentile(total_list, 75)
+    q4 = np.percentile(total_list, 100)
+    avg = np.mean(total_list)
+    std = np.std(total_list)
+    print(f'TOTAL: {q1}, {q2}, {q3}, {q4}, {avg:.2f}, {std:.2f}')
+    print(f'------------------------')
     optimizer = torch.optim.Adam(model.parameters(), lr=args.learning_rate, weight_decay=1e-6)
     if args.use_scheduler:
         scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.5, patience=50, verbose=True)

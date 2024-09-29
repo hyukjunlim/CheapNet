@@ -16,13 +16,16 @@ from collections import defaultdict
 import re
 
 os.environ['CUDA_VISIBLE_DEVICES'] = "0"
-# %%
-def val(model, model2, dataloader, device):
+def val(model, model2, dataloader, device, latest_epoch_model_path, test2016_df):
     model.eval()
     model2.eval()
 
     pred_list = []
+    pred2_list = []
     label_list = []
+    idx_list = []
+    pdbid_list = []
+
     for i, data in enumerate(dataloader):
         data = data.to(device)
         with torch.no_grad():
@@ -30,22 +33,34 @@ def val(model, model2, dataloader, device):
             pred2 = model2(data)
             label = data.y
 
-            # i wanna find a row that pred is the closest to label and pred2 is the farthest from label
-            pred_diff = torch.abs(pred - label)
-            pred2_diff = torch.abs(pred2 - label)
-            closest_pred_idx = torch.argmin(pred_diff)
+            # Store indices, labels, predictions
+            for idx in range(len(label)):
+                idx_list.append(64 * i + idx)
+                pdbid_list.append(test2016_df.iloc[idx_list[-1]]['pdbid'])
+                pred_list.append(pred[idx].detach().cpu().numpy())
+                pred2_list.append(pred2[idx].detach().cpu().numpy())
+                label_list.append(label[idx].detach().cpu().numpy())
 
-            closest_pred = (64 * i + closest_pred_idx - 1, pred[closest_pred_idx], label[closest_pred_idx], pred2[closest_pred_idx], pred2[closest_pred_idx] / pred[closest_pred_idx])
+    # Create a DataFrame for the collected data
+    df = pd.DataFrame({
+        'pdbid': pdbid_list,
+        'Index': idx_list,
+        '-logKd/Ki': label_list,
+        'Pred': pred_list,
+        'Pred2': pred2_list,
+        'diff' : np.abs(np.array(pred_list) - np.array(label_list))
+    })
 
-            print(f'Row {i}')
-            print(f"Closest prediction to label: {closest_pred}")
+    # Sort the DataFrame by 'Pred'
+    df = df.sort_values(by='diff')
 
+    # Save the DataFrame to a CSV file
+    postfix = latest_epoch_model_path.split('/')[-3]
+    df.to_csv(f'data/pred_{postfix}.csv', index=False)
 
-            pred_list.append(pred.detach().cpu().numpy())
-            label_list.append(label.detach().cpu().numpy())
-            
-    pred = np.concatenate(pred_list, axis=0)
-    label = np.concatenate(label_list, axis=0)
+    # Convert lists to numpy arrays for RMSE and MAE calculations
+    pred = np.array(pred_list)
+    label = np.array(label_list)
 
     rmse = np.sqrt(mean_squared_error(label, pred))
     mae = mean_absolute_error(label, pred)
@@ -55,18 +70,17 @@ def val(model, model2, dataloader, device):
 
     return rmse, mae
     
-# %%
 data_root = './data'
 graph_type = 'Graph_GIGN'
 batch_size = 64
 
 for red_node in [1]:
 
-    casf2016_dir = os.path.join(data_root, 'casf2016')
-    casf2016_df = pd.read_csv(os.path.join(data_root, 'casf2016.csv'))
-    casf2016_set = GraphDataset(casf2016_dir, casf2016_df, graph_type=graph_type, create=False)
-    casf2016_loader = PLIDataLoader(casf2016_set, batch_size=batch_size, shuffle=False, num_workers=4)
-    columns = ['Model', 'casf2016 RMSE', 'casf2016 MAE']
+    test2016_dir = os.path.join(data_root, 'test2016')
+    test2016_df = pd.read_csv(os.path.join(data_root, 'test2016.csv'))
+    test2016_set = GraphDataset(test2016_dir, test2016_df, graph_type=graph_type, create=False)
+    test2016_loader = PLIDataLoader(test2016_set, batch_size=batch_size, shuffle=False, num_workers=4)
+    columns = ['Model', 'test2016 RMSE', 'test2016 MAE']
     results_df = pd.DataFrame(columns=columns)
 
     models = ['GIGN']
@@ -93,19 +107,19 @@ for red_node in [1]:
             load_model_dict(model2, GIGN_path)
             model2 = model2.cuda()
 
-            casf2016_rmse, casf2016_mae = val(model, model2, casf2016_loader, device)
+            test2016_rmse, test2016_mae = val(model, model2, test2016_loader, device, latest_epoch_model_path, test2016_df)
 
             new_row = {
                 'Model': md.split('/')[2] + " | " + md[-1],
-                'casf2016 RMSE': casf2016_rmse,
-                'casf2016 MAE': casf2016_mae
+                'test2016 RMSE': test2016_rmse,
+                'test2016 MAE': test2016_mae
             }
 
             new_row_df = pd.DataFrame([new_row])
 
             results_df = pd.concat([results_df, new_row_df], ignore_index=True)
 # 
-    metrics = ['casf2016 RMSE', 'casf2016 MAE']
+    metrics = ['test2016 RMSE', 'test2016 MAE']
     mean_values = results_df[metrics].mean()
     std_values = results_df[metrics].std()
     results_df = results_df.append(pd.Series(['Mean'] + list(mean_values), index=results_df.columns), ignore_index=True)

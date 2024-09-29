@@ -1,2 +1,2 @@
-seed: 706
-GIGN params # : 376705
+seed: 498
+GIGN params # : 1393064

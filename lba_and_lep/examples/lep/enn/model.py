@@ -8,7 +8,7 @@ from cormorant.cg_lib import CGModule, SphericalHarmonicsRel
 from cormorant.nn import RadialFilters
 from cormorant.nn import BasicMLP
 from cormorant.nn import InputLinear, InputMPNN
-from cormorant.nn import OutputLinear, OutputPMLP, OutputSoftmax, OutputLinearOnce, OutputSiamesePMLP, OutputSoftmaxPMLP
+from cormorant.nn import OutputLinear, OutputPMLP
 from cormorant.nn import GetScalarsAtom
 from cormorant.nn import NoLayer
 
@@ -109,11 +109,11 @@ class ENN_LEP(CGModule):
         # Set up the output networks
         num_scalars_atom = self.get_scalars_atom.num_scalars
         num_scalars_edge = self.get_scalars_edge.num_scalars
-        self.output_layer_atom = OutputLinearOnce(num_scalars_atom, bias=True,
+        self.output_layer_atom = OutputLinear(num_scalars_atom, bias=True,
                                                   device=self.device, dtype=self.dtype) 
         self.output_layer_edge = NoLayer()
 
-        self.output_layer = OutputSiamesePMLP(36, num_classes=num_classes, device=self.device, dtype=self.dtype)
+        self.output_layer = OutputPMLP(36, num_classes=num_classes, device=self.device, dtype=self.dtype)
 
         logging.info('Model initialized. Number of parameters: {}'.format(
             sum([p.nelement() for p in self.parameters()])))
