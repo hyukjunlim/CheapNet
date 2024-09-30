@@ -201,7 +201,7 @@ class AttentionBlock(nn.Module):
         
         return x, attention
 
-class GIGN(nn.Module):
+class CheapNet(nn.Module):
     def __init__(self, node_dim, hidden_dim, num_clusters, heads=1, drop_rate=0.1):
         super().__init__()
         
@@ -241,10 +241,6 @@ class GIGN(nn.Module):
 
         return x
 
-mode = 'q2q2'
-explain = f"{mode}"
-
-    
 class MLP_LEP(torch.nn.Module):
     def __init__(self, hidden_dim):
         super(MLP_LEP, self).__init__()

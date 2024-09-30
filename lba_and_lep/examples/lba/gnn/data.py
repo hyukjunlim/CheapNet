@@ -1,7 +1,7 @@
 import numpy as np
 import os
 import sys
-sys.path.append(os.path.abspath('/data/project/dlagurwns03/GIGN/codes/lba_and_lep'))
+sys.path.append(os.path.abspath('/data/project/dlagurwns03/CheapNet/lba_and_lep'))
 from tqdm import tqdm
 import torch
 from atom3d.util.transforms import prot_graph_transform, mol_graph_transform
@@ -27,14 +27,11 @@ class GNNTransformLBA(object):
         combined_graph = Data(node_feats, edges, intra_edge_attr=intra_edge_attr, inter_edge_attr=inter_edge_attr, y=item['scores']['neglog_aff'], pos=node_pos, edge_index_intra=intra_edges, edge_index_inter=inter_edges, split=split)
         return combined_graph
     
-
-        
 if __name__=="__main__":
     seqid = 60
-    # seqid = sys.argv[1]
-    save_dir = f'/data/project/dlagurwns03/GIGN/atom3d/examples/lba/gnn/dataset/split-by-sequence-identity-{seqid}/data'
-    data_dir = f'/data/project/dlagurwns03/GIGN/atom3d/dataset/split-by-sequence-identity-{seqid}/data'
-    # data_dir = '/scratch/users/aderry/atom3d/lba_30_withH/split/data'
+    save_dir = f'dataset/split-by-sequence-identity-{seqid}/data'
+    data_dir = f'../../../dataset/split-by-sequence-identity-{seqid}/data'
+    
     os.makedirs(os.path.join(save_dir, 'train'), exist_ok=True)
     os.makedirs(os.path.join(save_dir, 'val'), exist_ok=True)
     os.makedirs(os.path.join(save_dir, 'test'), exist_ok=True)

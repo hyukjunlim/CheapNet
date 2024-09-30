@@ -21,7 +21,7 @@ Training
 The training script can be invoked from the example folder using, e.g.::
 
     cd atom3d/examples/lep/gnn
-    python train.py --learning_rate 15e-4 --seed_set 1 --GPU_NUM 0
+    python train.py --learning_rate 15e-4 --data_dir $LMDBDIR
                     
 where LMDBDIR is the path to the subfolder "/data" of the split LMDB dataset.
 

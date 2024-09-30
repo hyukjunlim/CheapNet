@@ -1,12 +1,11 @@
-# DGIGN
-*.pt
-*.mol2
-*.pdb
-CheapNet/data/
-lba_and_lep/dataset
-lba_and_lep/dataset_lep
-lba_and_lep/dataset_DUDE
-lba_and_lep/examples/vir/gnn/all
-lba_and_lep/examples/vir/gnn/dataset
-lba_and_lep/tests/test_data
-lba_and_lep/cormorant
+# CheapNet
+
+cross-dataset/data/csar
+cross-dataset/data/test2013
+cross-dataset/data/test2016
+cross-dataset/data/test2019
+cross-dataset/data/train
+cross-dataset/data/valid
+
+lba_and_lep/examples/lba/gnn/dataset
+lba_and_lep/examples/lep/gnn/dataset

@@ -14,7 +14,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torch_geometric.data import DataLoader as PTGDataLoader
 from torch.utils.data import DataLoader
-from model import GIGN, MLP_LEP, explain
+from model import CheapNet, MLP_LEP
 from data import CollaterLEP
 from atom3d.util.transforms import PairedGraphTransform
 from atom3d.datasets import LMDBDataset, PTGDataset
@@ -30,8 +30,6 @@ def train_loop(args, epoch, gcn_model, ff_model, loader, criterion, optimizer, s
     ff_model.train()
 
     losses = []
-    total = 0
-    print_frequency = 70
     for it, (active, inactive) in enumerate(loader):
         labels = torch.FloatTensor([a == 'A' for a in active.y]).to(device)
         active = active.to(device)
@@ -56,9 +54,6 @@ def test(gcn_model, ff_model, loader, criterion, device):
     ff_model.eval()
 
     losses = []
-    total = 0
-    print_frequency = 10
-
     y_true = []
     y_pred = []
 
@@ -101,6 +96,7 @@ def train(args, device, log_dir, rep=None, test_mode=False):
         train_loader = PTGDataLoader(train_dataset, args.batch_size, shuffle=True, num_workers=4)
         val_loader = PTGDataLoader(val_dataset, args.batch_size, shuffle=False, num_workers=4)
         test_loader = PTGDataLoader(test_dataset, args.batch_size, shuffle=False, num_workers=4)
+    print(f'Total samples : {len(train_dataset) + len(val_dataset) + len(test_dataset)}')
 
     for active, inactive in train_loader:
         num_features1 = active.num_features
@@ -109,29 +105,21 @@ def train(args, device, log_dir, rep=None, test_mode=False):
         break
 
     num_clusters = [49, 312]
-    gcn_model = GIGN(num_features1, hidden_dim=args.hidden_dim, num_clusters=num_clusters)
+    gcn_model = CheapNet(num_features1, hidden_dim=args.hidden_dim, num_clusters=num_clusters)
     gcn_model.to(device)
     ff_model = MLP_LEP(args.hidden_dim).to(device)
     num_params_gcn = sum(p.numel() for p in gcn_model.parameters() if p.requires_grad)
     num_params_ff = sum(p.numel() for p in ff_model.parameters() if p.requires_grad)
     num_params = num_params_gcn + num_params_ff
-    print(F'GIGN params # : {num_params} ({num_params_gcn} + {num_params_ff})')
-    logger.info(f"GIGN params # : {num_params}({num_params_gcn}, {num_params_ff})")
-    print(f'Total samples : {len(train_dataset) + len(val_dataset) + len(test_dataset)}')
+    print(F'CheapNet params # : {num_params} ({num_params_gcn} + {num_params_ff})')
+    logger.info(f"CheapNet params # : {num_params}({num_params_gcn}, {num_params_ff})")
 
     best_val_loss = 999
-    best_val_auroc = 0
 
-    maxnum = 0
-    maxnum_lig = 0
-    maxnum_pro = 0
+    lig_list = []
+    pro_list = []
+    total_list = []
     for j in [test_loader, val_loader, train_loader]:
-        sum_intra = 0
-        sum_lig = 0
-        sum_pro = 0
-        lig_list = []
-        pro_list = []
-        total_list = []
         for i, (data, data2) in enumerate(j):
             data = data.to(device)
             for i in range(data.batch.max().item() + 1):
@@ -139,19 +127,11 @@ def train(args, device, log_dir, rep=None, test_mode=False):
                 mask = data.batch[data.edge_index_intra[0, :]] == i
                 mask_lig = data.split[data.edge_index_intra[0, :]] == 0
                 mask_pro = data.split[data.edge_index_intra[0, :]] == 1
-                comb_lig = mask & mask_lig
-                comb_pro = mask & mask_pro
-                edge_index_lig = data.edge_index_intra[:, comb_lig]
-                edge_index_pro = data.edge_index_intra[:, comb_pro]
+                edge_index_lig = data.edge_index_intra[:, mask & mask_lig]
+                edge_index_pro = data.edge_index_intra[:, mask & mask_pro]
                 unique_nodes_lig = torch.unique(edge_index_lig)
                 unique_nodes_pro = torch.unique(edge_index_pro)
 
-                maxnum_lig = max(maxnum_lig, unique_nodes_lig.size(0))
-                maxnum_pro = max(maxnum_pro, unique_nodes_pro.size(0))
-                maxnum = max(maxnum, unique_nodes_lig.size(0) + unique_nodes_pro.size(0))
-                sum_intra += unique_nodes_lig.size(0) + unique_nodes_pro.size(0)
-                sum_lig += unique_nodes_lig.size(0)
-                sum_pro += unique_nodes_pro.size(0)
                 lig_list.append(unique_nodes_lig.size(0))
                 pro_list.append(unique_nodes_pro.size(0))
                 total_list.append(unique_nodes_lig.size(0) + unique_nodes_pro.size(0))
@@ -159,27 +139,15 @@ def train(args, device, log_dir, rep=None, test_mode=False):
                 mask = data2.batch[data2.edge_index_intra[0, :]] == i
                 mask_lig = data2.split[data2.edge_index_intra[0, :]] == 0
                 mask_pro = data2.split[data2.edge_index_intra[0, :]] == 1
-                comb_lig = mask & mask_lig
-                comb_pro = mask & mask_pro
-                edge_index_lig = data2.edge_index_intra[:, comb_lig]
-                edge_index_pro = data2.edge_index_intra[:, comb_pro]
+                edge_index_lig = data2.edge_index_intra[:, mask & mask_lig]
+                edge_index_pro = data2.edge_index_intra[:, mask & mask_pro]
                 unique_nodes_lig = torch.unique(edge_index_lig)
                 unique_nodes_pro = torch.unique(edge_index_pro)
 
-                maxnum_lig = max(maxnum_lig, unique_nodes_lig.size(0))
-                maxnum_pro = max(maxnum_pro, unique_nodes_pro.size(0))
-                maxnum = max(maxnum, unique_nodes_lig.size(0) + unique_nodes_pro.size(0))
-                sum_intra += unique_nodes_lig.size(0) + unique_nodes_pro.size(0)
-                sum_lig += unique_nodes_lig.size(0)
-                sum_pro += unique_nodes_pro.size(0)
                 lig_list.append(unique_nodes_lig.size(0))
                 pro_list.append(unique_nodes_pro.size(0))
                 total_list.append(unique_nodes_lig.size(0) + unique_nodes_pro.size(0))
 
-    # print(sum_intra / args.batch_size / len(j))
-    # print(sum_lig / args.batch_size / len(j))
-    # print(sum_pro / args.batch_size / len(j))
-    # print(maxnum, maxnum_lig, maxnum_pro)
     lig_list = np.array(lig_list)
     q1 = np.percentile(lig_list, 25)
     q2 = np.percentile(lig_list, 50)
@@ -188,6 +156,7 @@ def train(args, device, log_dir, rep=None, test_mode=False):
     avg = np.mean(lig_list)
     std = np.std(lig_list)
     print(f'LIG: {q1}, {q2}, {q3}, {q4}, {avg:.2f}, {std:.2f}')
+
     pro_list = np.array(pro_list)
     q1 = np.percentile(pro_list, 25)
     q2 = np.percentile(pro_list, 50)
@@ -196,6 +165,7 @@ def train(args, device, log_dir, rep=None, test_mode=False):
     avg = np.mean(pro_list)
     std = np.std(pro_list)
     print(f'PRO: {q1}, {q2}, {q3}, {q4}, {avg:.2f}, {std:.2f}')
+
     total_list = np.array(total_list)
     q1 = np.percentile(total_list, 25)
     q2 = np.percentile(total_list, 50)
@@ -279,7 +249,7 @@ def seed_everything(seed):
 
 if __name__=="__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('--data_dir', type=str, default=f"/data/project/dlagurwns03/GIGN/codes/lba_and_lep/examples/lep/gnn/dataset")
+    parser.add_argument('--data_dir', type=str, default=f"dataset")
     parser.add_argument('--mode', type=str, default='test')
     parser.add_argument('--batch_size', type=int, default=4)
     parser.add_argument('--hidden_dim', type=int, default=256)
@@ -321,7 +291,7 @@ if __name__=="__main__":
             for rep, seed in enumerate(iter_list):
                 if args.rep is not None and rep != args.rep:
                     continue
-                log_dir = os.path.join('logs', f'lep_test_{explain}_{repeat}_{args.GPU_NUM}_{rep}')
+                log_dir = os.path.join('logs', f'lep_test_{repeat}_{args.GPU_NUM}_{rep}')
                 if not os.path.exists(log_dir):
                     os.makedirs(log_dir)
                 logger = logging.getLogger('lep')

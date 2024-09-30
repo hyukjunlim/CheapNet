@@ -49,11 +49,9 @@ class CollaterLEP(object):
         batch_2 = Batch.from_data_list([d[1] for d in data_list])
         return batch_1, batch_2
     
-
-        
 if __name__=="__main__":
-    save_dir = '/data/project/dlagurwns03/GIGN/atom3d/examples/lep/gnn/dataset'
-    data_dir = '/data/project/dlagurwns03/GIGN/atom3d/dataset_lep/split-by-protein/data'
+    save_dir = 'dataset'
+    data_dir = '../../../dataset_lep/split-by-protein/data'
     os.makedirs(os.path.join(save_dir, 'train'), exist_ok=True)
     os.makedirs(os.path.join(save_dir, 'val'), exist_ok=True)
     os.makedirs(os.path.join(save_dir, 'test'), exist_ok=True)

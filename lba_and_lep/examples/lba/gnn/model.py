@@ -101,7 +101,6 @@ class GIGNBlock(nn.Module):
 
         return x
 
-
 class DiffPool(nn.Module):
     def __init__(self, input_dim, output_dim, max_num, red_node, edge, drop_rate):
         super().__init__()
@@ -201,7 +200,7 @@ class AttentionBlock(nn.Module):
         
         return x, attention
 
-class GIGN(nn.Module):
+class CheapNet(nn.Module):
     def __init__(self, node_dim, hidden_dim, num_clusters, heads=1, drop_rate=0.1):
         super().__init__()
         
@@ -244,8 +243,4 @@ class GIGN(nn.Module):
         x = self.fc(x)
 
         return x.view(-1)
-
-mode = 'q2q2'
-explain = f"{mode}"
-
 

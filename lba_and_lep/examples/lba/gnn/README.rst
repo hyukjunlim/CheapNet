@@ -22,8 +22,8 @@ Training
 The training script can be invoked from the example folder using, e.g.::
 
     cd atom3d/examples/lba/gnn
-    python train.py --seqid 30 --num_epochs 15 --learning_rate 1.5e-3 --use_scheduler 0 --GPU_NUM 0 --batch_size 16 --seed_set 1 --data_dir $LMDBDIR 
-    python train.py --seqid 60 --learning_rate 1e-3 --GPU_NUM 0 --batch_size 16 --seed_set 1 --data_dir $LMDBDIR 
+    python train.py --seqid 30 --num_epochs 15 --learning_rate 1.5e-3 --use_scheduler 0 --data_dir $LMDBDIR 
+    python train.py --seqid 60 --learning_rate 1e-3 --data_dir $LMDBDIR 
                     
                     
 where LMDBDIR is the path to the subfolder "/data" of the split LMDB dataset.

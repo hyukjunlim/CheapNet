@@ -1,6 +1,8 @@
 import argparse
 import logging
 import os
+import sys
+sys.path.append(os.path.abspath('/data/project/dlagurwns03/CheapNet/lba_and_lep'))
 import time
 import datetime
 import random
@@ -9,8 +11,7 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 from torch_geometric.data import DataLoader
-from model import GIGN, explain
-from pre_model import GNN_LBA
+from model import CheapNet
 from data import GNNTransformLBA
 from atom3d.datasets import LMDBDataset, PTGDataset
 from scipy.stats import spearmanr
@@ -60,13 +61,6 @@ def test(model, loader, device):
 
     return np.sqrt(loss_all / total), r_p, r_s, y_true, y_pred
 
-# def plot_corr(y_true, y_pred, plot_dir):
-#     plt.clf()
-#     sns.scatterplot(y_true, y_pred)
-#     plt.xlabel('Actual -log(K)')
-#     plt.ylabel('Predicted -log(K)')
-#     plt.savefig(plot_dir)
-
 def save_weights(model, weight_dir):
     torch.save(model.state_dict(), weight_dir)
 
@@ -81,6 +75,7 @@ def train(args, device, log_dir, rep=None, test_mode=False):
         train_dataset = LMDBDataset(os.path.join(args.data_dir, 'train'), transform=transform)
         val_dataset = LMDBDataset(os.path.join(args.data_dir, 'val'), transform=transform)
         test_dataset = LMDBDataset(os.path.join(args.data_dir, 'test'), transform=transform)
+    print(f'Total samples : {len(train_dataset) + len(val_dataset) + len(test_dataset)}')
     
     train_loader = DataLoader(train_dataset, args.batch_size, shuffle=True, num_workers=4)
     val_loader = DataLoader(val_dataset, args.batch_size, shuffle=False, num_workers=4)
@@ -91,27 +86,19 @@ def train(args, device, log_dir, rep=None, test_mode=False):
         break
     
     num_clusters = [25, 372] if args.seqid == 30 else [24, 362]
-    # model = GNN_LBA(num_features, hidden_dim=64)
-    model = GIGN(num_features, hidden_dim=args.hidden_dim, num_clusters=num_clusters).to(device)
+    model = CheapNet(num_features, hidden_dim=args.hidden_dim, num_clusters=num_clusters).to(device)
     model.to(device)
-    print(F'GIGN params # : {sum(p.numel() for p in model.parameters() if p.requires_grad)}')
-    logger.info(f"GIGN params # : {sum(p.numel() for p in model.parameters() if p.requires_grad)}")
-    print(f'Total samples : {len(train_dataset) + len(val_dataset) + len(test_dataset)}')
+    print(F'CheapNet params # : {sum(p.numel() for p in model.parameters() if p.requires_grad)}')
+    logger.info(f"CheapNet params # : {sum(p.numel() for p in model.parameters() if p.requires_grad)}")
 
     best_val_loss = 999
     best_rp = 0
     best_rs = 0
 
-    maxnum = 0
-    maxnum_lig = 0
-    maxnum_pro = 0
+    lig_list = []
+    pro_list = []
+    total_list = []
     for j in [train_loader, val_loader, test_loader]:
-        sum_intra = 0
-        sum_lig = 0
-        sum_pro = 0
-        lig_list = []
-        pro_list = []
-        total_list = []
         for i, data in enumerate(j):
             data = data.to(device)
             for i in range(data.batch.max().item() + 1):
@@ -119,33 +106,14 @@ def train(args, device, log_dir, rep=None, test_mode=False):
                 mask = data.batch[data.edge_index_intra[0, :]] == i
                 mask_lig = data.split[data.edge_index_intra[0, :]] == 0
                 mask_pro = data.split[data.edge_index_intra[0, :]] == 1
-                comb_lig = mask & mask_lig
-                comb_pro = mask & mask_pro
-                edge_index_lig = data.edge_index_intra[:, comb_lig]
-                edge_index_pro = data.edge_index_intra[:, comb_pro]
+                edge_index_lig = data.edge_index_intra[:, mask & mask_lig]
+                edge_index_pro = data.edge_index_intra[:, mask & mask_pro]
                 unique_nodes_lig = torch.unique(edge_index_lig)
                 unique_nodes_pro = torch.unique(edge_index_pro)
 
-                # pocket_nodes = torch.unique(data.edge_index_inter)
-                # intra_lig_edges = edge_index_lig[:, torch.isin(edge_index_lig[0, :], pocket_nodes) & torch.isin(edge_index_lig[1, :], pocket_nodes)]
-                # intra_pro_edges = edge_index_pro[:, torch.isin(edge_index_pro[0, :], pocket_nodes) & torch.isin(edge_index_pro[1, :], pocket_nodes)]
-                # edge_index_pocket = torch.cat([intra_lig_edges, data.edge_index_inter, intra_pro_edges], dim=1)
-                # edge_index_pocket = edge_index_pocket[:, data.batch[edge_index_pocket[0, :]] == i]
-                # unique_nodes_pocket = torch.unique(edge_index_pocket)
-
-                maxnum_lig = max(maxnum_lig, unique_nodes_lig.size(0))
-                maxnum_pro = max(maxnum_pro, unique_nodes_pro.size(0))
-                maxnum = max(maxnum, unique_nodes_lig.size(0) + unique_nodes_pro.size(0))
-                sum_intra += unique_nodes_lig.size(0) + unique_nodes_pro.size(0)
-                sum_lig += unique_nodes_lig.size(0)
-                sum_pro += unique_nodes_pro.size(0)
                 lig_list.append(unique_nodes_lig.size(0))
                 pro_list.append(unique_nodes_pro.size(0))
                 total_list.append(unique_nodes_lig.size(0) + unique_nodes_pro.size(0))
-        # print(sum_intra / args.batch_size / len(j))
-        # print(sum_lig / args.batch_size / len(j))
-        # print(sum_pro / args.batch_size / len(j))
-        # print(maxnum, maxnum_lig, maxnum_pro)
     lig_list = np.array(lig_list)
     q1 = np.percentile(lig_list, 25)
     q2 = np.percentile(lig_list, 50)
@@ -154,6 +122,7 @@ def train(args, device, log_dir, rep=None, test_mode=False):
     avg = np.mean(lig_list)
     std = np.std(lig_list)
     print(f'LIG: {q1}, {q2}, {q3}, {q4}, {avg:.2f}, {std:.2f}')
+
     pro_list = np.array(pro_list)
     q1 = np.percentile(pro_list, 25)
     q2 = np.percentile(pro_list, 50)
@@ -162,6 +131,7 @@ def train(args, device, log_dir, rep=None, test_mode=False):
     avg = np.mean(pro_list)
     std = np.std(pro_list)
     print(f'PRO: {q1}, {q2}, {q3}, {q4}, {avg:.2f}, {std:.2f}')
+
     total_list = np.array(total_list)
     q1 = np.percentile(total_list, 25)
     q2 = np.percentile(total_list, 50)
@@ -171,6 +141,7 @@ def train(args, device, log_dir, rep=None, test_mode=False):
     std = np.std(total_list)
     print(f'TOTAL: {q1}, {q2}, {q3}, {q4}, {avg:.2f}, {std:.2f}')
     print(f'------------------------')
+    
     optimizer = torch.optim.Adam(model.parameters(), lr=args.learning_rate, weight_decay=1e-6)
     if args.use_scheduler:
         scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.5, patience=50, verbose=True)
@@ -215,7 +186,6 @@ def train(args, device, log_dir, rep=None, test_mode=False):
         print('Epoch: {:03d}, Time: {:.3f}s'.format(epoch, elapsed), end=', ')
         print('Train RMSE: {:.7f}, Val RMSE: {:.7f}, Pearson R: {:.7f}, Spearman R: {:.7f}'.format(train_loss, val_loss, r_p, r_s))
         logger.info('Epoch: {:03d}, Train RMSE: {:.7f}, Val RMSE: {:.7f}, Pearson R: {:.7f}, Spearman R: {:.7f}'.format(epoch, train_loss, val_loss, r_p, r_s))
-        # logger.info('{:03d}\t{:.7f}\t{:.7f}\t{:.7f}\t{:.7f}\n'.format(epoch, train_loss, val_loss, r_p, r_s))
 
     if test_mode:
         train_file = os.path.join(log_dir, f'lba-rep{rep}.best.train.pt')
@@ -260,7 +230,7 @@ if __name__=="__main__":
     args = parser.parse_args()
 
     if args.data_dir is None:
-        args.data_dir = f'/data/project/dlagurwns03/GIGN/codes/lba_and_lep/examples/lba/gnn/dataset/split-by-sequence-identity-{args.seqid}/data'
+        args.data_dir = f'dataset/split-by-sequence-identity-{args.seqid}/data'
     if args.GPU_NUM is None:
         args.GPU_NUM = 0 if args.seqid == 30 else 1
 
@@ -294,7 +264,7 @@ if __name__=="__main__":
                     continue
                 else:
                     pass
-                log_dir = os.path.join('logs', f'lba_test_withH_{args.seqid}_{explain}_{repeat}_{args.GPU_NUM}')
+                log_dir = os.path.join('logs', f'lba_test_withH_{args.seqid}_{repeat}_{args.GPU_NUM}')
                 if not os.path.exists(log_dir):
                     os.makedirs(log_dir)
                 logger = logging.getLogger('lba')
