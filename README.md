@@ -35,8 +35,6 @@ To install and use CheapNet, follow these steps:
    # For Diverse-protein Evaluation (LBA 30%, LBA 60%), and LEP Task
    conda env create -f cheapdivlep.yaml
    conda activate cheapdivlep
-
-
    ```
 
 ## Usage
