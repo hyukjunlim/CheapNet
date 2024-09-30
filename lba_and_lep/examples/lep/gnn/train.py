@@ -1,8 +1,8 @@
-import argparse
-import logging
 import os
 import sys
-sys.path.append(os.path.abspath('/data/project/dlagurwns03/GIGN/codes/lba_and_lep'))
+sys.path.append(os.path.abspath('/home/users/CheapNet/lba_and_lep'))
+import argparse
+import logging
 import time
 import datetime
 import random

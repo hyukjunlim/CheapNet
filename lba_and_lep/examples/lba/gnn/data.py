@@ -1,7 +1,7 @@
-import numpy as np
 import os
 import sys
-sys.path.append(os.path.abspath('/data/project/dlagurwns03/CheapNet/lba_and_lep'))
+sys.path.append(os.path.abspath('/home/users/CheapNet/lba_and_lep'))
+import numpy as np
 from tqdm import tqdm
 import torch
 from atom3d.util.transforms import prot_graph_transform, mol_graph_transform

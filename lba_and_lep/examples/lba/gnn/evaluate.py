@@ -1,6 +1,6 @@
 import os
 import sys
-sys.path.append(os.path.abspath('/data/project/dlagurwns03/CheapNet/lba_and_lep'))
+sys.path.append(os.path.abspath('/home/users/CheapNet/lba_and_lep'))
 import numpy as np
 import torch
 import atom3d.util.results as res

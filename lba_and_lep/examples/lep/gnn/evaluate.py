@@ -1,8 +1,8 @@
+import os
+import sys
+sys.path.append(os.path.abspath('/home/users/CheapNet/lba_and_lep'))
 import numpy as np
 import torch
-import sys
-import os
-sys.path.append(os.path.abspath('/data/project/dlagurwns03/GIGN/codes/lba_and_lep'))
 import atom3d.util.results as res
 import atom3d.util.metrics as met
 

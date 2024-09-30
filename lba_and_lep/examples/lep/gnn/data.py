@@ -1,10 +1,10 @@
-import numpy as np
-import sys
 import os
+import sys
+sys.path.append(os.path.abspath('/home/users/CheapNet/lba_and_lep'))
+import numpy as np
 import torch
 from tqdm import tqdm
 from atom3d.util.transforms import prot_graph_transform, mol_graph_transform, PairedGraphTransform
-sys.path.append(os.path.abspath('/data/project/dlagurwns03/GIGN/codes/lba_and_lep'))
 from atom3d.datasets import LMDBDataset
 from torch_geometric.data import Data, Batch, DataLoader
 import atom3d.util.graph as gr
