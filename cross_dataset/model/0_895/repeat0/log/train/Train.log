@@ -1,0 +1,8 @@
+lr=0.001, rep=0, seed=895
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+CheapNet params # : 1331241

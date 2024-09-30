@@ -1,5 +1,7 @@
 # CheapNet
 
+*.pyc
+
 cross-dataset/data/csar
 cross-dataset/data/test2013
 cross-dataset/data/test2016
@@ -7,5 +9,6 @@ cross-dataset/data/test2019
 cross-dataset/data/train
 cross-dataset/data/valid
 
-lba_and_lep/examples/lba/gnn/dataset
-lba_and_lep/examples/lep/gnn/dataset
+diverse_protein/dataset
+
+lep/dataset
