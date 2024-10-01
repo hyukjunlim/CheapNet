@@ -36,7 +36,7 @@ To install and use CheapNet, follow these steps:
    conda env create -f cheapcross.yaml
    conda activate cheapcross
 
-   # For Diverse-protein Evaluation (LBA 30%, LBA 60%), and LEP Task
+   # For Diverse Protein Evaluation (LBA 30%, LBA 60%), and LEP Task
    conda env create -f cheapdivlep.yaml
    conda activate cheapdivlep
    ```
@@ -51,7 +51,7 @@ To train CheapNet on your dataset, run the following command:
 # For Cross-dataset Evaluation
 python train_CheapNet.py
 
-# For Diverse-protein Evaluation
+# For Diverse Protein Evaluation
 ## LBA 30%
 python train.py --seqid 30 --num_epochs 15 --learning_rate 1.5e-3 --use_scheduler 0 --data_dir $LMDBDIR
 
