@@ -1,5 +1,5 @@
 seed: 679
-GIGN params # : 1393064
+CheapNet params # : 1393064
 Best model saved at epoch 1 with val rmse: 1.9498189
 Epoch: 001, Train RMSE: 3.2253735, Val RMSE: 1.9498189, Pearson R: 0.3211495, Spearman R: 0.3172638
 Best model saved at epoch 2 with val rmse: 1.7900968

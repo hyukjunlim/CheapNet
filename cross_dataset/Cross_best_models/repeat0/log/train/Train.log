@@ -1,5 +1,5 @@
-ours-lrs-0.001-28-156, lr=0.001, seed=418
-train_GIGN.py
+lr=0.001, repeat=0, seed=418
+train_CheapNet.py
 train data: 11904
 valid data: 1000
 test2013 data: 107

@@ -1,5 +1,5 @@
 seed: 758
-GIGN params # : 1449276(1317179, 132097)
+CheapNet params # : 1449276(1317179, 132097)
 Best model saved at epoch 1 with val loss: 0.6936700
 Epoch: 1, Train loss 0.6847451, Val loss 0.6936700, Val AUROC 0.5835826, Val AUPRC 0.5665652
 Epoch: 2, Train loss 0.6718030, Val loss 0.7126094, Val AUROC 0.6214689, Val AUPRC 0.6208936

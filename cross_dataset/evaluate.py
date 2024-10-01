@@ -6,7 +6,7 @@ from glob import glob
 path = 'Cross_best_models'
 
 print(f'==================== {path} ====================')
-models = ['GIGN']
+models = ['CheapNet']
 model_performance_dict = defaultdict(list)
 results_dict = defaultdict(list)
 

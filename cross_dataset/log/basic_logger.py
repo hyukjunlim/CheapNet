@@ -3,13 +3,10 @@ import os
 
 class BasicLogger(object):
     def __init__(self, path):
-        #
+        
         self.logger = logging.getLogger(path)
-        #
         self.logger.setLevel(logging.DEBUG)
-        # Create a logging format
         formatter = logging.Formatter()
-        # formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s', "%Y-%m-%d %H:%M:%S")
 
         if not self.logger.handlers:
             # Create a file handler
