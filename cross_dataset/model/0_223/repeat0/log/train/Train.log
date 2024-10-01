@@ -1,0 +1,21 @@
+lr=0.001, rep=0, seed=223
+train_CheapNet.py
+train data: 11904
+valid data: 1000
+test2013 data: 107
+test2016 data: 285
+test2019 data: 4366
+CheapNet params # : 1331241
+epoch-0, train_loss-14.9740, train_rmse-3.8696, valid_rmse-2.5196, valid_pr-0.2435
+Validation : valid_rmse-2.5196, valid_pr-0.2435, 
+test2013_rmse-2.7364, test2013_pr-0.3689, test2016_rmse-2.5622, test2016_pr-0.4281, test2019_rmse-2.3481, test2019_pr-0.3009
+epoch-1, train_loss-2.6918, train_rmse-1.6407, valid_rmse-1.7452, valid_pr-0.5013
+Validation : valid_rmse-1.7452, valid_pr-0.5013, 
+test2013_rmse-1.8837, test2013_pr-0.6026, test2016_rmse-1.6449, test2016_pr-0.6595, test2019_rmse-1.6710, test2019_pr-0.5327
+epoch-2, train_loss-2.3737, train_rmse-1.5407, valid_rmse-1.4633, valid_pr-0.6136
+Validation : valid_rmse-1.4633, valid_pr-0.6136, 
+test2013_rmse-1.5901, test2013_pr-0.7651, test2016_rmse-1.5311, test2016_pr-0.7467, test2019_rmse-1.4070, test2019_pr-0.6170
+epoch-3, train_loss-2.2085, train_rmse-1.4861, valid_rmse-1.4187, valid_pr-0.6432
+Validation : valid_rmse-1.4187, valid_pr-0.6432, 
+test2013_rmse-1.6499, test2013_pr-0.7260, test2016_rmse-1.4842, test2016_pr-0.7494, test2019_rmse-1.4223, test2019_pr-0.6075
+epoch-4, train_loss-2.0575, train_rmse-1.4344, valid_rmse-1.4515, valid_pr-0.6488
