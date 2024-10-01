@@ -46,9 +46,8 @@ def check_quantiles(train_loader, valid_loader, test2013_loader, test2016_loader
     lig_list = []
     pro_list = []
     total_list = []
-    for idx, j in [('train_loader', train_loader), ('valid_loader', valid_loader)]:
-    # for idx, j in [('train_loader', train_loader), ('valid_loader', valid_loader), ('test2013_loader', test2013_loader), \
-                # ('test2016_loader', test2016_loader), ('test2019_loader', test2019_loader)]:
+    for idx, j in [('train_loader', train_loader), ('valid_loader', valid_loader), ('test2013_loader', test2013_loader), \
+                ('test2016_loader', test2016_loader), ('test2019_loader', test2019_loader)]:
         print(f'=' * 20)
         print(f'Processing {idx}')
         for i, data in enumerate(j):

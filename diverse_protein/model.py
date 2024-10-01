@@ -1,11 +1,9 @@
-import os
 import math
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from math import ceil
 from torch_geometric.utils import to_dense_adj, to_dense_batch
-from torch_geometric.nn import DenseGCNConv, global_mean_pool, global_add_pool
+from torch_geometric.nn import DenseGCNConv
 from torch_geometric.nn.conv import MessagePassing
 
 def _rbf(D, D_min=0., D_max=6., D_count=9, device='cpu'):

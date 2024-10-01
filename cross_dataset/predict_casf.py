@@ -5,7 +5,7 @@ from CheapNet import CheapNet
 from dataset_CheapNet import GraphDataset, PLIDataLoader
 import numpy as np
 from utils import *
-from sklearn.metrics import mean_squared_error, mean_absolute_error
+from sklearn.metrics import mean_squared_error
 from scipy.stats import spearmanr
 
 from glob import glob
@@ -64,7 +64,7 @@ for red_node in [1]:
     columns = ['Model', 'CASF2016 RMSE', 'CASF2016 R', 'CASF2016 Spea']
     results_df = pd.DataFrame(columns=columns)
     models = ['CheapNet']
-    model_root = 'model/best_models'
+    model_root = 'Cross_best_models'
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
     epoch_file_pattern = re.compile(r'epoch-(\d+)')

@@ -5,10 +5,9 @@ from CheapNet import CheapNet
 from dataset_CheapNet import GraphDataset, PLIDataLoader
 import numpy as np
 from utils import *
-from sklearn.metrics import mean_squared_error, mean_absolute_error
+from sklearn.metrics import mean_squared_error
 from scipy.stats import spearmanr
 from glob import glob
-from collections import defaultdict
 import re
 
 def val(model, dataloader, device):
@@ -76,7 +75,7 @@ for red_node in [1]:
     results_df = pd.DataFrame(columns=columns)
 
     models = ['CheapNet']
-    model_root = 'model/best_models'
+    model_root = 'Cross_best_models'
     device = torch.device('cuda:0')
     epoch_file_pattern = re.compile(r'epoch-(\d+)')
 

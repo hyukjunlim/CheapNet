@@ -84,7 +84,7 @@ if __name__ == "__main__":
     auroc_list = []
     auprc_list = []
     for i in range(3):
-        model_dir = f'best_model'
+        model_dir = f'LEP_best_models'
         model_path = os.path.join(model_dir, f'best_weights_rep{i}.pt')  # Adjust rep accordingly
 
         # Initialize models

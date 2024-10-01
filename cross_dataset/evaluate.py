@@ -3,35 +3,32 @@ import pandas as pd
 from collections import defaultdict
 from glob import glob
 
-path = 'model'
-model_directories = [d for d in os.listdir(path) if os.path.isdir(os.path.join(path, d))]
-model_directories = sorted(model_directories)
+path = 'Cross_best_models'
 
-for model_root in model_directories:
-    print(f'==================== {model_root} ====================')
-    models = ['GIGN']
-    model_performance_dict = defaultdict(list)
-    model_root_path = os.path.join(path, model_root)
-    results_dict = defaultdict(list)
-    for model_name in models:
-        model_dirs = sorted(glob(os.path.join(model_root_path, f'repeat*')))
-        best_dict = defaultdict(list)
-        for md in model_dirs:
-            log_path = os.path.join(md, 'log', 'train', 'Train.log')
-            with open(log_path, 'r') as f:
-                logs = f.readlines()
-                check = False
-                log = logs[-1]
-                if 'test2013_pr' in log:
-                    messages = log.split(', ')
-                    for msg in messages:
-                        parts = msg.split('-')
-                        key = parts[-2].rstrip().replace(',', '')
-                        try:
-                            val = float(parts[-1].rstrip().replace(',', ''))
-                            results_dict[key].append(val)
-                        except ValueError:
-                            continue
+print(f'==================== {path} ====================')
+models = ['GIGN']
+model_performance_dict = defaultdict(list)
+results_dict = defaultdict(list)
+
+for model_name in models:
+    model_dirs = sorted(glob(os.path.join(path, f'repeat*')))
+    best_dict = defaultdict(list)
+    for md in model_dirs:
+        log_path = os.path.join(md, 'log', 'train', 'Train.log')
+        with open(log_path, 'r') as f:
+            logs = f.readlines()
+            check = False
+            log = logs[-1]
+            if 'test2013_pr' in log:
+                messages = log.split(', ')
+                for msg in messages:
+                    parts = msg.split('-')
+                    key = parts[-2].rstrip().replace(',', '')
+                    try:
+                        val = float(parts[-1].rstrip().replace(',', ''))
+                        results_dict[key].append(val)
+                    except ValueError:
+                        continue
 
     model_df = pd.DataFrame(results_dict)
     print(model_df)

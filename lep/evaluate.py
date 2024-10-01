@@ -1,10 +1,10 @@
 import os
 import sys
-sys.path.append(os.path.abspath('/home/users/CheapNet/lba_and_lep'))
+sys.path.append(os.path.abspath('/home/users/CheapNet/atom3d'))
 import atom3d.util.results as res
 import atom3d.util.metrics as met
 
-name = 'best_model'
+name = 'LEP_best_models'
 
 # Load training results
 rloader = res.ResultsGNN(name, task='lep', reps=[0,1,2])
