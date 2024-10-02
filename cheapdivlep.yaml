@@ -200,4 +200,3 @@ dependencies:
       - tqdm==4.64.1
       - virtualenv==20.17.1
       - wcwidth==0.2.13
-prefix: /data/project/dlagurwns03/IGN/envs/cheapdivlep
