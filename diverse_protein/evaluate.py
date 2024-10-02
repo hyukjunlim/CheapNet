@@ -6,7 +6,7 @@ import atom3d.util.metrics as met
 
 seqid = 60
 
-name = f'LBA_{seqid}_best_model'
+name = f'LBA_{seqid}_best_models'
 rloader = res.ResultsGNN(name, reps=[0,1,2])
 results = rloader.get_all_predictions()
 

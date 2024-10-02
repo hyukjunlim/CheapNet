@@ -64,7 +64,7 @@ if __name__ == "__main__":
     pearson_list = []
     spearman_list = []
     for i in range(3):
-      model_dir = f'LBA_{args.seqid}_best_model'
+      model_dir = f'LBA_{args.seqid}_best_models'
       model_path = os.path.join(model_dir, f'best_weights_rep{i}.pt')  # Adjust rep accordingly
       num_features = test_dataset[0].num_features
       num_clusters = [25, 372] if args.seqid == 30 else [24, 362]

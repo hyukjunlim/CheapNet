@@ -67,6 +67,18 @@ python train.py --learning_rate 15e-4 --data_dir $LMDBDIR
 For predicting the binding affinity of protein-ligand complexes, use the `predict.py` script:
 
 ```bash
+# For Cross-dataset Evaluation
+python predict.py
+python predict_casf.py
+
+# For Diverse Protein Evaluation
+## LBA 30%
+python predict.py --seqid 30
+
+## LBA 60%
+python predict.py --seqid 60
+
+# For LEP task
 python predict.py
 ```
 
