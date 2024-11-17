@@ -1,5 +1,6 @@
 # CheapNet
 
+.ipynb_checkpoints
 *.pyc
 
 cross-dataset/data/csar
