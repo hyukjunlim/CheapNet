@@ -229,7 +229,7 @@ class CheapNet(nn.Module):
         x = self.GIGNBlock2(x, data)
         x = self.GIGNBlock3(x, data)
 
-        # DiffPool-Attention
+        # Cluster-Attention
         x_lig, _  = self.diffpool1(x, data)
         x_pro, _  = self.diffpool2(x, data)
 

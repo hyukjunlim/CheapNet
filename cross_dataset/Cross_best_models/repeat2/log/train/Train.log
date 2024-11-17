@@ -5,7 +5,7 @@ valid data: 1000
 test2013 data: 107
 test2016 data: 285
 test2019 data: 4366
-GIGN params # : 1331241
+CheapNet params # : 1331241
 epoch-0, train_loss-16.2623, train_rmse-4.0327, valid_rmse-1.9789, valid_pr-0.4631
 Validation : valid_rmse-1.9789, valid_pr-0.4631, 
 test2013_rmse-1.9507, test2013_pr-0.7018, test2016_rmse-1.9782, test2016_pr-0.6958, test2019_rmse-1.8827, test2019_pr-0.5231

@@ -16,6 +16,7 @@ def _rbf(D, D_min=0., D_max=6., D_count=9, device='cpu'):
     
     return RBF
 
+
 def gnn_norm(x, norm):
 
     batch_size, num_nodes, num_channels = x.size()

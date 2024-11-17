@@ -101,21 +101,20 @@ for red_node in [1]:
             casf2016_rmse, casf2016_coff, casf2016_spea = val(model, casf2016_loader, device)
 
             # new_row = {
-            #     'Model': md.split('/')[2] + " | " + md[-1],
+            #     'Model': md.split('/')[-2] + " | " + md[-1],
             #     'CSAR RMSE': csar_rmse,
             #     'CSAR R': csar_coff,
             #     'CSAR Spea': csar_spea,
             # }
-
             new_row = {
-                'Model': md.split('/')[2] + " | " + md[-1],
+                'Model': md.split('/')[-2] + " | " + md[-1],
                 'CASF2026 RMSE': casf2016_rmse,
                 'CASF2026 R': casf2016_coff,
                 'CASF2026 Spea': casf2016_spea,
             }
 
             # new_row = {
-            #     'Model': md.split('/')[2] + " | " + md[-1],
+            #     'Model': md.split('/')[-2] + " | " + md[-1],
             #     'Test2013 RMSE': test2013_rmse,
             #     'Test2013 R': test2013_coff,
             #     'Test2016 RMSE': test2016_rmse,
@@ -126,7 +125,7 @@ for red_node in [1]:
 
 
             new_row = {
-                'Model': md.split('/')[2] + " | " + md[-1],
+                'Model': md.split('/')[-2] + " | " + md[-1],
                 'Valid RMSE': valid_rmse,
                 'Valid R': valid_coff,
                 'Valid Spea': valid_spea,

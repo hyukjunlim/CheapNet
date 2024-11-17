@@ -108,8 +108,8 @@ if __name__ == '__main__':
         for repeat, seed in enumerate(np.random.randint(0, 1000, size=3)):
             seed_everything(seed)
             
-            save_dir = f"./model/{rep}_{seed}"
-            msg_info = f"lr={lr}, rep={rep}, seed={seed}"
+            save_dir = f"./model/cross_dataset_test_{rep}"
+            msg_info = f"lr={lr}, repeat={repeat}, seed={seed}"
             args['repeat'] = repeat
 
             train_dir = os.path.join(data_root, 'train')

@@ -1,22 +1,22 @@
-seed: 370
+seed: 358
 CheapNet params # : 1393064
-Best model saved at epoch 1 with val rmse: 1.9609620
-Epoch: 001, Train RMSE: 3.2860194, Val RMSE: 1.9609620, Pearson R: 0.3750127, Spearman R: 0.3592482
-Epoch: 002, Train RMSE: 1.8092017, Val RMSE: 2.3961719, Pearson R: 0.4162149, Spearman R: 0.4073257
-Best model saved at epoch 3 with val rmse: 1.6876968
-Epoch: 003, Train RMSE: 1.7230800, Val RMSE: 1.6876968, Pearson R: 0.5475512, Spearman R: 0.5405513
-Epoch: 004, Train RMSE: 1.6659981, Val RMSE: 1.8098232, Pearson R: 0.4837212, Spearman R: 0.4723922
-Best model saved at epoch 5 with val rmse: 1.6727263
-Epoch: 005, Train RMSE: 1.5773277, Val RMSE: 1.6727263, Pearson R: 0.6025331, Spearman R: 0.5907714
-Best model saved at epoch 6 with val rmse: 1.6000815
-Epoch: 006, Train RMSE: 1.5874170, Val RMSE: 1.6000815, Pearson R: 0.6136631, Spearman R: 0.5938295
-Epoch: 007, Train RMSE: 1.5280966, Val RMSE: 1.7068405, Pearson R: 0.5460073, Spearman R: 0.5338410
-Epoch: 008, Train RMSE: 1.5232731, Val RMSE: 1.7600069, Pearson R: 0.5066657, Spearman R: 0.4796192
-Epoch: 009, Train RMSE: 1.4998225, Val RMSE: 1.6894794, Pearson R: 0.5606231, Spearman R: 0.5398999
-Epoch: 010, Train RMSE: 1.4580258, Val RMSE: 1.7038272, Pearson R: 0.5586072, Spearman R: 0.5478400
-Epoch: 011, Train RMSE: 1.3937450, Val RMSE: 1.7009068, Pearson R: 0.5547007, Spearman R: 0.5345071
-Epoch: 012, Train RMSE: 1.4003342, Val RMSE: 1.7175033, Pearson R: 0.5342490, Spearman R: 0.5118421
-Epoch: 013, Train RMSE: 1.3777421, Val RMSE: 1.8954372, Pearson R: 0.4711450, Spearman R: 0.4364966
-Epoch: 014, Train RMSE: 1.3662855, Val RMSE: 1.7177007, Pearson R: 0.5411319, Spearman R: 0.5477797
-Epoch: 015, Train RMSE: 1.3058269, Val RMSE: 1.7271463, Pearson R: 0.5573599, Spearman R: 0.5314144
-Test RMSE 1.3186697, Test Pearson 0.6229867, Test Spearman 0.6160290
+Best model saved at epoch 1 with val rmse: 2.0400646
+Epoch: 001, Train RMSE: 2.9748360, Val RMSE: 2.0400646, Pearson R: 0.4291538, Spearman R: 0.4231536
+Best model saved at epoch 2 with val rmse: 1.7568646
+Epoch: 002, Train RMSE: 1.8248067, Val RMSE: 1.7568646, Pearson R: 0.5570853, Spearman R: 0.5642406
+Best model saved at epoch 3 with val rmse: 1.6946526
+Epoch: 003, Train RMSE: 1.7278039, Val RMSE: 1.6946526, Pearson R: 0.5550888, Spearman R: 0.5898450
+Best model saved at epoch 4 with val rmse: 1.5329899
+Epoch: 004, Train RMSE: 1.6444407, Val RMSE: 1.5329899, Pearson R: 0.6452970, Spearman R: 0.6275014
+Epoch: 005, Train RMSE: 1.5990387, Val RMSE: 1.6350254, Pearson R: 0.5918103, Spearman R: 0.5810907
+Epoch: 006, Train RMSE: 1.5830694, Val RMSE: 1.8811208, Pearson R: 0.5407617, Spearman R: 0.5219267
+Epoch: 007, Train RMSE: 1.5593803, Val RMSE: 1.5921519, Pearson R: 0.6094500, Spearman R: 0.5893230
+Epoch: 008, Train RMSE: 1.4822894, Val RMSE: 1.6672765, Pearson R: 0.5685432, Spearman R: 0.5475000
+Epoch: 009, Train RMSE: 1.4868199, Val RMSE: 1.6579913, Pearson R: 0.5736574, Spearman R: 0.5493113
+Epoch: 010, Train RMSE: 1.4671197, Val RMSE: 1.9332986, Pearson R: 0.4660007, Spearman R: 0.5031272
+Epoch: 011, Train RMSE: 1.4810621, Val RMSE: 1.6723419, Pearson R: 0.5558198, Spearman R: 0.5269298
+Epoch: 012, Train RMSE: 1.4168292, Val RMSE: 1.7446913, Pearson R: 0.5141361, Spearman R: 0.5175166
+Epoch: 013, Train RMSE: 1.4060990, Val RMSE: 1.6800046, Pearson R: 0.5539011, Spearman R: 0.5570151
+Epoch: 014, Train RMSE: 1.3925344, Val RMSE: 1.6405448, Pearson R: 0.5943280, Spearman R: 0.5767168
+Epoch: 015, Train RMSE: 1.3256167, Val RMSE: 1.9814124, Pearson R: 0.5813489, Spearman R: 0.5557408
+Test RMSE 1.3146461, Test Pearson 0.6417191, Test Spearman 0.6525113
