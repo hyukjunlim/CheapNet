@@ -4,6 +4,3 @@
 */.ipynb_checkpoints/*
 *.pyc
 
-cross_dataset/data/
-diverse_protein/dataset/
-lep/dataset/
