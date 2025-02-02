@@ -2,8 +2,8 @@
 
 This is the official repository for "CheapNet: Cross-attention on Hierarchical representations for Efficient protein-ligand binding Affinity Prediction".
 
-- ![Paper](https://hyukjunlim.github.io/figures/CheapNet.pdf)
-- ![Project Page](https://hyukjunlim.github.io/project/CheapNet.html).
+- [Paper](https://hyukjunlim.github.io/figures/CheapNet.pdf)
+- [Project Page](https://hyukjunlim.github.io/project/CheapNet.html).
 
 We propose CheapNet, a novel interaction-based model that integrates atom-level representations with hierarchical cluster-level interactions through a cross-attention mechanism. By employing differentiable pooling of atom-level embeddings, CheapNet efficiently captures essential higher-order molecular representations crucial for accurate binding predictions. Extensive evaluations demonstrate that CheapNet not only achieves state-of-the-art performance across multiple binding affinity prediction tasks but also maintains prediction accuracy with reasonable computational efficiency.
 
@@ -26,11 +26,11 @@ We propose CheapNet, a novel interaction-based model that integrates atom-level 
 
 ## Dataset
 
-The original dataset can be found at ![GIGN](https://github.com/guaguabujianle/GIGN), and ![Atom3D](https://github.com/drorlab/atom3d).
+The original dataset can be found at [GIGN](https://github.com/guaguabujianle/GIGN), and [Atom3D](https://github.com/drorlab/atom3d).
 Also, you can download the preprocessed dataset at:
-- ![Cross-dataset Evaluation](https://zenodo.org/records/7490623#.Y60PTnZBxD8)
-- ![Diverse Protein Evaluation](https://zenodo.org/records/4914718)
-- ![LEP](https://zenodo.org/records/4914734)
+- [Cross-dataset Evaluation](https://zenodo.org/records/7490623#.Y60PTnZBxD8)
+- [Diverse Protein Evaluation](https://zenodo.org/records/4914718)
+- [LEP](https://zenodo.org/records/4914734)
 
 
 ## Installation
