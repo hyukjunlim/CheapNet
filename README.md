@@ -126,7 +126,7 @@ python evaluate.py
 
 If the code have been helpful in your research, please cite CheapNet:
 
-```bash
+```bibtex
 @inproceedings{
     lim2025cheapnet,
     title={CheapNet: Cross-attention on Hierarchical representations for Efficient protein-ligand binding Affinity Prediction},
