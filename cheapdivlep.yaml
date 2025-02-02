@@ -152,6 +152,7 @@ dependencies:
       - distlib==0.3.8
       - easy-parallel==0.1.6
       - filelock==3.4.1
+      - gdown==4.7.3
       - gpustat==1.1.1
       - h5py==3.1.0
       - hyperopt==0.2.7
