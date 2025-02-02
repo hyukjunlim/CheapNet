@@ -26,7 +26,7 @@ To install and use CheapNet, follow these steps:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/snumse/CheapNet.git
+   git clone https://github.com/hyukjunlim/CheapNet.git
    cd Cheapnet
    ```
 
@@ -64,7 +64,7 @@ python train.py --learning_rate 15e-4 --data_dir $LMDBDIR
 
 ### Prediction
 
-For predicting the binding affinity of protein-ligand complexes, use the `predict.py` script:
+To predict the binding affinity of protein-ligand complexes, use the `predict.py` script:
 
 ```bash
 # For Cross-dataset Evaluation
@@ -84,7 +84,7 @@ python predict.py
 
 ### Evaluation
 
-To evaluate the model's performance, use the evaluation scripts provided:
+To evaluate the model's performance, use the `evaulate.py` script:
 
 ```bash
 python evaluate.py
