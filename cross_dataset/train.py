@@ -141,7 +141,7 @@ if __name__ == '__main__':
             print(f'Test2016 samples : {len(test2016_set)}')
             print(f'Test2019 samples : {len(test2019_set)}')
             
-            check_quantiles(train_loader, valid_loader, test2013_loader, test2016_loader, test2019_loader)
+#             check_quantiles(train_loader, valid_loader, test2013_loader, test2016_loader, test2019_loader)
 
             iters = len(train_loader)
             logger = TrainLogger(args, cfg, save_dir, create=True)

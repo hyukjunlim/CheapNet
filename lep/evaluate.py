@@ -1,6 +1,6 @@
 import os
 import sys
-sys.path.append(os.path.abspath('/home/users/CheapNet/atom3d'))
+sys.path.append(os.path.abspath('../atom3d'))
 import atom3d.util.results as res
 import atom3d.util.metrics as met
 

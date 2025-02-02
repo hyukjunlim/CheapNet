@@ -4,13 +4,12 @@
 */.ipynb_checkpoints/*
 *.pyc
 
-cross-dataset/data/csar
-cross-dataset/data/test2013
-cross-dataset/data/test2016
-cross-dataset/data/test2019
-cross-dataset/data/train
-cross-dataset/data/valid
+cross_dataset/data/test2013/*
+cross_dataset/data/test2016/*
+cross_dataset/data/test2019/*
+cross_dataset/data/train/*
+cross_dataset/data/valid/*
 
-diverse_protein/dataset
+diverse_protein/dataset/*
 
-lep/dataset
+lep/dataset/*

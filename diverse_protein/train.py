@@ -1,6 +1,6 @@
 import os
 import sys
-sys.path.append(os.path.abspath('/home/users/CheapNet/atom3d'))
+sys.path.append(os.path.abspath('../atom3d'))
 import argparse
 import logging
 import time
@@ -94,7 +94,7 @@ def train(args, device, log_dir, rep=None, test_mode=False):
     best_rp = 0
     best_rs = 0
 
-    check_quantiles(train_loader, val_loader, test_loader)
+#     check_quantiles(train_loader, val_loader, test_loader)
     
     optimizer = torch.optim.Adam(model.parameters(), lr=args.learning_rate, weight_decay=1e-6)
     if args.use_scheduler:

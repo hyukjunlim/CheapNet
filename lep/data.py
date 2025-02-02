@@ -1,6 +1,6 @@
 import os
 import sys
-sys.path.append(os.path.abspath('/home/users/CheapNet/atom3d'))
+sys.path.append(os.path.abspath('../atom3d'))
 import torch
 from tqdm import tqdm
 from atom3d.util.transforms import prot_graph_transform, mol_graph_transform
