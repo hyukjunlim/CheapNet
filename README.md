@@ -16,7 +16,7 @@ We propose CheapNet, a novel interaction-based model that integrates atom-level 
 ## Key Features
 
 - **Hierarchical Representations**: Higher-level representations to enhance the understanding of protein-ligand interactions that act as groups.
-- **Cross-Attention Mechanism**: Leverages cross-attention to capture significnat interactions between protein and ligand clusters.
+- **Cross-Attention Mechanism**: Leverages cross-attention to capture significant interactions between protein and ligand clusters.
 - **Performance**: Achieves high accuracy of protein-ligand binding affinity prediction across various datasets.
 - **Efficiency**: Designed to be memory-efficient, requiring minimal memory and computation compared to other attention-based models.
 
@@ -27,7 +27,7 @@ To install and use CheapNet, follow these steps:
 1. Clone the repository:
    ```bash
    git clone https://github.com/hyukjunlim/CheapNet.git
-   cd Cheapnet
+   cd CheapNet
    ```
 
 2. Set up the environment:
@@ -45,11 +45,11 @@ To install and use CheapNet, follow these steps:
 
 ### Training the Model
 
-To train CheapNet on your dataset, run the following command:
+To train CheapNet for each dataset, use the `train.py` script:
 
 ```bash
 # For Cross-dataset Evaluation
-python train_CheapNet.py
+python train.py
 
 # For Diverse Protein Evaluation
 ## LBA 30%

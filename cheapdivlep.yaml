@@ -146,7 +146,6 @@ dependencies:
       - cached-property==1.5.2
       - click==8.0.4
       - cloudpickle==2.2.1
-      - cosine-annealing-warmup==2.0
       - dgl==1.0.0
       - dgllife==0.3.2
       - dill==0.3.4
