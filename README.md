@@ -28,7 +28,6 @@ We propose CheapNet, a novel interaction-based model that integrates atom-level 
 ## Dataset
 
 The original dataset can be found at [GIGN](https://github.com/guaguabujianle/GIGN), and [ATOM3D](https://github.com/drorlab/atom3d).
-
 If you want to download the preprocessed datasets, run the following commands:
 ```bash
 # For Cross-dataset Evaluation
