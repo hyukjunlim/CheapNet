@@ -8,6 +8,10 @@ This is the official repository for "CheapNet: Cross-attention on Hierarchical r
 
 We propose CheapNet, a novel interaction-based model that integrates atom-level representations with hierarchical cluster-level interactions through a cross-attention mechanism. By employing differentiable pooling of atom-level embeddings, CheapNet efficiently captures essential higher-order molecular representations crucial for accurate binding predictions. Extensive evaluations demonstrate that CheapNet not only achieves state-of-the-art performance across multiple binding affinity prediction tasks but also maintains prediction accuracy with reasonable computational efficiency.
 
+> **CheapNet: Cross-attention on Hierarchical representations for Efficient protein-ligand binding Affinity Prediction**
+> Hyukjun Lim, Sun Kim, and Sangseon Lee\∗ (\* indicates corresponding author)
+> Published in The Thirteenth International Conference on Learning Representations, 2025. (ICLR 2025)
+
 ## Overview of the Architecture of CheapNet
 
 ![Overview of the Architecture of CheapNet](./assets/CheapNet_Overview.png)
