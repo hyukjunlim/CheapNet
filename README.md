@@ -43,7 +43,7 @@ cd ../
 
 # For Diverse Protein Evaluation
 cd diverse_protein
-gdown 1i-f7kxUTffhJl396wEQAH8UZStyk7GfN
+gdown 1HxKLtCX3VCuHfXXWj1KlMB-S0PXQ_Hjl
 unzip diverse_protein.zip
 rm -f diverse_protein.zip
 cd ../
