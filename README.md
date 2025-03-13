@@ -12,11 +12,11 @@ We propose CheapNet, a novel interaction-based model that integrates atom-level 
 > Hyukjun Lim, Sun Kim, and Sangseon Lee&dagger; (&dagger; indicates corresponding author)  
 > Published in The Thirteenth International Conference on Learning Representations, 2025. (ICLR 2025)
 
-## Overview of the Architecture of CheapNet
+## Overview of the Architecture
 
-![Overview of the Architecture of CheapNet](./assets/CheapNet_Overview.png)
+![Overview of the Architecture](./assets/CheapNet_Overview.png)
 
-## Key Contributions of CheapNet
+## Key Contributions
 
   - We propose a hierarchical model that integrates atom-level and cluster-level interactions, improving the representation of protein-ligand complexes.
   - Our model incorporates a cross-attention mechanism between protein and ligand clusters, focusing on biologically relevant binding interactions.
@@ -29,6 +29,27 @@ We propose CheapNet, a novel interaction-based model that integrates atom-level 
 - **Performance**: Achieves high accuracy of protein-ligand binding affinity prediction across various datasets.
 - **Efficiency**: Designed to be memory-efficient, requiring minimal memory and computation compared to other attention-based models.
 
+## Installation
+
+To install and use CheapNet, follow these steps:
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/hyukjunlim/CheapNet.git
+   cd CheapNet
+   ```
+
+2. Set up the environment:
+   ```bash
+   # For Cross-dataset Evaluation
+   conda env create -f cheapcross.yaml
+   conda activate cheapcross
+
+   # For Diverse Protein Evaluation, and LEP
+   conda env create -f cheapdivlep.yaml
+   conda activate cheapdivlep
+   ```
+   
 ## Dataset
 
 The original dataset can be found at [GIGN](https://github.com/guaguabujianle/GIGN), and [ATOM3D](https://github.com/drorlab/atom3d).  
@@ -55,27 +76,6 @@ unzip LEP.zip
 rm -f LEP.zip
 cd ../
 ```
-
-## Installation
-
-To install and use CheapNet, follow these steps:
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/hyukjunlim/CheapNet.git
-   cd CheapNet
-   ```
-
-2. Set up the environment:
-   ```bash
-   # For Cross-dataset Evaluation
-   conda env create -f cheapcross.yaml
-   conda activate cheapcross
-
-   # For Diverse Protein Evaluation, and LEP
-   conda env create -f cheapdivlep.yaml
-   conda activate cheapdivlep
-   ```
 
 ## Usage
 
